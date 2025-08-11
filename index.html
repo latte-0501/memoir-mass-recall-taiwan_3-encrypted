@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 台灣大罷免運動始末</title>
+    <meta name="description" content="台灣大罷免運動始末 - 加密保護的個人回憶錄 - 加密保護的個人回憶錄">
+    <meta name="author" content="MemoirFlow">
+    <meta name="generator" content="MemoirFlow - Encrypted Edition">
+    
+    <!-- 🔐 關鍵加密標記 - 驗證邏輯會檢查這些 -->
+    <meta name="memoir-encryption" content="true">
+    <meta name="memoir-backend" content="https://mastermaso.com/memoirflow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="台灣大罷免運動始末 - 加密回憶錄">
+    <meta property="og:description" content="受密碼保護的個人回憶錄">
+    
+    <!-- PWA Support -->
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+    
+    <!-- External Libraries -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+            overscroll-behavior: none;
+        }
+
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
+            overflow: hidden;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* 加密載入畫面 - 增強版 */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f172a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-out;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-animation {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(59, 130, 246, 0.2);
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: encryptSpin 1.5s linear infinite;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        @keyframes encryptSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-subtitle {
+            color: #60a5fa;
+            font-size: 16px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .loading-status {
+            color: #9ca3af;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* 加密狀態指示器 */
+        .encryption-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 12px;
+            color: #f87171;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        /* 🔐 密碼輸入模態框 - 關鍵元素，驗證邏輯會檢查 password-modal */
+        .password-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(20px);
+            animation: modalFadeIn 0.5s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { 
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .password-modal-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 50px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.8),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .password-modal-content::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+            mask: radial-gradient(circle at 50% 0%, transparent 50%, black 100%);
+            pointer-events: none;
+        }
+
+        .modal-icon {
+            font-size: 64px;
+            margin-bottom: 25px;
+            animation: lockBounce 2s infinite;
+        }
+
+        @keyframes lockBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .modal-title {
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-description {
+            color: #9ca3af;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .password-input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 18px;
+            border: 2px solid rgba(107, 114, 128, 0.3);
+            border-radius: 12px;
+            background: rgba(31, 41, 55, 0.8);
+            color: white;
+            text-align: center;
+            letter-spacing: 2px;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+            transform: scale(1.02);
+        }
+
+        .password-input::placeholder {
+            color: #6b7280;
+            letter-spacing: normal;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+
+        .unlock-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .unlock-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+        }
+
+        .unlock-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .cancel-btn {
+            background: rgba(107, 114, 128, 0.8);
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background: rgba(75, 85, 99, 0.8);
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            color: #ef4444;
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 10px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .attempts-warning {
+            color: #f59e0b;
+            font-size: 12px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* 解密錯誤頁面 */
+        .decryption-error {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-icon {
+            font-size: 80px;
+            margin-bottom: 30px;
+            color: #ef4444;
+            animation: errorShake 1s ease-in-out;
+        }
+
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .error-title {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .error-description {
+            color: #9ca3af;
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .error-details {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: #f87171;
+            max-width: 500px;
+            text-align: left;
+        }
+
+        .retry-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
+        }
+
+        /* 繼承標準模板的其他樣式 */
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 40;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.9) 70%, transparent 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(107, 114, 128, 0.3);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            gap: 8px;
+            min-height: 60px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .control-btn {
+            width: 32px;
+            height: 32px;
+            background: rgba(31, 41, 55, 0.8);
+            border: 1px solid rgba(107, 114, 128, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .control-btn:hover {
+            background: rgba(55, 65, 81, 0.8);
+            transform: scale(1.05);
+        }
+
+        .title-area {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            min-width: 0;
+            max-width: 300px;
+        }
+
+        .mobile-title {
+            display: none;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .title-box {
+            background: linear-gradient(to right, rgba(31, 41, 55, 0.8), rgba(55, 65, 81, 0.8));
+            backdrop-filter: blur(4px);
+            border-radius: 20px;
+            padding: 8px 16px;
+            border: 1px solid rgba(107, 114, 128, 0.3);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            text-align: center;
+            position: relative;
+        }
+
+        .title-box::before {
+            content: '🔒';
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+        }
+
+        .title-text {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-left: 20px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* 其他樣式繼承自標準模板... */
+        .nav-btn {
+            width: 28px;
+            height: 28px;
+            background: rgba(55, 65, 81, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+
+        .nav-btn:hover:not(.disabled) {
+            background: rgba(75, 85, 99, 0.8);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .event-counter {
+            color: white;
+            font-size: 12px;
+            white-space: nowrap;
+            padding: 4px 12px;
+            text-align: center;
+            min-width: 50px;
+        }
+
+        .media-counter {
+            color: rgb(156, 163, 175);
+            font-size: 12px;
+            white-space: nowrap;
+            background: rgba(31, 41, 55, 0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(107, 114, 128, 0.3);
+        }
+
+        /* 字幕區域 */
+        .subtitle-area {
+            padding: 12px 16px;
+            background: linear-gradient(to right, rgba(31, 41, 55, 0.6), rgba(55, 65, 81, 0.6));
+            backdrop-filter: blur(4px);
+            border-radius: 12px;
+            margin: 0 16px 12px 16px;
+            border: 1px solid rgba(107, 114, 128, 0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            touch-action: pan-x;
+            cursor: grab;
+        }
+
+        .subtitle-area:active {
+            cursor: grabbing;
+        }
+
+        .subtitle-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .event-date {
+            color: rgb(209, 213, 219);
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .event-title {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .subtitle-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+            background: #6b7280;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #3b82f6;
+        }
+
+        .toggle-knob {
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-knob {
+            transform: translateX(20px);
+        }
+
+        .event-description {
+            color: rgb(229, 231, 235);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* 主要內容區域 */
+        .main-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding-top: 120px;
+            transition: all 0.5s ease;
+            touch-action: pan-x;
+        }
+
+        .main-content.transitioning {
+            opacity: 0.7;
+            transform: scale(0.98);
+        }
+
+        .main-content.grid-mode {
+            padding-top: 80px;
+        }
+
+        .media-area {
+            flex: 1;
+            position: relative;
+            padding: 8px 12px;
+            min-height: 0;
+            touch-action: pan-x;
+        }
+
+        /* 媒體輪播模式 */
+        .media-carousel {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            gap: 16px;
+        }
+
+        .main-media {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(135deg, #1f2937, #000000);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(107, 114, 128, 0.3);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            transition: all 0.5s ease;
+        }
+
+        .main-media.transitioning {
+            opacity: 0.5;
+            transform: scale(0.95);
+        }
+
+        .media-display {
+            position: absolute;
+            inset: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-display img,
+        .media-display video {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .title-area {
+                display: none;
+            }
+
+            .mobile-title {
+                display: block;
+            }
+
+            .header-content {
+                padding: 8px 12px;
+                min-height: 56px;
+            }
+            
+            .control-btn {
+                width: 28px;
+                height: 28px;
+            }
+
+            .subtitle-area {
+                margin: 0 8px 8px 8px;
+                padding: 10px 12px;
+            }
+
+            .event-title {
+                font-size: 13px;
+            }
+
+            .event-date {
+                font-size: 11px;
+            }
+
+            .event-description {
+                font-size: 11px;
+            }
+
+            .password-modal-content {
+                padding: 30px;
+                margin: 20px;
+            }
+
+            .modal-title {
+                font-size: 24px;
+            }
+
+            .modal-description {
+                font-size: 14px;
+            }
+        }
+
+        /* 安全性增強 */
+        .no-select {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* 防止右鍵選單 */
+        .no-context {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* 防截圖水印 */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 48px;
+            color: rgba(239, 68, 68, 0.1);
+            pointer-events: none;
+            z-index: 9999;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+        }
+    </style>
+</head>
+<body class="no-select no-context">
+    <!-- 防截圖水印 -->
+    <div class="watermark">🔒 ENCRYPTED MEMOIR 🔒</div>
+
+    <!-- 加密狀態指示器 -->
+    <div class="encryption-indicator">
+        🔒 加密保護
+    </div>
+
+    <!-- 載入畫面 -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-animation"></div>
+        <div class="loading-title">🔒 台灣大罷免運動始末</div>
+        <div class="loading-subtitle">加密回憶錄正在載入中...</div>
+        <div class="loading-status" id="loadingStatus">正在初始化安全連接</div>
+    </div>
+
+    <!-- 🔐 密碼輸入模態框 - 關鍵元素！驗證邏輯會檢查這個 ID -->
+    <div class="password-modal hidden" id="passwordModal">
+        <div class="password-modal-content">
+            <div class="modal-icon">🔒</div>
+            <h2 class="modal-title">此回憶錄受密碼保護</h2>
+            <p class="modal-description">請輸入正確的密碼以查看加密內容</p>
+            <div class="password-input-group">
+                <input type="password" id="memoirPassword" class="password-input" placeholder="請輸入密碼" autocomplete="new-password">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn unlock-btn" id="unlockBtn">🔓 解鎖</button>
+                <button class="modal-btn cancel-btn" id="cancelBtn">❌ 取消</button>
+            </div>
+            <div id="passwordError" class="error-message hidden"></div>
+        </div>
+    </div>
+
+    <!-- 主應用程式 -->
+    <div class="container hidden" id="app">
+        <!-- 標題列 -->
+        <div class="header">
+            <div class="header-content">
+                <!-- 左側控制按鈕 -->
+                <div class="header-left">
+                    <!-- 設定按鈕 -->
+                    <div class="control-btn" id="settingsBtn" title="設定選單">
+                        <i data-lucide="settings" style="width: 14px; height: 14px;"></i>
+                    </div>
+                    
+                    <!-- 時間軸按鈕 -->
+                    <div class="control-btn" id="timelineBtn" title="時間軸導航" style="background: rgba(59, 130, 246, 0.8);">
+                        <i data-lucide="calendar" style="width: 14px; height: 14px;"></i>
+                    </div>
+                </div>
+                
+                <!-- 桌面版標題 -->
+                <div class="title-area">
+                    <div class="title-box">
+                        <div class="title-text">台灣大罷免運動始末</div>
+                    </div>
+                </div>
+
+                <!-- 手機版標題 -->
+                <div class="mobile-title">🔒 台灣大罷免運動始末</div>
+                
+                <!-- 右側導航 -->
+                <div class="header-right">
+                    <div class="nav-btn" id="prevEventBtn" title="上一個時間節點">
+                        <i data-lucide="chevron-left" style="width: 12px; height: 12px;"></i>
+                    </div>
+                    <div class="event-counter">
+                        <span id="currentEventNum">-</span>/<span id="totalEvents">-</span>
+                    </div>
+                    <div class="nav-btn" id="nextEventBtn" title="下一個時間節點">
+                        <i data-lucide="chevron-right" style="width: 12px; height: 12px;"></i>
+                    </div>
+                    <div class="media-counter">
+                        <span id="mediaCount">-</span>媒體
+                    </div>
+                </div>
+            </div>
+
+            <!-- 字幕區域 -->
+            <div class="subtitle-area content-transition hidden" id="subtitleArea">
+                <div class="subtitle-header">
+                    <div class="event-date" id="eventDate">載入中...</div>
+                    <div class="event-title" id="eventTitle">正在解密...</div>
+                    <div class="subtitle-toggle">
+                        <span style="color: white; font-size: 12px;">字幕</span>
+                        <div class="toggle-switch active" id="subtitleToggle">
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="event-description" id="eventDescription">正在解密內容...</div>
+            </div>
+        </div>
+
+        <!-- 主要內容區域 -->
+        <div class="main-content content-transition hidden" id="mainContent">
+            <div class="media-area">
+                <!-- 輪播模式 -->
+                <div class="media-carousel" id="mediaCarousel">
+                    <div class="main-media content-transition" id="mainMedia">
+                        <div class="media-display" id="mediaDisplay">
+                            <div style="text-align: center; color: #9ca3af;">
+                                <div style="font-size: 48px; margin-bottom: 20px;">🔓</div>
+                                <div>內容正在解密中...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔐 加密數據注入點 - 關鍵！這是解密腳本的注入位置 -->
+    
+        <script>
+        // 🔐 MemoirFlow 統一前端解密系統 - 強制覆蓋版本
+        (function() {
+            'use strict';
+            
+            console.log('🔐 解密腳本開始載入...');
+            
+            // 🚨 檢查並避免重複初始化
+            if (window.MemoirFlowDecryptionSystem) {
+                console.warn('⚠️ 解密系統已初始化，跳過重複載入');
+                return;
+            }
+            
+            // 🚨 強制覆蓋標記
+            window.MemoirFlowDecryptionSystem = true;
+            
+            // 🚨 全域變數管理
+            window.MemoirFlowGlobals = window.MemoirFlowGlobals || {
+                MEMOIR_DATA: null,
+                decryptionAttempts: 0,
+                MAX_ATTEMPTS: 3,
+                isInitialized: false,
+                decryptionMode: null,
+                debugInfo: {}
+            };
+            
+            const globals = window.MemoirFlowGlobals;
+            
+            // 🚨 模式特定的解密邏輯
+            
+            // 🔄 回退模式解密邏輯 - 修正 UTF-8 編碼問題
+            globals.decryptionMode = 'fallback';
+            
+            const fallbackData = 'eyJjaGluZXNlTmFtZSI6IuWPsOeBo+Wkp+e9t+WFjemBi+WLleWni+acqyIsImNyZWF0ZWRBdCI6IjIwMjUtMDgtMDRUMDc6MDc6MjYuODA2MTk2MzAwKzAwOjAwIiwiZW5nbGlzaE5hbWUiOiJtYXNzLXJlY2FsbC10YWl3YW5fMyIsImV2ZW50cyI6W3siZGF0ZSI6IjIwMjQtMDItMDYiLCJkZXNjcmlwdGlvbiI6IueVtuaZguWPsOeBo+e4vee1seWkp+mBuOOAgeeri+WnlOmBuOiIieWhteWfg+iQveWumu+8jOWwjeaWvOWPsOeBo+awkeecvuiqjeeCuuOAjOmBuOiIiee1kOaenOaYr+S6kuebuOWItuihoe+8jOWItuihoeaJjeaYr+awkeS4u+OAje+8jOiigee0heWGsDLmnIjmmYLooajnpLrvvJrjgIzlnKjlnIvmsJHpu6jplbfmnJ/nmoTmtJfohablkozliIbljJbnk6bop6PkuYvkuIvvvIzlj7DngaPnorrlr6bmmK/mnInkuIDnqK7lkozlubPkuLvnvqnnmoTlubvmg7PjgILigKbigKbmiYDorILnmoTntbHkuIDlj7DngaPvvIzkuZ/lsLHmmK/lvoHmnI3oh6rnlLHlj7DngaPvvIzmmK/nv5Lov5HlubPlr6vpgLLkuK3lhbHmmrTmlL/nmoTmhrLms5XjgIHlr6vpgLLkuK3lhbHpu6jnq6DnmoTkuIDlgIvln7rmnKzlnIvnrZbjgILkuK3lhbHlr6bpmpvkuIrntablj7DngaPlsLHlhanlgIvpgbjmk4fvvJrkuqTlh7rkvaDnmoTkurrmsJHkuLvmrIrvvIzkuqTlh7rmsbrlrproh6rlt7Hlkb3pgYvlkozliY3pgJTnmoTmrIrliKnvvIzmjqXlj5fkuK3lhbHmmrTmlL/lvLfliqDntabkvaDpppnmuK/ljJbnmoTliY3mma/vvIzpgqPpurzlsLHlj6/ku6XlvpfliLDlsYjovrHnmoTmiYDorILjgI7lkozlubPjgI/jgILjgI0iLCJpZCI6IjE3NTQyOTEzODk1MDQiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiIxNzUyMjAwMTQ2ODU5MDBfUDI5NzYyOTMxLndlYnAiLCJpZCI6ImNhMTFhMjI4LWRhYzEtNDAzYi1hMzc1LTkwZGVmYjE5YmJjZiIsImlzVXJsIjpmYWxzZSwib3JpZ2luYWxOYW1lIjoiMTc1MjIwMDE0Njg1OTAwX1AyOTc2MjkzMS53ZWJwIiwicGF0aCI6Im1lZGlhLzE3NTIyMDAxNDY4NTkwMF9QMjk3NjI5MzEud2VicCIsInR5cGUiOiJpbWFnZSIsInVybCI6bnVsbH1dLCJvcmRlciI6MCwidGl0bGUiOiLoooHntIXlhrDvvJrkuK3lhbHmu7LpgI/lj7DngaPnq4vms5XpmaIifSx7ImRhdGUiOiIyMDI0LTA0LTAzIiwiZGVzY3JpcHRpb24iOiIyMDI05bm06Iqx6JOu5Zyw6ZyH77yI5Y+I56ix54K6NDAz6Iqx5p2x5aSn5Zyw6ZyH77yJ55m855Sf5pa855W25Zyw5pmC6ZaTNOaciDPml6XkuIrljYg35pmCNTjliIYwOeenku+8jOmch+WkruS9jeaWvOWPsOeBo+iKseiTrue4o+WjveixkOmEie+8jOiKruawj+imj+aooTcuMe+8jOmch+a6kOa3seW6pueCujE5Ljflhazph4zvvIzkuKblnKjoirHok67nuKPnp4DmnpfphInlkozlubPmnZHop4DmuKzliLDkuK3lpK7msKPosaHnvbLlnLDpnIfliIbntJrkuK3mnIDlpKfpnIfluqY25by355qE5Zyw6ZyH5ZKM6bql5Y2h5Yip6ZyH5bqm5YiG57Sa5Lit55qEOO+8iFZJSUnvvInluqbvvIzmjIHnuozmkJbmmYPlhbHlpKfntIQ5OOenku+8jOacn+mWk+iHuueBo+WFqOWztumDveaEn+WPl+WIsOaYjumhr+aQluaZg+OAgiIsImlkIjoiMTc1NDI5MTQ4MjMyMSIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkxNTA0Mzc5IiwiaWQiOiIxNzU0MjkxNTA0Mzc5IiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjUzNjQzODU4MTk2X2ZhZTgxNjdkZDBfYi5qcGciLCJwYXRoIjoiaHR0cHM6Ly9saXZlLnN0YXRpY2ZsaWNrci5jb20vNjU1MzUvNTM2NDM4NTgxOTZfZmFlODE2N2RkMF9iLmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vbGl2ZS5zdGF0aWNmbGlja3IuY29tLzY1NTM1LzUzNjQzODU4MTk2X2ZhZTgxNjdkZDBfYi5qcGcifV0sIm9yZGVyIjoxLCJ0aXRsZSI6IuiKseiTrueZvOeUn+imj+aooTcuMeW8t+mchyJ9LHsiZGF0ZSI6IjIwMjQtMDQtMjciLCJkZXNjcmlwdGlvbiI6IuWCheW0kOiQgee9lOmhp+iKseiTrueBveaDhe+8jOeOh+WcmOioquWVj+eOi+a7rOWvp++8jOWFseWNgeS4g+S9jeeri+WnlO+8jOS9lOS6huWci+awkem7qOS6lOWNgeS6jOW4reeri+WnlOi/keS4ieWIhuS5i+S4gOOAgumZpOWCheW0kOiQge+8jOWNgOWfn+eri+WnlOWMheWQq+mbmeWMl+eOi+m0u+iWh+OAgee+heaYjuaJjeOAgeW8teaZuuWAq+OAgeW7luWFiOe/lO+8jOWfuumahuW4guael+aym+elpe+8jOerueiLl+WcsOWNgOW+kOaso+eRqeOAgemEreato+mIkOOAgemCsemOrui7je+8jOWNl+aKlee4o+a4uOmhpeOAgemHkemWgOe4o+mZs+eOieePjeOAgemAo+axn+e4o+mZs+mbqueUn++8jOWOn+S9j+awkeeri+WnlOaciem7g+S7geOAgemEreWkqeiyoeOAgeebp+e4o+S4gO+8m+S4jeWIhuWNgOWJh+aciee/geabieeOsuOAgeael+WAqee2uuOAguWQjOihjOeahOmChOacieWJjeWci+awkem7qOeri+WnlOW8teiCsue+juOAgiIsImlkIjoiMTc1NDI5MTYyNDU1OCIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6IjUyMzkzNTk4OF8xNzg4NzQ5OTg0NzMxNjY3NF81MTE5NjU3OTQwMTU5Njc4MTQzX24uanBnIiwiaWQiOiI0N2Q1YzRhNC1mZjVhLTQyNWMtYjk3Mi0wYzczMjkyNmJiYmEiLCJpc1VybCI6ZmFsc2UsIm9yaWdpbmFsTmFtZSI6IjUyMzkzNTk4OF8xNzg4NzQ5OTg0NzMxNjY3NF81MTE5NjU3OTQwMTU5Njc4MTQzX24uanBnIiwicGF0aCI6Im1lZGlhLzUyMzkzNTk4OF8xNzg4NzQ5OTg0NzMxNjY3NF81MTE5NjU3OTQwMTU5Njc4MTQzX24uanBnIiwidHlwZSI6ImltYWdlIiwidXJsIjpudWxsfV0sIm9yZGVyIjoyLCJ0aXRsZSI6IuWCheW0kOiQgeeOh+Wci+awkeeri+mZoum7qOWcmO+8jOaLnOimi+e1seaIsOmgreebriJ9LHsiZGF0ZSI6IjIwMjQtMDUtMjgiLCJkZXNjcmlwdGlvbiI6Iueri+azlemZouiBt+asiuihjOS9v+azleetieazleahiO+8jOS4i+WNiOWbm+m7nuWkmuS4ieiugOmAmumBjuOAguiIieaJi+ihqOaxuumBjueoi+S4re+8jOiXjeeZveWFqem7qOaMvuiRl+S6uuaVuOWEquWLou+8jOiuk+azleahiOmXlumXnOOAguawkemAsum7qOeri+WnlOaJueipleiZn+eoseWci+acg+aUuemdqeeahOazleahiO+8jOWNu+aYr+m7keeuseOAgeeoi+W6j+S4jeato+e+qe+8jOaykuaUtuawkeS4u+OAgeeEoemZkOaTtOasiuOAgiIsImlkIjoiMTc1NDI5MTczNjcwMyIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkxNzM5NjIxIiwiaWQiOiIxNzU0MjkxNzM5NjIxIiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjEyMDB4ODAwX3dta3lfMDQ5OTEyNzAxMTMxXzIwMjQwNTI4MDEzNTAwMDAwMC5qcGciLCJwYXRoIjoiaHR0cHM6Ly9pbWdjZG4uY25hLmNvbS50dy93d3cvV2ViUGhvdG9zLzEwMjQvMjAyNDA1MjgvMTIwMHg4MDBfd21reV8wNDk5MTI3MDExMzFfMjAyNDA1MjgwMTM1MDAwMDAwLmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy8xMDI0LzIwMjQwNTI4LzEyMDB4ODAwX3dta3lfMDQ5OTEyNzAxMTMxXzIwMjQwNTI4MDEzNTAwMDAwMC5qcGcifV0sIm9yZGVyIjozLCJ0aXRsZSI6IuaMvuW4reasoeWEquWLoiwg6JeN55m96IGv5omL5pq05Yqb6YCa6YGO5ZyL5pyD5pO05qyK5rOV5qGIIn0seyJkYXRlIjoiMjAyNC0xMS0xNCIsImRlc2NyaXB0aW9uIjoi5Y+w54Gj57aT5r+f5rCR5Li76YCj5ZCI6IiH5Y+w54Gj5YWs5rCR6Zmj57eaMTDmnIgzMOaXpeWcqOeri+azlemZoue+pOizouaok+mWgOWPo+WPrOmWi+iomOiAheacg++8jOizqueWkemZs+eOieePjeetieS6uuaJgOaPkOmbouWztuW7uuioreaineS+i+S/ruato+iNieahiO+8jOimgeioree9rumbouWztuWci+mam+mGq+eZgueJueWNgOeahOesrDEz5qKd5LmLMeWPiuS5izLkv67mraPojYnmoYjvvIzlj4roqK3nva7pm6Lls7boh6rnlLHosr/mmJPnpLrnr4TljYDnmoTnrKwxOOaineS5izHkv67mraPojYnmoYjvvIzmgZDorpPph5Hppqzpm6Lls7bmt6rngrrkuK3lnIvkuIDlnIvlhanliLboqabpqZfljYDvvIzmnInlrrPlnIvlrrblronlhajjgIIiLCJpZCI6IjE3NTQyOTIwMjEwNTciLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MjAyMzU1NSIsImlkIjoiMTc1NDI5MjAyMzU1NSIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiJ3MTIwMCIsInBhdGgiOiJodHRwczovL3RvZGF5LW9icy5saW5lLXNjZG4ubmV0LzBoSkE1c3B1c0FGVzRJQ2dROHQ0dHFPVEJjR1I4N2JBOW5LbVZiRHk4RFRGc25KbEl3TWo1R0RTOVlHVUoyYVFCdktEc0tEbjRMSDFaMVB3VV9OZy93MTIwMCIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vdG9kYXktb2JzLmxpbmUtc2Nkbi5uZXQvMGhKQTVzcHVzQUZXNElDZ1E4dDR0cU9UQmNHUjg3YkE5bkttVmJEeThEVEZzbkpsSXdNajVHRFM5WUdVSjJhUUJ2S0RzS0RuNExIMVoxUHdVX05nL3cxMjAwIn1dLCJvcmRlciI6NCwidGl0bGUiOiLpmbPnjonnj43mj5Dlh7rpm6Lls7blu7roqK3mop3kvosifSx7ImRhdGUiOiIyMDI0LTEyLTIwIiwiZGVzY3JpcHRpb24iOiLkuK3oj6/msJHlnIvnq4vms5XpmaLmnIMyMOaXpeWcqOS4reWci+Wci+awkem7qO+8iOiXje+8ieOAgeawkeecvum7qO+8iOeZve+8ieeri+WnlOiBr+aJi+S4i++8jOW8t+ihjOS4ieiugOmAmumBjuOAiuWFrOiBt+S6uuWToemBuOiIiee9t+WFjeazleOAi+OAiuaGsuazleiotOion+azleOAi+OAiuiyoeaUv+aUtuaUr+WKg+WIhuazleOAi++8jOW8leeZvOeIreitsOOAglxuXG7ngrrlj43lsI3ol43nmb3pgJrpgY7kuInlpKfniK3orbDms5XmoYjvvIzlj7DngaPlpJrlgIvlhazmsJHlnJjpq5QyMOaXpeiIieihjOOAjOWGrOWto+mdkumzpeezu+WIl++8muWbnuW+qeWci+acg+awkeS4u++8jOmAgOWbnuS4ieWkp+aDoeazleOAjea0u+WLle+8jOiZn+WPrOmdkumzpeWFrOawkemBi+WLlee+pOecvuWcqOeri+azlemZouWklumbhue1kO+8jOS4u+i+puaWueWcqOaZmumWkznmmYLlt6blj7PlrqPluIPnj77loLTmnIky6JCs6aSY5Lq677yM5rS75YuV5Zyo5YeM5pmoMTLmmYLntZDmnZ/jgIJcblxu5Lit6I+v5rCR5ZyL57i957Wx6LO05riF5b63MjDml6XmmZrplpPmlrzoh4nmm7jnmbzmlofoqqrvvIznq4vms5XpmaLmmK/lnIvlrrbmnIDpq5jmsJHmhI/mqZ/pl5zvvIzosaHlvrXlj7DngaPnmoToh6rnlLHmsJHkuLvjgILkvYYyMOaXpeW8t+ihjOmAmumBjueahDPpoIXms5XmoYjvvIzmnKrntpPlhYXliIboqI7oq5bjgIHnhKHoppbmsJHmhI/vvIzkuI3lg4XliZ3lparkurrmsJHnm6PnnaPnmoTmrIrliKnvvIzmm7TmmK/kvrXlrrPlj7jms5Xnjajnq4vvvIznlJroh7PooZ3mk4rmlLjpl5zmr4/kvY3lnIvmsJHjgIHlnIvlrrbmlbTpq5Tos4fmupDliIbphY3nmoTlhazlubPmraPnvqnjgILpgJnmmK/mspLmlLbmsJHkuLvlnIvlrrbmrIrlipvliIbnq4vnmoTljp/liYfvvIzmm7TmmK/mgpbpm6LmsJHkuLvlnIvlrrbkurrmsJHkvZzkuLvnmoTnnJ/oq6bjgIIiLCJpZCI6IjE3NTQyOTIxMzM5MjQiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MjEzNjA4NCIsImlkIjoiMTc1NDI5MjEzNjA4NCIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiIyMDI0MTIyMC0wMDEuanBnIiwicGF0aCI6Imh0dHBzOi8vdGhlaW5pdGl1bS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjQvMTIvMjAyNDEyMjAtMDAxLmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vdGhlaW5pdGl1bS5jb20vd3AtY29udGVudC91cGxvYWRzLzIwMjQvMTIvMjAyNDEyMjAtMDAxLmpwZyJ9LHsiZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MjM4ODc4OCIsImlkIjoiMTc1NDI5MjM4ODc4OCIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiJpZDE0Mzk1MTk2LTI0MTIyMDIxMTYzOTEwMDMxMS02MDB4NDAwLmpwZyIsInBhdGgiOiJodHRwczovL2kuZXBvY2h0aW1lcy5jb20vYXNzZXRzL3VwbG9hZHMvMjAyNC8xMi9pZDE0Mzk1MTk2LTI0MTIyMDIxMTYzOTEwMDMxMS02MDB4NDAwLmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vaS5lcG9jaHRpbWVzLmNvbS9hc3NldHMvdXBsb2Fkcy8yMDI0LzEyL2lkMTQzOTUxOTYtMjQxMjIwMjExNjM5MTAwMzExLTYwMHg0MDAuanBnIn1dLCJvcmRlciI6NSwidGl0bGUiOiLol43nmb3lhanpu6jlvLfooYzpgJrpgY7mhrLms5XoqLToqJ/ms5Uv6YG457235rOVL+iyoeWKg+azlSJ9LHsiZGF0ZSI6IjIwMjQtMTItMzEiLCJkZXNjcmlwdGlvbiI6Iueri+azlemZouS7iuWkqeS4ieiugOmAmumBjuWwsealreacjeWLmeazlemDqOWIhuS/ruato+aineaWh++8jDgw5q2y5Lul5LiK6ZW36ICF6IGY5YOx5aSW57GN55yL6K235YWN57aT6Yar55mC6KmV5Lyw44CC5Yue5YuV6YOo5bCN5q2k6KGo56S66YG65oa+77yM6KqN54K65pyD5pu06Zuj5om+5Yiw5oiW55WZ5LiL5aSW57GN55yL6K235bel5Lq65Yqb77yM5Lmf5bCN5pa854Wn6aGn5ZOB6LOq6YCg5oiQ5b2x6Z+/44CCXG5cbuW3tOawj+mHj+ihqOebruWJjeaYr+mVt+eFp+WutuW6reeUs+iri+iBmOWDseWkluexjeeci+itt+eahOmGq+eZguipleS8sOS4u+imgeS+neaTmu+8jOeri+azlemZouS7iuWkqeS4ieiugOmAmumBjuWwsealreacjeWLmeazlemDqOWIhuaineaWh++8jOS4ieiugOaineaWh+aYjuWumu+8jOmbh+S4u+iBmOWDseWkluWci+S6uuW+nuS6i+WutuW6reeci+itt+W3peS9nO+8jOiiq+eci+itt+iAheWHoeW5tOm9oTgw5q2y5Lul5LiK77yM5oiWNzDmrbLoh7M3OeatsuaCo+acieeZjOeXh+S6jOacn+S7peS4iuiAhe+8jOW+l+WFjee2k+mGq+eZguapn+ani+S5i+WwiOalreipleS8sOOAgiIsImlkIjoiMTc1NDI5MjQzOTE3MyIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkyNDY2MjA1IiwiaWQiOiIxNzU0MjkyNDY2MjA1IiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjEyMDB4ODc1X3dta3lfMzc1MjUwOTExMjQwXzIwMjQxMjMxMDA0NDAwMDAwMC5qcGciLCJwYXRoIjoiaHR0cHM6Ly9pbWdjZG4uY25hLmNvbS50dy93d3cvV2ViUGhvdG9zLzgwMC8yMDI0MTIzMS8xMjAweDg3NV93bWt5XzM3NTI1MDkxMTI0MF8yMDI0MTIzMTAwNDQwMDAwMDAuanBnIiwidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9pbWdjZG4uY25hLmNvbS50dy93d3cvV2ViUGhvdG9zLzgwMC8yMDI0MTIzMS8xMjAweDg3NV93bWt5XzM3NTI1MDkxMTI0MF8yMDI0MTIzMTAwNDQwMDAwMDAuanBnIn1dLCJvcmRlciI6NiwidGl0bGUiOiLol43nmb3lvLfooYzpgJrpgY7vvIw4MOatsuS7peS4iuWFjeW3tOawj+mHj+ihqOiri+WkluWCrSJ9LHsiZGF0ZSI6IjIwMjUtMDEtMTMiLCJkZXNjcmlwdGlvbiI6IuaYr+WQpuaUvuWvrOS4reWci+exjemFjeWBtuWPluW+l+WPsOeBo+i6q+WIhuitieW5tOmZkO+8jOacnemHjuaaq+S8keaIsO+8geiXjeeZveacrOmAseS6jO+8iDE05pel77yJ5Lul5Lq65pW45YSq5Yui77yM5pa856iL5bqP5aeU5ZOh5pyD5by35Yui6YCa6Zec44CM5YWp5bK45Lq65rCR6Zec5L+C5qKd5L6L44CN5L+u5q2j5qGI77yM5Lim6aCG5Yip5o6S5YWl5LuK77yIMTfml6XvvInorbDnqIvvvIznhLbogIzlnIvmsJHpu6jlnJjljbvmlrzmnIPkuK3mj5DmoYjvvIzlsIfljIXmi6znuK7nn63kuK3phY3lhaXnsY3lubTpmZDlnKjlhafnmoTmiYDmnInloLHlkYrkuovpoIXvvIzlhajpg6jpgIDlm57nqIvluo/lp5Tlk6HmnIPjgIJcblxu57m85ZyL5rCR6buo56uL5aeU6Kix5a6H55SE77yM5ri46aGl5pys5pyD5pyf5YaN5qyh5o+Q5Ye644CM5YWp5bK45Lq65rCR6Zec5L+C5qKd5L6L56ysMTfmop3kv67mraPojYnmoYjjgI3vvIzlu7rorbDlsIfkuK3phY3lj5blvpfouqvliIborYnnmoTlubTpmZDmr5TnhaflpJbphY3vvIzlvp425bm057iu55+t54K6NOW5tO+8jOWEmOeuoeawkemAsum7qOWcmOaPkOWHuueVsOitsO+8jOipsuahiDE05pel5LuN57aT56uL6Zmi56iL5bqP5aeU5ZOh5pyD5o6S5YWlMTfml6XpmaLmnIPloLHlkYrkuovpoIXnrKwxMeahiOOAgiIsImlkIjoiMTc1NDI5MjY0MDM2MyIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkyNjQyNTc2IiwiaWQiOiIxNzU0MjkyNjQyNTc2IiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6ImQ2M2QzOWEyNTU0Yzc4N2Y1NmE4MzI0ZWI3MjgwMmFmIiwicGF0aCI6Imh0dHBzOi8vcy55aW1nLmNvbS9ueS9hcGkvcmVzLzEuMi83N1duaHFUYkI3ZGR2QzY5N0RENlBnLS0vWVhCd2FXUTlhR2xuYUd4aGJtUmxjanQzUFRrMk1EdG9QVFUwTUEtLS9odHRwczovL21lZGlhLnplbmZzLmNvbS96aC10dy9tbmV3c190d18yNTgvZDYzZDM5YTI1NTRjNzg3ZjU2YTgzMjRlYjcyODAyYWYiLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL3MueWltZy5jb20vbnkvYXBpL3Jlcy8xLjIvNzdXbmhxVGJCN2RkdkM2OTdERDZQZy0tL1lYQndhV1E5YUdsbmFHeGhibVJsY2p0M1BUazJNRHRvUFRVME1BLS0vaHR0cHM6Ly9tZWRpYS56ZW5mcy5jb20vemgtdHcvbW5ld3NfdHdfMjU4L2Q2M2QzOWEyNTU0Yzc4N2Y1NmE4MzI0ZWI3MjgwMmFmIn1dLCJvcmRlciI6NywidGl0bGUiOiLol43lp5TmuLjpoaXnrYnkurrph43mj5DvvIzkuK3phY025bm05pS5NOW5tO+8jOaUvuWvrOS4remFjeWPluW+l+i6q+WIhuitieWSjOimquWxrOS+huWPsOWumuWxheaineS7tiJ9LHsiZGF0ZSI6IjIwMjUtMDEtMTciLCJkZXNjcmlwdGlvbiI6IumZs+aWjOiPr+aMh+WHuu+8jOawkemAsum7qOaUv+W6nOeahOWqkuWuo+mgkOeul+aatOWinu+8jOWPjeaYoOWFtuOAjOeyiemjvuWkquW5s+OAgeaOqeiTi+eEoeiDveOAjeeahOaEj+WcluOAguS7luaMh+aOp++8jOawkemAsum7qOWIqeeUqOWqkuWuo+iyu+ixoumkiue2sui7je+8jOaUu+aTiueVsOW3seS4puaKuem7keS4reWci+OAguS7lueUmuiHs+iBsueose+8jOOAjOWztuWFp+WQhOeVjOWwjeatpOaXqeacieWFrOirluOAjeOAgueEtuiAjO+8jOmAmeauteeZvOiogOiiq+WPsOeBo+e2suWPi+imlueCuuS4jeeVtuW5sua2ieWFp+aUv++8jOS4puWkp+iChuaMluiLpuWcqOmHjum7qOeahOWIqumgkOeul+ihjOeCuuaYr+OAjOeNsuW+l+elluWci+iqjeitieOAjeOAjOWci+WPsOi+puiqh+eNjuWltOaJjeOAjeOAgiIsImlkIjoiMTc1NDI5MjczNDk2NSIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkyNzM3MzIwIiwiaWQiOiIxNzU0MjkyNzM3MzIwIiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6ImI1MTBjYTU1LTY3NDItNGY5ZS1hYTA4LThhMjRkZWRlMjUzMi13MjQwMC53ZWJQIiwicGF0aCI6Imh0dHBzOi8vdjMtc3RhdGljcy5taXJyb3JtZWRpYS5tZy9pbWFnZXMvYjUxMGNhNTUtNjc0Mi00ZjllLWFhMDgtOGEyNGRlZGUyNTMyLXcyNDAwLndlYlAiLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL3YzLXN0YXRpY3MubWlycm9ybWVkaWEubWcvaW1hZ2VzL2I1MTBjYTU1LTY3NDItNGY5ZS1hYTA4LThhMjRkZWRlMjUzMi13MjQwMC53ZWJQIn1dLCJvcmRlciI6OCwidGl0bGUiOiLkuK3lhbHlnIvlj7DovqblpKflipvnqLHorprol43nmb3noI3poJDnrpcifSx7ImRhdGUiOiIyMDI1LTAxLTIwIiwiZGVzY3JpcHRpb24iOiLlj7DngaPnq4vms5XpmaLlnKjmrbfntpPot6jml6XjgIEyMOWwj+aZguS4jeaWt+mbu+ihqOaxuuS4i++8jOeUseWcqOmHjueahOWci+awkem7qOOAgeawkeecvum7qOiBr+aJi+S4ieiugOmAmumBjjIwMjXlubTkuK3lpK7mlL/lupznuL3poJDnrpfmoYjvvIznuL3poJDnrpfmrbLlh7rnlLHljp/lhYjnt6jliJfnmoQz5YWGMTMyNeWEhO+8iOaWsOWPsOW5o++8iea4m+eCujLlhYY5MjQ45YSE5YWD77yM5a+p6K2w57WQ5p6c57aT5Li76KiI57i96JmV6KiI566X77yM5oiq6IezMeaciDIz5pel5LiL5Y2IMTfmmYLlhbHoqIjmuJvliJfntIQyMDc25YSE5YWD77yM5Yiq5rib6YeR6aGN5Ym15LiL5paw6auY77yM5q2y5YWlM+WFhjE1MzTlhITlhYPliYfmmK/lj7LkuIrpppbluqbnqoHnoLQz5YWG44CCIiwiaWQiOiIxNzU0MjkyOTYxNzc2IiwibWVkaWEiOlt7ImZpbGVuYW1lIjoidXJsXzE3NTQyOTI5NjM4MjMiLCJpZCI6IjE3NTQyOTI5NjM4MjMiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoiNDg1NjUxNmMtYmE5YS00MGYyLTgwYTAtODUwNjRmNmQ0OTQ4LXcxNjAwLndlYlAiLCJwYXRoIjoiaHR0cHM6Ly92My1zdGF0aWNzLm1pcnJvcm1lZGlhLm1nL2ltYWdlcy80ODU2NTE2Yy1iYTlhLTQwZjItODBhMC04NTA2NGY2ZDQ5NDgtdzE2MDAud2ViUCIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vdjMtc3RhdGljcy5taXJyb3JtZWRpYS5tZy9pbWFnZXMvNDg1NjUxNmMtYmE5YS00MGYyLTgwYTAtODUwNjRmNmQ0OTQ4LXcxNjAwLndlYlAifV0sIm9yZGVyIjo5LCJ0aXRsZSI6IuiXjeeZveWFqem7qOmAmumBjuS6guWIquWHjemgkOeul++8jOWatOmHjeW9semfv+WPsOeBo+awkeeUn+OAgeWci+WuiSJ9LHsiZGF0ZSI6IjIwMjUtMDItMjAiLCJkZXNjcmlwdGlvbiI6IuWci+awkem7qOWcmOe4veWPrOWCheW0kOiQge+8jDIw5pel5pma6ZaT77yM5ZKM5aa75a2Q6Iqx6JOu57ij6ZW35b6Q5qab6JSa5LiA6LW35b6e6aaZ5riv6L+U5Y+w77yM5Zyo6Iqx6JOu5qmf5aC05Y+X6Kiq5pmC77yM5LuW6KGo56S66Ieq5bex5Y+I5a6M5oiQ5LqG5LiA6aCF5q235Y+y5Lu75YuZ44CC5Y+q5piv77yM5LuW6LW05Lit55qE5raI5oGv77yM5byV55m86Zec5rOo77yM6YKE5pyJ5Lq654m55Yil5L6G5o6l5qmf77yM5p2x56S+55m86KiA5Lq66Zmz6LKh6IO95a6I5Zyo5qmf5aC06ZaA5Y+j77yM55W26Z2i5ZeG5LuW5piv5Lit5YWx6LWw54uX44CCIiwiaWQiOiIxNzU0MjkzMDUwNzUzIiwibWVkaWEiOlt7ImZpbGVuYW1lIjoidXJsXzE3NTQyOTMwNTM3OTgiLCJpZCI6IjE3NTQyOTMwNTM3OTgiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoiNmU5ZGI3NTItMzBhOC00OWM4LTg4MjQtNzc3ZjQ5Mjg3MTY4LmpwZyIsInBhdGgiOiJodHRwczovL2Nkbi5mdHZuZXdzLmNvbS50dy9tYW5hc3lzdGVtL0ZpbGVEYXRhL05ld3MvMS82ZTlkYjc1Mi0zMGE4LTQ5YzgtODgyNC03NzdmNDkyODcxNjguanBnIiwidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9jZG4uZnR2bmV3cy5jb20udHcvbWFuYXN5c3RlbS9GaWxlRGF0YS9OZXdzLzEvNmU5ZGI3NTItMzBhOC00OWM4LTg4MjQtNzc3ZjQ5Mjg3MTY4LmpwZyJ9XSwib3JkZXIiOjEwLCJ0aXRsZSI6IuWCheW0kOiQgemmmea4r+i/lOWPsO+8jOeosTzlrozmiJDmrbflj7Lku7vli5k+In0seyJkYXRlIjoiMjAyNS0wMy0yMSIsImRlc2NyaXB0aW9uIjoi5Y675bm057i957Wx6LO05riF5b635o+Q5ZCN55qE5Y+45rOV6Zmi5q2j44CB5Ymv6Zmi6ZW35Y+K5aSn5rOV5a6Y5YWx5LiD5ZCN5Lq66YG477yM5YWo5pW46YGt5Yiw56uL5rOV6Zmi5ZCm5rG677yM54K65LqG5a6I6K236Ieq55Sx5rCR5Li75oay5pS/5Yi25bqm44CB5o+Q5Y2H5ZyL5a6J5qGI5Lu25bCI5qWt6IO96YeP5Lim5oyB57qM5o6o5YuV5Y+45rOV5pS56Z2p77yM57i957Wx5L6d5pOa5oay5rOV5aKe5L+u5qKd5paH56ys5LqU5qKd6KaP5a6a77yM6YeN5paw5o+Q5ZCN5Y+45rOV6Zmi5Lq65LqL77ybMjHml6XnlLHlia/nuL3ntbHola3nvo7nkLTlhazluIPlhajmlrDlkI3llq7ngrrvvJrlj7jms5XpmaLplbfooqvmj5DlkI3kurrngrrolKHnp4vmmI7jgIHlia/pmaLplbfooqvmj5DlkI3kurrngrromIfntKDlqKXku6Xlj4rlj7jms5XpmaLlpKfms5Xlrpjooqvmj5DlkI3kurrngrrola3mlofnlJ/jgIHphK3ntJTmg6DjgIHmnpfpupfnkanjgIHpmbPmhYjpmb3lj4roqbnpjq7mpq7nrYnkurrvvIzlkIzmmYLkuZ/mnIPlnKgyMeaXpeeVtuWkqeWSqOiri+eri+azlemZouWQjOaEj+OAgiIsImlkIjoiMTc1NDI5MzEyNzAxMCIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkzMTI4ODc3IiwiaWQiOiIxNzU0MjkzMTI4ODc3IiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjIwMDB4MTM3M193bWt5Xzk3MjcxNDczNjUzMDExXzIwMjUwNzI1MDAzNzAwMDAwMC5qcGciLCJwYXRoIjoiaHR0cHM6Ly9pbWdjZG4uY25hLmNvbS50dy93d3cvV2ViUGhvdG9zLzEwMjQvMjAyNTA3MjUvMjAwMHgxMzczX3dta3lfOTcyNzE0NzM2NTMwMTFfMjAyNTA3MjUwMDM3MDAwMDAwLmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy8xMDI0LzIwMjUwNzI1LzIwMDB4MTM3M193bWt5Xzk3MjcxNDczNjUzMDExXzIwMjUwNzI1MDAzNzAwMDAwMC5qcGcifV0sIm9yZGVyIjoxMSwidGl0bGUiOiLnqbrnvLrnmoQ35ZCN5aSn5rOV5a6Y5Lq66YG4LCDlhajmlbjpga3ol43nmb3miYDmnInnq4vlp5TnmoTlkKbmsboifSx7ImRhdGUiOiIyMDI1LTA0LTE1IiwiZGVzY3JpcHRpb24iOiLph53lsI3lnIvmsJHpu6jjgIHmsJHnnL7pu6jmibnoqZXov5Hml6XmsJHpgLLpu6jlhafniIbnmbzlpJrotbflhbHoq5zmoYjvvIznq4vms5XpmaLmsJHpgLLpu6jlnJjlvLfoqr/vvIzmsJHpgLLpu6jnrKzkuIDmmYLplpPlsIfmtonmoYjogIXpgIHovqbjgIHplovpmaTpu6jnsY3ntZXkuI3lr6zosrjvvIzkuI3nqY3mpbXomZXnkIbmiY3mmK/ljIXluofvvIzol43nmb3lj6rmnIPorbTosqzlj5flrrPogIXvvIzogIzkuI3ljrvmibnoqZXliqDlrrPogIXvvIzlsLHmmK/og4zlvoznmoTkuK3lhbHvvJvnlJroh7PlnKjlnIvmnIPpmLvmk4vmsJHpgLLpu6jlnJjmiYDmj5DjgIzlnIvlronljYHms5XjgI3vvIzlhYnnq4vlp5TotbTkuK3ntI3nrqHnuL3oqIjlsLHmk4vkuoYzMTnmrKHvvIzliLDlupXpgoTopoHmk4vlpJrkuYXvvJ9cblxu5rCR6YCy6buo5ZyY5LuK6IiJ6KGM44CM5Y+N5YWx6Kuc5ruy6YCPIOWwseaUr+aMgeWci+WuieazleahiOOAjeiomOiAheacg+OAguawkemAsum7qOWcmOW5ueS6i+mVt+WQs+aAneeRpOihqOekuu+8jOWFseirnOWwseaYr+WFqOawkeWFrOaVte+8jOmdouWwjeS7u+S9leWei+aFi+eahOWFseirnO+8jOeVtueEtuimgeS+neazleeptui+puOAgeWatOaHsu+8jOiLpeePvuihjOazleW+i+S4jeWkoOWatOagvOOAgeeuoeeQhuS4jeWkoOWFqOmdou+8jOeVtueEtuimgeijnOa8j++8jOmAmeaYr+awkemAsum7qOato+WKquWKm+mAsuihjOeahOS6i+OAgiIsImlkIjoiMTc1NDI5MzI5MzQ1OCIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkzMzEwNzgzIiwiaWQiOiIxNzU0MjkzMzEwNzgzIiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjEyMDB4NzE2Xzc1OTkzMjU5MjYyOC5qcGciLCJwYXRoIjoiaHR0cHM6Ly9pbWdjZG4uY25hLmNvbS50dy93d3cvV2ViUGhvdG9zLzgwMC8yMDI1MDQxNy8xMjAweDcxNl83NTk5MzI1OTI2MjguanBnIiwidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9pbWdjZG4uY25hLmNvbS50dy93d3cvV2ViUGhvdG9zLzgwMC8yMDI1MDQxNy8xMjAweDcxNl83NTk5MzI1OTI2MjguanBnIn1dLCJvcmRlciI6MTIsInRpdGxlIjoi6JeN55m96YCj57qMMzE55qyh6Zi75pOL5by35YyW5ZyL5a6J55qE5L+u5rOV5o+Q5qGIIn0seyJkYXRlIjoiMjAyNS0wNS0zMSIsImRlc2NyaXB0aW9uIjoi5ZyL5rCR6buo56uL5aeU6Zmz5rC45bq35o+Q5qGI5L+u5q2j44CK5YWp5bK45Lq65rCR6Zec5L+C5qKd5L6L44CL56ysMjnmop3vvIzmiornpoHpmZDliLbmsLTln5/lhazlkYrmrIrosqznlLHlnIvpmLLpg6jmlLnngrrmtbflp5TmnIPvvIzogIzkuJTnq4vms5XopoHml6jmj5Dlj4rlhanlsrjlhafmiLDlsJrmnKrntZDmnZ/vvIzlvJXotbfpl5zms6jjgILpmbPmsLjlurfku4rvvIgxM++8ieaXpeihqOekuu+8jOmHkemmrOawtOWfn+W3suino+mZpOi7jeeuoe+8jOeuoeeQhuS5n+mAkOatpeenu+S6pOa1t+W3oee9su+8jOiLpeemgemZkOWItuawtOWfn+WKg+ioreasiuiyrOS7jeeUseWci+mYsumDqOaOjOeuoe+8jOS4jeaYr+W+iOWlh+aAqu+8n+S4jemBjuawkemAsum7qOeri+WnlOaJueiple+8jOS/ruazleWcqOaooeeziuWMluWPsOeBo+S4u+asiuOAgiIsImlkIjoiMTc1NDI5MzU2NDI3NSIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkzNTY2NDM1IiwiaWQiOiIxNzU0MjkzNTY2NDM1IiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjMyMjkyNjA4LmpwZyZ4PTAmeT0wJnN3PTAmc2g9MCZzbD1XJmZ3PTgwMCZleHA9MzYwMCIsInBhdGgiOiJodHRwczovL3Bndy51ZG4uY29tLnR3L2d3L3Bob3RvLnBocD91PWh0dHBzOi8vdWMudWRuLmNvbS50dy9waG90by8yMDI1LzA2LzEzL3JlYWx0aW1lLzMyMjkyNjA4LmpwZyZ4PTAmeT0wJnN3PTAmc2g9MCZzbD1XJmZ3PTgwMCZleHA9MzYwMCIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vcGd3LnVkbi5jb20udHcvZ3cvcGhvdG8ucGhwP3U9aHR0cHM6Ly91Yy51ZG4uY29tLnR3L3Bob3RvLzIwMjUvMDYvMTMvcmVhbHRpbWUvMzIyOTI2MDguanBnJng9MCZ5PTAmc3c9MCZzaD0wJnNsPVcmZnc9ODAwJmV4cD0zNjAwIn1dLCJvcmRlciI6MTMsInRpdGxlIjoi5ZyL5rCR6buo56uL5aeU6Zmz5rC45bq3562J5o+Q5qGI5L+u6KiC5YWp5bK45Lq65rCR6Zec5L+C5qKd5L6L77yM5YWn5a655YG35rih44CM5YWp5bK45YWn5oiw54uA5oWL44CN5qaC5b+1In0seyJkYXRlIjoiMjAyNS0wNi0yNyIsImRlc2NyaXB0aW9uIjoi5ZyL5rCR6buo44CB5rCR55y+6buo5o6o44CM5LiN5Zyo57GN5oqV56Wo44CN77yMMjAyNeW5tDbmnIgyN+aXpeWcqOeri+mZouS4gOiugO+8jOmHneWwjeOAjOWPsOeBo+acrOWcn+OAjemAsuihjOS4jeWcqOexjeaKleelqO+8jOWcqOS4reWci+eahOWPsOWVhuS4jemBqeeUqO+8jOS9huW+i+W4q+ael+aZuue+pOiqjeeCuu+8jOmChOaYr+acg+eUoueUn+WatOmHjeeahOWVj+mhjO+8jOWboOeCuuWPquimgeaPkOWHuuOAjOi6q+WIhuitieato+WPjemdouW9seacrOOAje+8jOWwseWPr+S7peeUs+iri+OAjOS4jeWcqOexjeaKleelqOOAjeOAgiIsImlkIjoiMTc1NDI5NDE1NzIwMiIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0Mjk0MTU4OTgxIiwiaWQiOiIxNzU0Mjk0MTU4OTgxIiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjEzMTR4ODM2X3dta25fODAzOTU5MTE3ODFfMC5qcGciLCJwYXRoIjoiaHR0cHM6Ly9pbWdjZG4uY25hLmNvbS50dy93d3cvV2ViUGhvdG9zLzEwMjQvMjAyNDAxMjQvMTMxNHg4MzZfd21rbl84MDM5NTkxMTc4MV8wLmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy8xMDI0LzIwMjQwMTI0LzEzMTR4ODM2X3dta25fODAzOTU5MTE3ODFfMC5qcGcifV0sIm9yZGVyIjoxNCwidGl0bGUiOiLol43nmb3mjqjkuI3lnKjnsY3mipXnpagifSx7ImRhdGUiOiIyMDI1LTA3LTEwIiwiZGVzY3JpcHRpb24iOiLlnIvmsJHpu6jnq4vlp5TpmbPmsLjlurfnrYnol43lp5Tmj5Dlh7rjgIrlnIvlrrblronlhajmiLDnlaXms5XjgIvvvIzpga3mibnkvIHlnJbliZ3lparnuL3ntbHlnIvlrrblronlhajkuovli5nmsbrnrZbmrIrvvIzmnrbnqbrlnIvlrrblronlhajmnIPorbDvvIzorpPnq4vms5XpmaLmn5PmjIflnIvlronmsbrnrZbjgILlsI3mraTvvIzntpPmsJHpgKPlj4rnvbflnJjlj6zplovoga/lkIjoqJjogIXmnIPvvIznl5vmibnkv67ms5XmmK/lsI3nj77ooYzpq5TliLbpgLLooYzkuInlpKfpgZXmhrLpoZvopobvvIzoi6XmraTms5XmoYjpgJrpgY7vvIzkuI3lg4XnoLTlo57mhrLms5XmrIrlipvliIbnq4voqK3oqIjvvIzmm7TlsIforpPnq4vms5XpmaLpgY7luqbmn5PmjIflnIvlronkuovli5njgIIiLCJpZCI6IjE3NTQyOTQyMDQ4MjMiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5NDIwNjQ4MCIsImlkIjoiMTc1NDI5NDIwNjQ4MCIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiJGQTBBMTA0Mi01MjczLTRGNTAtOTc1NC00OTBBQ0QzMUY3NUIlRTYlOEIlQjclRTglQjIlOUQuanBlZz9maXQ9MjA0OCUyQzEzNjUmc3NsPTEiLCJwYXRoIjoiaHR0cHM6Ly9pMC53cC5jb20vbW1lZGlhLmNvbS50dy93cC1jb250ZW50L3VwbG9hZHMvMjAyNC8wNS9GQTBBMTA0Mi01MjczLTRGNTAtOTc1NC00OTBBQ0QzMUY3NUIlRTYlOEIlQjclRTglQjIlOUQuanBlZz9maXQ9MjA0OCUyQzEzNjUmc3NsPTEiLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2kwLndwLmNvbS9tbWVkaWEuY29tLnR3L3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDI0LzA1L0ZBMEExMDQyLTUyNzMtNEY1MC05NzU0LTQ5MEFDRDMxRjc1QiVFNiU4QiVCNyVFOCVCMiU5RC5qcGVnP2ZpdD0yMDQ4JTJDMTM2NSZzc2w9MSJ9XSwib3JkZXIiOjE1LCJ0aXRsZSI6IuiXjeaOqOOAjOWci+WutuWuieWFqOaIsOeVpeazleOAje+8jOaEj+Wcluafk+aMh+e4vee1seWci+WuieaxuuetliJ9LHsiZGF0ZSI6IjIwMjUtMDctMTgiLCJkZXNjcmlwdGlvbiI6Iueri+azlemZouWPuOazleWPiuazleWItuWnlOWToeacgzbmnIg05pel5Yid5a+p6YCa6YGO56uL5aeU5omA5o+Q5YiR5rOV6YOo5YiG5qKd5paH5L+u5q2j6I2J5qGI77yM5pyJ6Zec5o+Q6auY6JmQ56ul6Ie05q275YiR5bqm5pyA6auY6Iez5q275YiR5oiW54Sh5pyf5b6S5YiR562J5qKd5paH77yM5pyd6YeO6ZuW5Z2H5pSv5oyB5Yqg6YeN5YiR6LKs77yM5L2G5Zyo56uL5rOV5oqA6KGT5LiK5pyq6YGU5oiQ5YWx6K2Y77yM5Zug5q2k5L+d55WZ5Lqk6buo5ZyY5Y2U5ZWG44CC6buo5ZyY5Y2U5ZWG5b6M5pyd6YeO6YGU5oiQ5YWx6K2Y77yM5YyF5ous5pyd6YeO6YO95pSv5oyB5aKe6KiC5YiR5rOV56ysMjcy5qKd5LmLMeaineaWh++8jOS9huS/neeVmeWIkeazleesrDI4NuaineaineaWh+mAgeeri+azlemZouacg+iZleeQhuOAglxuXG7lnIvmsJHpu6joiIfmsJHnnL7pu6jmhI/lnJbku6Xnq4vms5XkuI3lkajnmoTmop3mlofvvIzmk43kvZzmsJHpgLLpu6jkuI3mlK/mjIHlhZLnq6XomZDlvoXph43nvbDms5XmoYjjgIIiLCJpZCI6IjE3NTQyOTQzODEwODAiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5NDQwMDQzOCIsImlkIjoiMTc1NDI5NDQwMDQzOCIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiJjNDMxYjAwNGE0OTRkNTQ3NTQwN2MxY2NmOGE1NDRhYS53ZWJwIiwicGF0aCI6Imh0dHBzOi8vc3RhdGljLmttZWRpYS5jb20udHcvcHJkLzIwMjUvMDcxOC8yREI1NEM5NTNDMDQ4MkI3RDAxRjdBMjc0QUJGMjVENi9jNDMxYjAwNGE0OTRkNTQ3NTQwN2MxY2NmOGE1NDRhYS53ZWJwIiwidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9zdGF0aWMua21lZGlhLmNvbS50dy9wcmQvMjAyNS8wNzE4LzJEQjU0Qzk1M0MwNDgyQjdEMDFGN0EyNzRBQkYyNUQ2L2M0MzFiMDA0YTQ5NGQ1NDc1NDA3YzFjY2Y4YTU0NGFhLndlYnAifV0sIm9yZGVyIjoxNiwidGl0bGUiOiLol43nmb3lvLfooYzpgJrpgY7nq4vms5XkuI3lkajnmoTlhZLomZDpmLLmsrvnm7jpl5zms5XmoYgifSx7ImRhdGUiOiIyMDI1LTA3LTI1IiwiZGVzY3JpcHRpb24iOiLmhrLms5Xms5Xluq3mjIHnuozooqvnmbHnmJPjgIJcblxu56uL5rOV6Zmi5LuK5pel77yIN+aciDI15pel77yJ5LiK5Y2I6KGM5L2/5aSn5rOV5a6Y5Lq65LqL5ZCM5oSP5qyK5oqV56Wo77yM6KKr5o+Q5ZCN5Lq65b+F6aCI6KaB542y5b6X5Ye65bit56uL5aeU5LqM5YiG5LmL5LiA5ZCM5oSP5omN6IO96YCa6YGO44CC5ZyL5rCR6buo5ZyY5Zyo5oqV56Wo5YmN5bey57aT6KGo5piO5YWo5pW45ZCm5rG677yM5rCR55y+6buo5ZyY5YW25b6M5Lmf6KGo5piO5YWo6YOo5LiN5ZCM5oSP77yM5rCR6YCy6buo5ZyY5YmH5piv6Yed5bCN6Zmz5oWI6Zm96IiH6Km56Y6u5qau5YWp5Lq66ZaL5pS+6buo57GN56uL5aeU6Ieq55Sx5oqV56Wo77yM5pyA57WC57WQ5p6cN+WQjeWkp+azleWumOaPkOWQjeS6uuWFqOaVuOmBreWIsOWQpuaxuuOAgiIsImlkIjoiMTc1NDI5NDQ4ODc3MSIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0Mjk0NDkwNjc3IiwiaWQiOiIxNzU0Mjk0NDkwNjc3IiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IndpZGVfdHNhOTE4eF9TX18xMzA0NDEyMjkuanBnIiwicGF0aCI6Imh0dHBzOi8vcnduZXdzLnR3L3VwbG9hZC9uZXdzdGVtcF8yMTM4Ny93aWRlX3RzYTkxOHhfU19fMTMwNDQxMjI5LmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vcnduZXdzLnR3L3VwbG9hZC9uZXdzdGVtcF8yMTM4Ny93aWRlX3RzYTkxOHhfU19fMTMwNDQxMjI5LmpwZyJ9LHsiZmlsZW5hbWUiOiJ1cmxfMTc1NDMyNTc1NjY3MiIsImlkIjoiMTc1NDMyNTc1NjY3MiIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiJPeXY3bjdZdTEyaz9zaT1OREFjV3NicGNFMXJiZ014IiwicGF0aCI6Imh0dHBzOi8veW91dHUuYmUvT3l2N243WXUxMms/c2k9TkRBY1dzYnBjRTFyYmdNeCIsInR5cGUiOiJ2aWRlbyIsInVybCI6Imh0dHBzOi8veW91dHUuYmUvT3l2N243WXUxMms/c2k9TkRBY1dzYnBjRTFyYmdNeCJ9XSwib3JkZXIiOjE3LCJ0aXRsZSI6IuWGjeW6puaPkOWQjeeahDflkI3lpKfms5XlrpjkurrpgbgsIOmBreWPl+iXjeeZveaJgOacieeri+WnlOeahOWFqOaVuOWQpuaxuiJ9XSwiaWQiOiIyMGVhNmNiNC02MzNiLTRlZDgtOWY0YS01ZDM3ZjFkZTZmNGIiLCJsYXN0TW9kaWZpZWQiOiIyMDI1LTA4LTExVDEyOjE2OjUxLjI3MDA1NTEwMCswMDowMCJ9';
+
+            // 🚨 修正：UTF-8 安全的 Base64 解碼函式
+            function base64DecodeUTF8(base64) {
+                try {
+                    // 方法1：使用現代瀏覽器的 TextDecoder
+                    if (typeof TextDecoder !== 'undefined') {
+                        const binaryString = atob(base64);
+                        const bytes = new Uint8Array(binaryString.length);
+                        for (let i = 0; i < binaryString.length; i++) {
+                            bytes[i] = binaryString.charCodeAt(i);
+                        }
+                        const decoder = new TextDecoder('utf-8');
+                        return decoder.decode(bytes);
+                    }
+                    
+                    // 方法2：回退方法 - 使用 decodeURIComponent + escape
+                    const binaryString = atob(base64);
+                    const escapedString = binaryString.split('').map(function(char) {
+                        const code = char.charCodeAt(0);
+                        return code < 128 ? char : '%' + ('0' + code.toString(16)).slice(-2);
+                    }).join('');
+                    
+                    return decodeURIComponent(escapedString);
+                    
+                } catch (error) {
+                    console.error('❌ Base64 UTF-8 解碼失敗:', error);
+                    // 方法3：最後的回退 - 直接使用 atob（可能會有亂碼）
+                    return atob(base64);
+                }
+            }
+
+            // 回退解密函式
+            window.decryptMemoirData = async function() {
+                try {
+                    console.log('🔄 使用回退解密模式...');
+                    
+                    // 🚨 使用 UTF-8 安全解碼
+                    const decodedData = base64DecodeUTF8(fallbackData);
+                    console.log('🔍 解碼後的資料長度:', decodedData.length);
+                    console.log('🔍 解碼後的前100字元:', decodedData.substring(0, 100));
+                    
+                    globals.MEMOIR_DATA = JSON.parse(decodedData);
+                    
+                    // 🚨 驗證解碼結果
+                    if (globals.MEMOIR_DATA && globals.MEMOIR_DATA.chineseName) {
+                        console.log('✅ 中文名稱解碼結果:', globals.MEMOIR_DATA.chineseName);
+                        console.log('✅ 事件數量:', globals.MEMOIR_DATA.events ? globals.MEMOIR_DATA.events.length : 0);
+                    } else {
+                        console.warn('⚠️ 回憶錄資料結構異常');
+                    }
+                    
+                    console.log('✅ 回退解密成功');
+                    window.MemoirFlowUtils.initializeApp();
+                    return true;
+                    
+                } catch (error) {
+                    console.error('❌ 回退解密失敗:', error);
+                    console.error('❌ 錯誤詳情:', {
+                        name: error.name,
+                        message: error.message,
+                        stack: error.stack
+                    });
+                    
+                    // 🚨 嘗試備用解碼方法
+                    try {
+                        console.log('🔄 嘗試備用解碼方法...');
+                        const fallbackDecoded = atob(fallbackData);
+                        console.log('🔍 備用解碼結果長度:', fallbackDecoded.length);
+                        
+                        // 嘗試直接解析
+                        const backupData = JSON.parse(fallbackDecoded);
+                        if (backupData && backupData.chineseName) {
+                            console.log('✅ 備用方法成功');
+                            globals.MEMOIR_DATA = backupData;
+                            window.MemoirFlowUtils.initializeApp();
+                            return true;
+                        }
+                    } catch (backupError) {
+                        console.error('❌ 備用方法也失敗:', backupError);
+                    }
+                    
+                    window.MemoirFlowUtils.showDecryptionError('解密失敗，請聯繫技術支援');
+                    return false;
+                }
+            };
+        
+            
+            // 🚨 工具函式（如果未定義）
+            if (!window.MemoirFlowUtils) {
+                window.MemoirFlowUtils = {
+                    initializeApp: function() {
+                        console.log('🚀 MemoirFlowUtils 初始化應用程式');
+                        
+                        const loadingScreen = document.getElementById('loadingScreen');
+                        const passwordModal = document.getElementById('passwordModal');
+                        const app = document.getElementById('app');
+                        
+                        if (loadingScreen) loadingScreen.classList.add('hidden');
+                        if (passwordModal) passwordModal.classList.add('hidden');
+                        if (app) app.classList.remove('hidden');
+                        
+                        // 嘗試呼叫範本中的初始化函式
+                        if (typeof initializeApp === 'function') {
+                            initializeApp();
+                        } else if (typeof window.initializeApp === 'function') {
+                            window.initializeApp();
+                        }
+                        
+                        globals.isInitialized = true;
+                        window.MEMOIR_DATA = globals.MEMOIR_DATA;
+                    },
+                    
+                    showDecryptionError: function(message) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'decryption-error';
+                        errorDiv.innerHTML = `
+                            <div class="error-icon">❌</div>
+                            <h1 class="error-title">解密失敗</h1>
+                            <p class="error-description">${message}</p>
+                            <button class="retry-btn" onclick="location.reload()">🔄 重新載入</button>
+                        `;
+                        document.body.appendChild(errorDiv);
+                    }
+                };
+            }
+            
+            // 🚨 確保在下一個事件循環中執行初始化
+            setTimeout(function() {
+                console.log('🔐 開始自動解密流程');
+                if (typeof window.decryptMemoirData === 'function') {
+                    window.decryptMemoirData().catch(function(error) {
+                        console.error('❌ 自動解密失敗:', error);
+                        // 讓具體的解密邏輯處理錯誤顯示
+                    });
+                } else {
+                    console.error('❌ decryptMemoirData 函式未定義');
+                    window.MemoirFlowUtils.showDecryptionError('解密函式載入失敗');
+                }
+            }, 100);
+            
+            console.log('✅ 解密腳本載入完成');
+            
+        })();
+        </script>
+        
+
+    <!-- 🔐 主要解密系統腳本 -->
+    <script>
+        // 🔐 主要解密系統腳本
+        (function() {
+            'use strict';
+            
+            // 全域變數初始化
+            let MEMOIR_DATA = null;
+            let currentEventIndex = 0;
+            let currentMediaIndex = 0;
+            let showSubtitles = true;
+            let showGrid = false;
+            let typewriterEnabled = true;
+            let isTransitioning = false;
+            let typewriterTimer = null;
+            let decryptionAttempts = 0;
+            const MAX_ATTEMPTS = 3;
+            const ENCRYPTION_ENABLED = "true" === "true";
+            const BACKEND_URL = "https://mastermaso.com/memoirflow";
+            
+            // DOM 元素快取
+            const loadingScreen = document.getElementById('loadingScreen');
+            const passwordModal = document.getElementById('passwordModal');
+            const app = document.getElementById('app');
+            const loadingStatus = document.getElementById('loadingStatus');
+            
+            // 更新載入狀態
+            function updateLoadingStatus(message) {
+                console.log('🔄 狀態更新:', message);
+                if (loadingStatus) {
+                    loadingStatus.textContent = message;
+                }
+            }
+            
+            // 🚨 關鍵修正：檢查是否已有解密函數被注入
+            function initializeDecryptionSystem() {
+                console.log('🔐 初始化解密系統...');
+                
+                // 檢查是否有注入的解密函數
+                if (window.MemoirFlowGlobals && window.MemoirFlowGlobals.MEMOIR_DATA) {
+                    console.log('✅ 檢測到注入的解密數據，直接使用');
+                    MEMOIR_DATA = window.MemoirFlowGlobals.MEMOIR_DATA;
+                    window.MEMOIR_DATA = MEMOIR_DATA;
+                    initializeApp();
+                    return;
+                }
+                
+                // 檢查是否有注入的解密函數並且與模板函數不同
+                if (typeof window.decryptMemoirData === 'function') {
+                    const funcStr = window.decryptMemoirData.toString();
+                    // 檢查是否是注入的函數（不包含"基礎版本"字樣）
+                    if (!funcStr.includes('基礎版本') && !funcStr.includes('應該被實際解密腳本覆蓋')) {
+                        console.log('✅ 檢測到注入的解密函數，開始執行');
+                        window.decryptMemoirData().then(success => {
+                            if (success) {
+                                console.log('✅ 注入的解密函數執行成功');
+                            } else {
+                                console.warn('⚠️ 注入的解密函數執行失敗，使用預設邏輯');
+                                useDefaultDecryption();
+                            }
+                        }).catch(error => {
+                            console.error('❌ 注入的解密函數執行錯誤:', error);
+                            useDefaultDecryption();
+                        });
+                        return;
+                    }
+                }
+                
+                // 如果沒有注入的函數，使用預設邏輯
+                console.log('🔄 使用預設解密邏輯');
+                useDefaultDecryption();
+            }
+            
+            // 🔐 預設解密函數（僅在沒有注入腳本時使用）
+            function useDefaultDecryption() {
+                console.log('🔐 執行預設解密邏輯');
+                
+                // 延遲處理，給注入腳本更多時間
+                setTimeout(async () => {
+                    try {
+                        // 再次檢查是否有數據被注入
+                        if (window.MemoirFlowGlobals && window.MemoirFlowGlobals.MEMOIR_DATA) {
+                            console.log('✅ 延遲檢查發現注入數據');
+                            MEMOIR_DATA = window.MemoirFlowGlobals.MEMOIR_DATA;
+                            window.MEMOIR_DATA = MEMOIR_DATA;
+                            initializeApp();
+                            return;
+                        }
+                        
+                        console.log('⚠️ 未檢測到有效的解密腳本或數據');
+                        showDecryptionError('解密系統未正確載入，請重新整理頁面');
+                        
+                    } catch (error) {
+                        console.error('❌ 預設解密邏輯失敗:', error);
+                        showDecryptionError('解密初始化失敗: ' + error.message);
+                    }
+                }, 2000); // 給注入腳本2秒的執行時間
+            }
+            
+            // 🔐 顯示密碼輸入模態框 - 關鍵函數！
+            function showPasswordPrompt(errorMessage = '') {
+                console.log('🔑 顯示密碼輸入提示');
+                
+                if (loadingScreen) loadingScreen.classList.add('hidden');
+                if (passwordModal) {
+                    passwordModal.classList.remove('hidden');
+                    
+                    // 設定錯誤訊息
+                    const errorDiv = document.getElementById('passwordError');
+                    if (errorMessage && errorDiv) {
+                        errorDiv.textContent = errorMessage;
+                        errorDiv.classList.remove('hidden');
+                    } else if (errorDiv) {
+                        errorDiv.classList.add('hidden');
+                    }
+                    
+                    // 焦點到密碼輸入框
+                    const passwordInput = document.getElementById('memoirPassword');
+                    if (passwordInput) {
+                        setTimeout(() => passwordInput.focus(), 100);
+                    }
+                }
+            }
+            
+            // 🔐 嘗試密碼解密 - 關鍵函數！
+            async function attemptDecryption() {
+                const passwordInput = document.getElementById('memoirPassword');
+                const unlockBtn = document.getElementById('unlockBtn');
+                const errorDiv = document.getElementById('passwordError');
+                
+                const password = passwordInput ? passwordInput.value : '';
+                
+                if (!password) {
+                    if (errorDiv) {
+                        errorDiv.textContent = '請輸入密碼';
+                        errorDiv.classList.remove('hidden');
+                    }
+                    return;
+                }
+                
+                // 更新按鈕狀態
+                if (unlockBtn) {
+                    unlockBtn.textContent = '🔓 解密中...';
+                    unlockBtn.disabled = true;
+                }
+                
+                try {
+                    updateLoadingStatus('正在驗證密碼...');
+                    
+                    // 調用解密函數
+                    let success = false;
+                    
+                    // 如果有注入的解密函數，優先使用
+                    if (typeof window.decryptMemoirData === 'function') {
+                        const funcStr = window.decryptMemoirData.toString();
+                        if (!funcStr.includes('基礎版本')) {
+                            success = await window.decryptMemoirData(password);
+                        }
+                    }
+                    
+                    if (success) {
+                        console.log('✅ 密碼解密成功！');
+                        if (passwordModal) passwordModal.classList.add('hidden');
+                        updateLoadingStatus('解密成功，正在載入內容...');
+                        
+                        setTimeout(() => {
+                            initializeApp();
+                        }, 500);
+                    } else {
+                        throw new Error('密碼不正確');
+                    }
+                } catch (error) {
+                    console.error('❌ 密碼解密失敗:', error);
+                    decryptionAttempts++;
+                    
+                    // 恢復按鈕狀態
+                    if (unlockBtn) {
+                        unlockBtn.textContent = '🔓 解鎖';
+                        unlockBtn.disabled = false;
+                    }
+                    
+                    if (decryptionAttempts >= MAX_ATTEMPTS) {
+                        showDecryptionError('解密嘗試次數過多，請重新整理頁面後再試');
+                        return;
+                    }
+                    
+                    // 顯示錯誤訊息
+                    const errorMessage = `密碼錯誤，請重試 (${decryptionAttempts}/${MAX_ATTEMPTS})`;
+                    showPasswordPrompt(errorMessage);
+                    
+                    // 清空密碼輸入框
+                    if (passwordInput) {
+                        passwordInput.value = '';
+                        setTimeout(() => passwordInput.focus(), 100);
+                    }
+                }
+            }
+            
+            // 顯示解密錯誤頁面
+            function showDecryptionError(message) {
+                console.error('❌ 顯示解密錯誤:', message);
+                
+                // 隱藏其他元素
+                if (loadingScreen) loadingScreen.classList.add('hidden');
+                if (passwordModal) passwordModal.classList.add('hidden');
+                if (app) app.classList.add('hidden');
+                
+                const errorPage = document.createElement('div');
+                errorPage.className = 'decryption-error';
+                errorPage.innerHTML = `
+                    <div class="error-icon">🚫</div>
+                    <h1 class="error-title">解密失敗</h1>
+                    <p class="error-description">很抱歉，無法解密此回憶錄的內容。</p>
+                    <div class="error-details">
+                        <div><strong>錯誤原因：</strong> ${message}</div>
+                        <div style="margin-top: 15px;"><strong>可能解決方案：</strong></div>
+                        <ul style="margin-top: 8px; padding-left: 20px; text-align: left;">
+                            <li>檢查密碼是否正確</li>
+                            <li>確認網路連接正常</li>
+                            <li>重新整理頁面後再試</li>
+                            <li>聯繫回憶錄作者取得協助</li>
+                        </ul>
+                    </div>
+                    <button class="retry-btn" onclick="location.reload()">🔄 重新載入</button>
+                `;
+                
+                document.body.appendChild(errorPage);
+            }
+            
+            // 🚀 初始化應用程式 - 解密成功後調用
+            function initializeApp() {
+                console.log('🚀 初始化加密回憶錄應用程式');
+                
+                try {
+                    // 從多個可能的來源獲取數據
+                    if (!MEMOIR_DATA) {
+                        if (window.MemoirFlowGlobals && window.MemoirFlowGlobals.MEMOIR_DATA) {
+                            MEMOIR_DATA = window.MemoirFlowGlobals.MEMOIR_DATA;
+                        } else if (window.MEMOIR_DATA) {
+                            MEMOIR_DATA = window.MEMOIR_DATA;
+                        }
+                    }
+                    
+                    if (!MEMOIR_DATA) {
+                        throw new Error('MEMOIR_DATA 為空');
+                    }
+
+                    console.log('📊 載入的回憶錄數據:', {
+                        name: MEMOIR_DATA.chineseName,
+                        events: MEMOIR_DATA.events ? MEMOIR_DATA.events.length : 0
+                    });
+
+                    // 顯示主應用程式
+                    if (app) app.classList.remove('hidden');
+                    
+                    const subtitleArea = document.getElementById('subtitleArea');
+                    const mainContent = document.getElementById('mainContent');
+                    
+                    if (subtitleArea) subtitleArea.classList.remove('hidden');
+                    if (mainContent) mainContent.classList.remove('hidden');
+                    
+                    // 初始化 UI 事件
+                    initEventListeners();
+                    
+                    // 載入第一個事件
+                    if (MEMOIR_DATA.events && MEMOIR_DATA.events.length > 0) {
+                        loadEvent(0);
+                    } else {
+                        console.log('📝 沒有事件數據，顯示空狀態');
+                        showEmptyState();
+                    }
+                    
+                    // 初始化觸控滑動
+                    initTouchSwipe();
+                    
+                    // 隱藏載入畫面
+                    setTimeout(() => {
+                        if (loadingScreen) loadingScreen.classList.add('hidden');
+                    }, 1000);
+
+                    console.log('✅ 加密回憶錄應用程式初始化完成');
+                } catch (error) {
+                    console.error('❌ 應用程式初始化失敗:', error);
+                    showDecryptionError(`初始化失敗: ${error.message}`);
+                }
+            }
+            
+            // 初始化事件監聽器
+            function initEventListeners() {
+                // 導航按鈕
+                const prevEventBtn = document.getElementById('prevEventBtn');
+                const nextEventBtn = document.getElementById('nextEventBtn');
+                
+                if (prevEventBtn) prevEventBtn.addEventListener('click', () => goToEvent(currentEventIndex - 1));
+                if (nextEventBtn) nextEventBtn.addEventListener('click', () => goToEvent(currentEventIndex + 1));
+                
+                // 字幕切換
+                const subtitleToggle = document.getElementById('subtitleToggle');
+                if (subtitleToggle) subtitleToggle.addEventListener('click', toggleSubtitles);
+                
+                // 密碼模態框按鈕
+                const unlockBtn = document.getElementById('unlockBtn');
+                const cancelBtn = document.getElementById('cancelBtn');
+                const passwordInput = document.getElementById('memoirPassword');
+                
+                if (unlockBtn) unlockBtn.addEventListener('click', attemptDecryption);
+                if (cancelBtn) cancelBtn.addEventListener('click', () => window.history.back());
+                
+                // Enter 鍵支援
+                if (passwordInput) {
+                    passwordInput.addEventListener('keypress', function(e) {
+                        if (e.key === 'Enter') {
+                            attemptDecryption();
+                        }
+                    });
+                    
+                    // 輸入時移除錯誤狀態
+                    passwordInput.addEventListener('input', function() {
+                        const errorDiv = document.getElementById('passwordError');
+                        if (errorDiv) {
+                            errorDiv.classList.add('hidden');
+                        }
+                    });
+                }
+                
+                // 鍵盤控制
+                document.addEventListener('keydown', handleKeyPress);
+            }
+            
+            // 簡化版的核心功能
+            function loadEvent(eventIndex) {
+                if (!MEMOIR_DATA || !MEMOIR_DATA.events || MEMOIR_DATA.events.length === 0) {
+                    return;
+                }
+                
+                const sortedEvents = MEMOIR_DATA.events.sort((a, b) => 
+                    new Date(a.date).getTime() - new Date(b.date).getTime()
+                );
+                
+                if (eventIndex < 0 || eventIndex >= sortedEvents.length) return;
+                
+                const event = sortedEvents[eventIndex];
+                currentEventIndex = eventIndex;
+                currentMediaIndex = 0;
+                
+                // 更新 UI
+                updateEventInfo(event);
+                updateNavigationButtons(sortedEvents.length);
+                
+                console.log(`📅 載入事件: ${event.title} (${eventIndex + 1}/${sortedEvents.length})`);
+            }
+            
+            function updateEventInfo(event) {
+                const elements = {
+                    currentEventNum: document.getElementById('currentEventNum'),
+                    totalEvents: document.getElementById('totalEvents'),
+                    mediaCount: document.getElementById('mediaCount'),
+                    eventDate: document.getElementById('eventDate'),
+                    eventTitle: document.getElementById('eventTitle'),
+                    eventDescription: document.getElementById('eventDescription')
+                };
+                
+                if (elements.currentEventNum) elements.currentEventNum.textContent = currentEventIndex + 1;
+                if (elements.totalEvents) elements.totalEvents.textContent = MEMOIR_DATA.events.length;
+                if (elements.mediaCount) elements.mediaCount.textContent = event.media ? event.media.length : 0;
+                
+                if (elements.eventDate) {
+                    try {
+                        const eventDate = new Date(event.date).toLocaleDateString('zh-TW', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        elements.eventDate.textContent = eventDate;
+                    } catch (e) {
+                        elements.eventDate.textContent = event.date;
+                    }
+                }
+                
+                if (elements.eventTitle) elements.eventTitle.textContent = event.title;
+                if (elements.eventDescription) elements.eventDescription.textContent = event.description;
+            }
+            
+            function updateNavigationButtons(totalEvents) {
+                const prevBtn = document.getElementById('prevEventBtn');
+                const nextBtn = document.getElementById('nextEventBtn');
+                
+                if (prevBtn) {
+                    if (currentEventIndex === 0) {
+                        prevBtn.classList.add('disabled');
+                    } else {
+                        prevBtn.classList.remove('disabled');
+                    }
+                }
+                
+                if (nextBtn) {
+                    if (currentEventIndex === totalEvents - 1) {
+                        nextBtn.classList.add('disabled');
+                    } else {
+                        nextBtn.classList.remove('disabled');
+                    }
+                }
+            }
+            
+            function goToEvent(eventIndex) {
+                if (!MEMOIR_DATA || !MEMOIR_DATA.events) return;
+                const totalEvents = MEMOIR_DATA.events.length;
+                if (eventIndex >= 0 && eventIndex < totalEvents && eventIndex !== currentEventIndex) {
+                    loadEvent(eventIndex);
+                }
+            }
+            
+            function toggleSubtitles() {
+                showSubtitles = !showSubtitles;
+                const toggle = document.getElementById('subtitleToggle');
+                const eventDescription = document.getElementById('eventDescription');
+                
+                if (showSubtitles) {
+                    if (toggle) toggle.classList.add('active');
+                    if (eventDescription) eventDescription.style.display = 'block';
+                } else {
+                    if (toggle) toggle.classList.remove('active');
+                    if (eventDescription) eventDescription.style.display = 'none';
+                }
+            }
+            
+            function handleKeyPress(e) {
+                switch (e.key) {
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        goToEvent(currentEventIndex - 1);
+                        break;
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        goToEvent(currentEventIndex + 1);
+                        break;
+                    case 'Escape':
+                        e.preventDefault();
+                        break;
+                }
+            }
+            
+            function showEmptyState() {
+                const mediaDisplay = document.getElementById('mediaDisplay');
+                if (mediaDisplay) {
+                    mediaDisplay.innerHTML = `
+                        <div style="text-align: center; color: #9ca3af; padding: 40px;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">📖</div>
+                            <div style="font-size: 18px; margin-bottom: 10px;">回憶錄已解密</div>
+                            <div style="font-size: 14px;">但暫時沒有時間節點內容</div>
+                        </div>
+                    `;
+                }
+            }
+            
+            // 簡化版的觸控支援
+            function initTouchSwipe() {
+                let touchStartX = 0;
+                let touchEndX = 0;
+                const minSwipeDistance = 50;
+                
+                const swipeArea = document.getElementById('subtitleArea');
+                if (!swipeArea) return;
+                
+                swipeArea.addEventListener('touchstart', (e) => {
+                    touchStartX = e.touches[0].clientX;
+                }, { passive: true });
+                
+                swipeArea.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].clientX;
+                    const deltaX = touchEndX - touchStartX;
+                    
+                    if (Math.abs(deltaX) > minSwipeDistance) {
+                        if (deltaX > 0) {
+                            goToEvent(currentEventIndex - 1);
+                        } else {
+                            goToEvent(currentEventIndex + 1);
+                        }
+                    }
+                }, { passive: true });
+            }
+            
+            // 將關鍵函數暴露到全域作用域
+            window.showPasswordPrompt = showPasswordPrompt;
+            window.attemptDecryption = attemptDecryption;
+            window.initializeApp = initializeApp;
+            
+            // 🔐 主要初始化流程
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('🔐 MemoirFlow 加密回憶錄載入中...');
+                console.log('⚙️ 加密狀態:', ENCRYPTION_ENABLED);
+                console.log('🌐 後端 URL:', BACKEND_URL);
+                
+                updateLoadingStatus('正在準備解密系統...');
+                
+                // 初始化 Lucide 圖標
+                if (typeof lucide !== 'undefined') {
+                    try {
+                        lucide.createIcons();
+                    } catch (e) {
+                        console.warn('⚠️ Lucide 圖標初始化失敗:', e);
+                    }
+                }
+                
+                // 延遲啟動解密流程，給注入腳本時間執行
+                setTimeout(() => {
+                    updateLoadingStatus('正在檢查存取權限...');
+                    
+                    // 開始解密流程
+                    setTimeout(() => {
+                        console.log('🔐 開始解密流程');
+                        initializeDecryptionSystem(); // 使用新的初始化函數
+                    }, 800);
+                }, 1500);
+            });
+            
+            // 錯誤處理
+            window.addEventListener('error', function(e) {
+                console.error('❌ 頁面錯誤:', e.error);
+                if (!app || app.classList.contains('hidden')) {
+                    showDecryptionError(`系統錯誤: ${e.error?.message || '未知錯誤'}`);
+                }
+            });
+            
+            window.addEventListener('unhandledrejection', function(e) {
+                console.error('❌ Promise 錯誤:', e.reason);
+                if (!app || app.classList.contains('hidden')) {
+                    showDecryptionError(`載入錯誤: ${e.reason?.message || '網路連接問題'}`);
+                }
+            });
+        })();
+    </script>
+
+    <!-- 🔐 安全性增強腳本 -->
+    <script>
+        // 安全性保護
+        (function() {
+            'use strict';
+            
+            // 防止右鍵選單
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+            
+            // 防止開發者工具快捷鍵
+            // document.addEventListener('keydown', function(e) {
+            //     if (e.key === 'F12' || 
+            //         (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) ||
+            //         (e.ctrlKey && e.key === 'U') ||
+            //         (e.ctrlKey && e.key === 'S')) {
+            //         e.preventDefault();
+            //         return false;
+            //     }
+            // });
+            
+            // 防止文字選取和拖曳
+            document.addEventListener('selectstart', e => e.preventDefault());
+            document.addEventListener('dragstart', e => e.preventDefault());
+            
+            // 清理控制台
+            // if (typeof console !== 'undefined') {
+            //     setTimeout(() => {
+            //         console.clear();
+            //         console.log('%c🔒 MemoirFlow 加密回憶錄', 'color: #3b82f6; font-size: 16px; font-weight: bold;');
+            //         console.log('%c此內容受到加密保護，未經授權的存取將被記錄', 'color: #ef4444; font-size: 12px;');
+            //     }, 2000);
+            // }
+        })();
+    </script>
+    
+    <!-- 版權與安全聲明 -->
+    <script>
+        console.log('%c🔐 生成時間: 2025-08-11T14:21:43.980160700+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🛡️ 版權所有 © MemoirFlow - 未經授權禁止存取', 'color: #6b7280; font-size: 10px;');
+    </script>
+</body>
+</html>
