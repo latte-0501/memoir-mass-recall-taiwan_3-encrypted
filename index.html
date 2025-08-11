@@ -1378,7 +1378,7 @@
                     if (subtitleArea) subtitleArea.classList.remove('hidden');
                     if (mainContent) mainContent.classList.remove('hidden');
                     
-                    // 初始化 UI 事件
+                    // 🚨 關鍵修正：初始化完整的 UI 和媒體顯示邏輯
                     initEventListeners();
                     
                     // 載入第一個事件
@@ -1404,40 +1404,26 @@
                 }
             }
             
-            // 初始化事件監聽器
+            // 事件監聽器初始化
             function initEventListeners() {
+                console.log('🔧 初始化事件監聽器');
+                
                 // 導航按鈕
                 const prevEventBtn = document.getElementById('prevEventBtn');
                 const nextEventBtn = document.getElementById('nextEventBtn');
                 
-                if (prevEventBtn) prevEventBtn.addEventListener('click', () => goToEvent(currentEventIndex - 1));
-                if (nextEventBtn) nextEventBtn.addEventListener('click', () => goToEvent(currentEventIndex + 1));
-                
-                // 字幕切換
-                const subtitleToggle = document.getElementById('subtitleToggle');
-                if (subtitleToggle) subtitleToggle.addEventListener('click', toggleSubtitles);
-                
-                // 密碼模態框按鈕
-                const unlockBtn = document.getElementById('unlockBtn');
-                const cancelBtn = document.getElementById('cancelBtn');
-                const passwordInput = document.getElementById('memoirPassword');
-                
-                if (unlockBtn) unlockBtn.addEventListener('click', attemptDecryption);
-                if (cancelBtn) cancelBtn.addEventListener('click', () => window.history.back());
-                
-                // Enter 鍵支援
-                if (passwordInput) {
-                    passwordInput.addEventListener('keypress', function(e) {
-                        if (e.key === 'Enter') {
-                            attemptDecryption();
+                if (prevEventBtn) {
+                    prevEventBtn.addEventListener('click', () => {
+                        if (currentEventIndex > 0) {
+                            loadEvent(currentEventIndex - 1);
                         }
                     });
-                    
-                    // 輸入時移除錯誤狀態
-                    passwordInput.addEventListener('input', function() {
-                        const errorDiv = document.getElementById('passwordError');
-                        if (errorDiv) {
-                            errorDiv.classList.add('hidden');
+                }
+                
+                if (nextEventBtn) {
+                    nextEventBtn.addEventListener('click', () => {
+                        if (currentEventIndex < MEMOIR_DATA.events.length - 1) {
+                            loadEvent(currentEventIndex + 1);
                         }
                     });
                 }
@@ -1449,6 +1435,7 @@
             // 簡化版的核心功能
             function loadEvent(eventIndex) {
                 if (!MEMOIR_DATA || !MEMOIR_DATA.events || MEMOIR_DATA.events.length === 0) {
+                    console.warn('⚠️ 沒有事件數據可載入');
                     return;
                 }
                 
@@ -1456,19 +1443,180 @@
                     new Date(a.date).getTime() - new Date(b.date).getTime()
                 );
                 
-                if (eventIndex < 0 || eventIndex >= sortedEvents.length) return;
+                if (eventIndex < 0 || eventIndex >= sortedEvents.length) {
+                    console.warn('⚠️ 事件索引超出範圍:', eventIndex);
+                    return;
+                }
                 
                 const event = sortedEvents[eventIndex];
                 currentEventIndex = eventIndex;
                 currentMediaIndex = 0;
                 
+                console.log(`📅 載入事件: ${event.title} (${eventIndex + 1}/${sortedEvents.length})`);
+                
                 // 更新 UI
                 updateEventInfo(event);
                 updateNavigationButtons(sortedEvents.length);
                 
-                console.log(`📅 載入事件: ${event.title} (${eventIndex + 1}/${sortedEvents.length})`);
+                // 🚨 關鍵：載入並顯示媒體
+                if (event.media && event.media.length > 0) {
+                    displayMedia(event.media[0]); // 顯示第一個媒體
+                } else {
+                    showNoMediaMessage();
+                }
             }
-            
+
+            // 🚨 核心函數：媒體顯示邏輯
+            function displayMedia(media) {
+                const mediaDisplay = document.getElementById('mediaDisplay');
+                
+                if (!mediaDisplay) {
+                    console.error('❌ 找不到媒體顯示容器');
+                    return;
+                }
+                
+                console.log('🎬 顯示媒體:', media);
+                
+                // 清空現有內容
+                mediaDisplay.innerHTML = '';
+                
+                try {
+                    let mediaElement;
+                    
+                    if (media.type === 'image' || media.media_type === 'image') {
+                        // 創建圖片元素
+                        mediaElement = document.createElement('img');
+                        mediaElement.style.maxWidth = '100%';
+                        mediaElement.style.maxHeight = '100%';
+                        mediaElement.style.objectFit = 'contain';
+                        mediaElement.alt = media.originalName || media.filename || 'Image';
+                        
+                        // 設置圖片載入事件
+                        mediaElement.onload = function() {
+                            console.log('✅ 圖片載入成功:', media.path);
+                        };
+                        
+                        mediaElement.onerror = function() {
+                            console.error('❌ 圖片載入失敗:', media.path);
+                            showMediaError(mediaDisplay, '圖片載入失敗');
+                        };
+                        
+                    } else if (media.type === 'video' || media.media_type === 'video') {
+                        // 創建影片元素
+                        mediaElement = document.createElement('video');
+                        mediaElement.style.maxWidth = '100%';
+                        mediaElement.style.maxHeight = '100%';
+                        mediaElement.style.objectFit = 'contain';
+                        mediaElement.controls = true;
+                        
+                        // 設置影片載入事件
+                        mediaElement.onloadeddata = function() {
+                            console.log('✅ 影片載入成功:', media.path);
+                        };
+                        
+                        mediaElement.onerror = function() {
+                            console.error('❌ 影片載入失敗:', media.path);
+                            showMediaError(mediaDisplay, '影片載入失敗');
+                        };
+                    }
+                    
+                    if (mediaElement) {
+                        // 🚨 關鍵：設置媒體源
+                        setMediaSource(mediaElement, media);
+                        mediaDisplay.appendChild(mediaElement);
+                    } else {
+                        showMediaError(mediaDisplay, '不支援的媒體格式');
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ 媒體顯示錯誤:', error);
+                    showMediaError(mediaDisplay, `媒體顯示錯誤: ${error.message}`);
+                }
+            }
+
+            // 🚨 關鍵函數：設置媒體源
+            function setMediaSource(mediaElement, media) {
+                console.log('🔗 設置媒體源:', media);
+                
+                // 檢查是否為 URL 媒體
+                if (media.isUrl || media.is_url) {
+                    console.log('🌐 URL 媒體:', media.url || media.path);
+                    
+                    // YouTube 影片特殊處理
+                    if (media.url && (media.url.includes('youtube.com') || media.url.includes('youtu.be'))) {
+                        handleYouTubeVideo(mediaElement.parentElement, media.url);
+                        return;
+                    }
+                    
+                    // 直接使用 URL
+                    mediaElement.src = media.url || media.path;
+                    
+                } else {
+                    // 本地媒體檔案
+                    console.log('📁 本地媒體:', media.path);
+                    
+                    // 🚨 確保路徑格式正確
+                    let mediaSrc = media.path;
+                    
+                    // 如果路徑不是以 ./ 開頭，添加前綴
+                    if (!mediaSrc.startsWith('./') && !mediaSrc.startsWith('http')) {
+                        if (mediaSrc.startsWith('media/')) {
+                            mediaSrc = './' + mediaSrc;
+                        } else {
+                            mediaSrc = './media/' + (mediaSrc.split('/').pop() || mediaSrc);
+                        }
+                    }
+                    
+                    console.log('🔧 修正後的媒體路徑:', mediaSrc);
+                    mediaElement.src = mediaSrc;
+                }
+            }
+            // YouTube 影片處理
+            function handleYouTubeVideo(container, url) {
+                const videoId = extractYouTubeId(url);
+                if (videoId) {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = `https://www.youtube.com/embed/${videoId}`;
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.border = 'none';
+                    iframe.setAttribute('allowfullscreen', '');
+                    container.innerHTML = '';
+                    container.appendChild(iframe);
+                    console.log('✅ YouTube 影片嵌入成功:', videoId);
+                }
+            }
+
+            function extractYouTubeId(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+            }
+
+            // 顯示媒體錯誤
+            function showMediaError(container, message) {
+                container.innerHTML = `
+                    <div style="text-align: center; color: #ef4444; padding: 40px;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
+                        <div style="font-size: 16px;">${message}</div>
+                    </div>
+                `;
+            }
+
+            // 顯示無媒體訊息
+            function showNoMediaMessage() {
+                const mediaDisplay = document.getElementById('mediaDisplay');
+                if (mediaDisplay) {
+                    mediaDisplay.innerHTML = `
+                        <div style="text-align: center; color: #9ca3af; padding: 40px;">
+                            <div style="font-size: 48px; margin-bottom: 20px;">📷</div>
+                            <div style="font-size: 16px;">此時間節點沒有媒體內容</div>
+                        </div>
+                    `;
+                }
+            }
+
+            // 更新事件信息
             function updateEventInfo(event) {
                 const elements = {
                     currentEventNum: document.getElementById('currentEventNum'),
@@ -1500,6 +1648,7 @@
                 if (elements.eventDescription) elements.eventDescription.textContent = event.description;
             }
             
+            // 更新導航按鈕
             function updateNavigationButtons(totalEvents) {
                 const prevBtn = document.getElementById('prevEventBtn');
                 const nextBtn = document.getElementById('nextEventBtn');
@@ -1547,11 +1696,15 @@
                 switch (e.key) {
                     case 'ArrowLeft':
                         e.preventDefault();
-                        goToEvent(currentEventIndex - 1);
+                        if (currentEventIndex > 0) {
+                            loadEvent(currentEventIndex - 1);
+                        }
                         break;
                     case 'ArrowRight':
                         e.preventDefault();
-                        goToEvent(currentEventIndex + 1);
+                        if (currentEventIndex < MEMOIR_DATA.events.length - 1) {
+                            loadEvent(currentEventIndex + 1);
+                        }
                         break;
                     case 'Escape':
                         e.preventDefault();
@@ -1572,14 +1725,13 @@
                 }
             }
             
-            // 簡化版的觸控支援
+            // 觸控滑動支援
             function initTouchSwipe() {
                 let touchStartX = 0;
                 let touchEndX = 0;
                 const minSwipeDistance = 50;
                 
-                const swipeArea = document.getElementById('subtitleArea');
-                if (!swipeArea) return;
+                const swipeArea = document.getElementById('subtitleArea') || document.body;
                 
                 swipeArea.addEventListener('touchstart', (e) => {
                     touchStartX = e.touches[0].clientX;
@@ -1590,10 +1742,10 @@
                     const deltaX = touchEndX - touchStartX;
                     
                     if (Math.abs(deltaX) > minSwipeDistance) {
-                        if (deltaX > 0) {
-                            goToEvent(currentEventIndex - 1);
-                        } else {
-                            goToEvent(currentEventIndex + 1);
+                        if (deltaX > 0 && currentEventIndex > 0) {
+                            loadEvent(currentEventIndex - 1);
+                        } else if (deltaX < 0 && currentEventIndex < MEMOIR_DATA.events.length - 1) {
+                            loadEvent(currentEventIndex + 1);
                         }
                     }
                 }, { passive: true });
@@ -1690,7 +1842,7 @@
     
     <!-- 版權與安全聲明 -->
     <script>
-        console.log('%c🔐 生成時間: 2025-08-11T20:28:30.405723300+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔐 生成時間: 2025-08-11T20:40:34.343740600+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 版權所有 © MemoirFlow - 未經授權禁止存取', 'color: #6b7280; font-size: 10px;');
     </script>
 </body>
