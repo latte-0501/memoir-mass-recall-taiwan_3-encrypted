@@ -423,7 +423,7 @@
             border: 1px solid rgba(107, 114, 128, 0.3);
         }
 
-        /* 設定選單 */
+        /* 設定選單 - 修正 z-index 問題 */
         .settings-menu {
             position: absolute;
             top: 48px;
@@ -435,7 +435,7 @@
             backdrop-filter: blur(16px);
             min-width: 160px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-            z-index: 50;
+            z-index: 100;
             opacity: 0;
             transform: translateY(-10px);
             transition: all 0.3s ease;
@@ -729,7 +729,7 @@
             z-index: 20;
         }
 
-        /* 媒體縮圖導航 */
+        /* 媒體縮圖導航 - 改進顯示邏輯和排列 */
         .media-thumbnails {
             width: 80px;
             position: relative;
@@ -744,17 +744,22 @@
             border-radius: 12px;
             border: 1px solid rgba(107, 114, 128, 0.2);
             padding: 12px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .thumbnails-scroll {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 12px;
             height: 100%;
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
+            min-height: 100%;
         }
 
         .thumbnails-scroll::-webkit-scrollbar {
@@ -1257,13 +1262,40 @@
                 padding-top: 120px;
             }
 
+            /* 手機版：縮圖移到底部 */
+            .media-carousel {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .main-media {
+                flex: 1;
+            }
+
             .media-thumbnails {
-                width: 64px;
+                width: 100%;
+                height: 80px;
+                order: 2;
+            }
+
+            .thumbnails-container {
+                padding: 8px 12px;
+            }
+
+            .thumbnails-scroll {
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                overflow-x: auto;
+                overflow-y: hidden;
+                height: 100%;
+                gap: 8px;
             }
 
             .thumbnail-item {
                 width: 48px;
                 height: 48px;
+                flex-shrink: 0;
             }
 
             .media-nav-btn {
@@ -2812,7 +2844,7 @@
                 }
             }
             
-            // 更新媒體導航
+            // 更新媒體導航 - 修改顯示邏輯
             function updateMediaNavigation() {
                 const currentEvent = getCurrentEvent();
                 const mediaCount = currentEvent?.media?.length || 0;
@@ -2821,6 +2853,7 @@
                 if (elements.mediaCounterOverlay) {
                     if (mediaCount > 0) {
                         elements.mediaCounterOverlay.textContent = `${currentMediaIndex + 1} / ${mediaCount}`;
+                        // 修改：只有在多於1個媒體時才顯示計數器
                         elements.mediaCounterOverlay.style.display = mediaCount > 1 ? 'block' : 'none';
                     } else {
                         elements.mediaCounterOverlay.style.display = 'none';
@@ -2834,6 +2867,7 @@
                     } else {
                         elements.prevMediaBtn.classList.remove('disabled');
                     }
+                    // 修改：只有在多於1個媒體時才顯示按鈕
                     elements.prevMediaBtn.style.display = mediaCount > 1 ? 'flex' : 'none';
                 }
                 
@@ -2843,18 +2877,20 @@
                     } else {
                         elements.nextMediaBtn.classList.remove('disabled');
                     }
+                    // 修改：只有在多於1個媒體時才顯示按鈕
                     elements.nextMediaBtn.style.display = mediaCount > 1 ? 'flex' : 'none';
                 }
             }
             
-            // 渲染縮圖
+            // 渲染縮圖 - 修改為總是顯示，包含單一媒體
             function renderThumbnails() {
                 const currentEvent = getCurrentEvent();
                 if (!currentEvent || !elements.thumbnailsScroll) return;
                 
                 elements.thumbnailsScroll.innerHTML = '';
                 
-                if (!currentEvent.media || currentEvent.media.length <= 1) {
+                // 修改：即使只有一個媒體也顯示縮圖
+                if (!currentEvent.media || currentEvent.media.length === 0) {
                     return;
                 }
                 
@@ -3228,7 +3264,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-12T07:41:57.205376600+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-12T07:55:59.052899900+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
