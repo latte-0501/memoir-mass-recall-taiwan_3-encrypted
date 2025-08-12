@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔒 台灣大罷免運動始末</title>
-    <meta name="description" content="台灣大罷免運動始末 - 加密保護的個人回憶錄 - 加密保護的個人回憶錄">
-    <meta name="author" content="MemoirFlow">
-    <meta name="generator" content="MemoirFlow - Encrypted Edition">
-    
-    <!-- 🔐 關鍵加密標記 - 驗證邏輯會檢查這些 -->
-    <meta name="memoir-encryption" content="true">
-    <meta name="memoir-backend" content="https://mastermaso.com/memoirflow">
+    <title>台灣大罷免運動始末</title>
+    <meta name="description" content="台灣大罷免運動始末 - 包含 18 個時間節點的個人回憶錄">
+    <meta name="author" content="台灣大罷免運動始末">
+    <meta name="generator" content="MemoirFlow">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="台灣大罷免運動始末 - 加密回憶錄">
-    <meta property="og:description" content="受密碼保護的個人回憶錄">
+    <meta property="og:title" content="台灣大罷免運動始末">
+    <meta property="og:description" content="台灣大罷免運動始末 - 包含 18 個時間節點的個人回憶錄">
     
     <!-- PWA Support -->
     <meta name="theme-color" content="#1a1a2e">
@@ -24,9 +20,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔒</text></svg>">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
     
     <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
+
+    <!-- 使用 Lucide 官方 CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
@@ -34,19 +33,22 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            /* 防止手機上的選擇高亮 */
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            /* 防止手機上的點擊延遲 */
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #000000 50%, #1a1a2e 100%);
             color: white;
             overflow: hidden;
             height: 100vh;
+            /* 防止手機上的橡皮筋效果 */
             overscroll-behavior: none;
         }
 
@@ -54,7 +56,7 @@
             position: relative;
             width: 100vw;
             height: 100vh;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f172a 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #000000 50%, #1a1a2e 100%);
             overflow: hidden;
         }
 
@@ -62,320 +64,35 @@
             display: none !important;
         }
 
-        /* 加密載入畫面 - 增強版 */
+        /* 載入畫面 */
         .loading-screen {
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f172a);
+            background: linear-gradient(135deg, #1a1a2e, #000000);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             transition: opacity 0.5s ease-out;
-            backdrop-filter: blur(10px);
         }
 
         .loading-animation {
-            width: 80px;
-            height: 80px;
-            border: 4px solid rgba(59, 130, 246, 0.2);
-            border-top: 4px solid #3b82f6;
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top: 3px solid #3498db;
             border-radius: 50%;
-            animation: encryptSpin 1.5s linear infinite;
-            margin-bottom: 30px;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
         }
 
-        @keyframes encryptSpin {
+        @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        .loading-title {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .loading-subtitle {
-            color: #60a5fa;
-            font-size: 16px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .loading-status {
-            color: #9ca3af;
-            font-size: 14px;
-            text-align: center;
-            font-style: italic;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-        }
-
-        /* 加密狀態指示器 */
-        .encryption-indicator {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid rgba(239, 68, 68, 0.4);
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-size: 12px;
-            color: #f87171;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            z-index: 100;
-        }
-
-        /* 🔐 密碼輸入模態框 - 關鍵元素，驗證邏輯會檢查 password-modal */
-        .password-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            backdrop-filter: blur(20px);
-            animation: modalFadeIn 0.5s ease-out;
-        }
-
-        @keyframes modalFadeIn {
-            from { 
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to { 
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .password-modal-content {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 50px;
-            border-radius: 24px;
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            border: 2px solid rgba(59, 130, 246, 0.3);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.8),
-                0 0 0 1px rgba(255, 255, 255, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .password-modal-content::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
-            mask: radial-gradient(circle at 50% 0%, transparent 50%, black 100%);
-            pointer-events: none;
-        }
-
-        .modal-icon {
-            font-size: 64px;
-            margin-bottom: 25px;
-            animation: lockBounce 2s infinite;
-        }
-
-        @keyframes lockBounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .modal-title {
-            color: white;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-description {
-            color: #9ca3af;
-            font-size: 16px;
-            margin-bottom: 30px;
-            line-height: 1.5;
-        }
-
-        .password-input-group {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .password-input {
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 18px;
-            border: 2px solid rgba(107, 114, 128, 0.3);
-            border-radius: 12px;
-            background: rgba(31, 41, 55, 0.8);
-            color: white;
-            text-align: center;
-            letter-spacing: 2px;
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-        }
-
-        .password-input:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-            transform: scale(1.02);
-        }
-
-        .password-input::placeholder {
-            color: #6b7280;
-            letter-spacing: normal;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 25px;
-        }
-
-        .modal-btn {
-            padding: 14px 28px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-width: 120px;
-        }
-
-        .unlock-btn {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: white;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-
-        .unlock-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
-        }
-
-        .unlock-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .cancel-btn {
-            background: rgba(107, 114, 128, 0.8);
-            color: white;
-        }
-
-        .cancel-btn:hover {
-            background: rgba(75, 85, 99, 0.8);
-            transform: translateY(-1px);
-        }
-
-        .error-message {
-            color: #ef4444;
-            font-size: 14px;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(239, 68, 68, 0.1);
-            border-radius: 8px;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .attempts-warning {
-            color: #f59e0b;
-            font-size: 12px;
-            margin-top: 10px;
-            font-style: italic;
-        }
-
-        /* 解密錯誤頁面 */
-        .decryption-error {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .error-icon {
-            font-size: 80px;
-            margin-bottom: 30px;
-            color: #ef4444;
-            animation: errorShake 1s ease-in-out;
-        }
-
-        @keyframes errorShake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .error-title {
-            color: white;
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .error-description {
-            color: #9ca3af;
-            font-size: 18px;
-            margin-bottom: 30px;
-            max-width: 600px;
-            line-height: 1.6;
-        }
-
-        .error-details {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 30px;
-            color: #f87171;
-            max-width: 500px;
-            text-align: left;
-        }
-
-        .retry-btn {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-
-        .retry-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.5);
-        }
-
-        /* 繼承標準模板的其他樣式 */
+        /* 頂部控制列 */
         .header {
             position: absolute;
             top: 0;
@@ -432,6 +149,7 @@
             max-width: 300px;
         }
 
+        /* 手機版標題區域優化 */
         .mobile-title {
             display: none;
             color: white;
@@ -452,16 +170,6 @@
             border: 1px solid rgba(107, 114, 128, 0.3);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             text-align: center;
-            position: relative;
-        }
-
-        .title-box::before {
-            content: '🔒';
-            position: absolute;
-            left: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 12px;
         }
 
         .title-text {
@@ -471,7 +179,6 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding-left: 20px;
         }
 
         .header-right {
@@ -481,7 +188,6 @@
             flex-shrink: 0;
         }
 
-        /* 其他樣式繼承自標準模板... */
         .nav-btn {
             width: 28px;
             height: 28px;
@@ -524,7 +230,7 @@
             border: 1px solid rgba(107, 114, 128, 0.3);
         }
 
-        /* 字幕區域 */
+        /* 字幕區域 - 支援觸控滑動 */
         .subtitle-area {
             padding: 12px 16px;
             background: linear-gradient(to right, rgba(31, 41, 55, 0.6), rgba(55, 65, 81, 0.6));
@@ -534,6 +240,7 @@
             border: 1px solid rgba(107, 114, 128, 0.2);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             transition: all 0.3s ease;
+            /* 支援觸控滑動 */
             touch-action: pan-x;
             cursor: grab;
         }
@@ -609,7 +316,28 @@
             line-height: 1.5;
         }
 
-        /* 主要內容區域 */
+        /* 滑動提示 */
+        .swipe-hint {
+            display: none;
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(59, 130, 246, 0.8);
+            color: white;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            z-index: 10;
+            animation: fadeInOut 3s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            20%, 80% { opacity: 1; }
+        }
+
+        /* 主要內容區域 - 添加淡入淡出動畫 */
         .main-content {
             width: 100%;
             height: 100%;
@@ -617,6 +345,7 @@
             flex-direction: column;
             padding-top: 120px;
             transition: all 0.5s ease;
+            /* 支援觸控滑動 */
             touch-action: pan-x;
         }
 
@@ -634,6 +363,7 @@
             position: relative;
             padding: 8px 12px;
             min-height: 0;
+            /* 支援觸控滑動 */
             touch-action: pan-x;
         }
 
@@ -678,16 +408,666 @@
             transition: opacity 0.3s;
         }
 
-        /* 響應式設計 */
+        .media-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 48px;
+            height: 48px;
+            background: rgba(31, 41, 55, 0.9);
+            border: 1px solid rgba(107, 114, 128, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+            z-index: 20;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .media-nav-btn:hover:not(.disabled) {
+            background: rgba(55, 65, 81, 0.9);
+        }
+
+        .media-nav-btn.disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .media-nav-btn.prev {
+            left: 16px;
+        }
+
+        .media-nav-btn.next {
+            right: 16px;
+        }
+
+        .media-counter-display {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid rgba(107, 114, 128, 0.5);
+            color: white;
+            font-size: 12px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+            z-index: 20;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        /* 縮圖列表 - 改善為垂直中央排列 */
+        .thumbnail-list {
+            width: 120px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .thumbnail-container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(31, 41, 55, 0.8) 0%, rgba(55, 65, 81, 0.6) 50%, rgba(31, 41, 55, 0.8) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(107, 114, 128, 0.2);
+            padding: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thumbnail-scroll {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            height: 100%;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            
+            /* 垂直中央對齊 */
+            justify-content: center;
+            min-height: 100%;
+        }
+
+        .thumbnail-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 當有超過3個縮圖時，改為從上開始排列 */
+        .thumbnail-scroll.many-items {
+            justify-content: flex-start;
+            padding-top: 20px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid rgba(107, 114, 128, 0.5);
+            transition: all 0.3s;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+
+        .thumbnail:hover {
+            border-color: rgba(107, 114, 128, 0.7);
+            transform: scale(1.05);
+        }
+
+        .thumbnail.active {
+            border-color: #3b82f6;
+            transform: scale(1.1);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        }
+
+        .thumbnail img,
+        .thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail-index {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+            color: white;
+            font-size: 10px;
+            text-align: center;
+            padding: 2px;
+        }
+
+        /* 網格模式 */
+        .media-grid {
+            width: 100%;
+            height: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1f2937 0%, #000000 50%, #1f2937 100%);
+            transition: all 0.3s;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .grid-item {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid rgba(107, 114, 128, 0.5);
+            transition: all 0.3s;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .grid-item:hover {
+            border-color: rgba(107, 114, 128, 0.7);
+            transform: scale(1.02);
+        }
+
+        .grid-item.active {
+            border-color: #3b82f6;
+            transform: scale(1.05);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+        }
+
+        .grid-item img,
+        .grid-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .grid-item-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(17, 24, 39, 0.9) 0%, rgba(55, 65, 81, 0.7) 70%, transparent 100%);
+            padding: 8px;
+            border-top: 1px solid rgba(107, 114, 128, 0.3);
+        }
+
+        .grid-item-name {
+            color: white;
+            font-size: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* 全螢幕查看器 */
+        .media-viewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .viewer-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 60;
+            width: 48px;
+            height: 48px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .viewer-close:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .viewer-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            box-sizing: border-box;
+        }
+
+        .viewer-content img{
+            width: 100%;
+            object-fit: contain;
+        }
+
+        .viewer-media {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* 手機版全螢幕查看器優化 - 完全修復 */
         @media (max-width: 768px) {
-            .title-area {
-                display: none;
+            .viewer-content {
+                padding: 16px !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                box-sizing: border-box !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            .viewer-content img{
+                max-width: 100%;
+                max-height: 100vh;
             }
 
-            .mobile-title {
-                display: block;
+            .viewer-media {
+                max-width: calc(100vw - 32px) !important;
+                max-height: calc(100vh - 80px) !important;
+                width: auto !important;
+                height: auto !important;
+                object-fit: contain !important;
+                display: block !important;
+                margin: auto !important;
             }
+            
+            .viewer-close {
+                top: 16px !important;
+                right: 16px !important;
+                width: 40px !important;
+                height: 40px !important;
+                z-index: 70 !important;
+                position: fixed !important;
+            }
+            
+            /* 強制覆蓋任何其他樣式 */
+            .media-viewer img {
+                max-width: calc(100vw - 32px) !important;
+                max-height: calc(100vh - 80px) !important;
+                width: auto !important;
+                height: auto !important;
+                object-fit: contain !important;
+            }
+            
+            .media-viewer video {
+                max-width: calc(100vw - 32px) !important;
+                max-height: calc(100vh - 80px) !important;
+                width: auto !important;
+                height: auto !important;
+                object-fit: contain !important;
+            }
+        }
 
+        /* 設定選單 */
+        .settings-menu {
+            position: absolute;
+            top: 48px;
+            left: 0;
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(107, 114, 128, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            backdrop-filter: blur(12px);
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            z-index: 50;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .menu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 網格選項開關 */
+        .settings-menu .menu-item:first-child {
+            display: none;
+        }
+
+        .menu-button {
+            width: 100%;
+            background: #22c55e;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .menu-button:hover {
+            background: #16a34a;
+        }
+
+        .menu-button.skip {
+            background: #f97316;
+        }
+
+        .menu-button.skip:hover {
+            background: #ea580c;
+        }
+
+        /* 時間軸導航面板 - 重新設計質感 */
+        .timeline-panel {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .timeline-content {
+            background: linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.9) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            padding: 32px;
+            min-width: 600px;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.5), rgba(147, 51, 234, 0.3), rgba(59, 130, 246, 0.5));
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-right: 60px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .timeline-title {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .timeline-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 100;
+            width: 40px;
+            height: 40px;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f87171;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .timeline-close:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.5);
+            transform: scale(1.05);
+        }
+
+        .timeline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+        }
+
+        .timeline-list::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #3b82f6);
+            border-radius: 1px;
+        }
+
+        .timeline-item {
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(55, 65, 81, 0.6) 100%);
+            border: 1px solid rgba(107, 114, 128, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            margin-left: 50px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -42px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #3b82f6;
+            border: 3px solid rgba(17, 24, 39, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s;
+        }
+
+        .timeline-item:hover {
+            background: linear-gradient(135deg, rgba(55, 65, 81, 0.9) 0%, rgba(75, 85, 99, 0.7) 100%);
+            border-color: rgba(59, 130, 246, 0.5);
+            transform: translateX(8px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        .timeline-item:hover::before {
+            background: #60a5fa;
+            transform: translateY(-50%) scale(1.2);
+            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.4);
+        }
+
+        .timeline-item.active {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.1) 100%);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            transform: translateX(12px);
+        }
+
+        .timeline-item.active::before {
+            background: #fbbf24;
+            box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.4);
+            }
+            50% { 
+                box-shadow: 0 0 0 8px rgba(251, 191, 36, 0.2);
+            }
+        }
+
+        .timeline-item-date {
+            color: #60a5fa;
+            font-size: 12px;
+            margin-bottom: 6px;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .timeline-item-title {
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .timeline-item-description {
+            color: rgb(209, 213, 219);
+            font-size: 13px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        /* 使用說明面板 */
+        .help-panel {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .help-content {
+            background: rgba(17, 24, 39, 0.95);
+            border: 1px solid rgba(107, 114, 128, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        }
+
+        .help-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .help-title {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .help-close {
+            width: 32px;
+            height: 32px;
+            background: rgba(55, 65, 81, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .help-close:hover {
+            background: rgba(75, 85, 99, 0.8);
+        }
+
+        .help-section {
+            margin-bottom: 20px;
+        }
+
+        .help-section h3 {
+            color: rgb(96, 165, 250);
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .help-section p {
+            color: rgb(209, 213, 219);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .help-shortcuts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+        }
+
+        .help-shortcut {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgb(209, 213, 219);
+            font-size: 12px;
+        }
+
+        .help-key {
+            background: rgba(55, 65, 81, 0.8);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: white;
+        }
+
+        /* 響應式設計 - 手機版優化 */
+        @media (max-width: 768px) {
             .header-content {
                 padding: 8px 12px;
                 min-height: 56px;
@@ -698,6 +1078,16 @@
                 height: 28px;
             }
 
+            /* 隱藏桌面版標題，顯示手機版標題 */
+            .title-area {
+                display: none;
+            }
+
+            .mobile-title {
+                display: block;
+            }
+
+            /* 調整字幕區域在手機版的顯示 */
             .subtitle-area {
                 margin: 0 8px 8px 8px;
                 padding: 10px 12px;
@@ -715,89 +1105,186 @@
                 font-size: 11px;
             }
 
-            .password-modal-content {
-                padding: 30px;
-                margin: 20px;
+            /* 顯示滑動提示 */
+            .swipe-hint {
+                display: block;
             }
 
-            .modal-title {
-                font-size: 24px;
+            .media-carousel {
+                flex-direction: column;
             }
 
-            .modal-description {
-                font-size: 14px;
+            .thumbnail-list {
+                width: 100%;
+                height: 100px;
+            }
+
+            .thumbnail-container {
+                width: 100%;
+                height: 100%;
+                padding: 8px;
+            }
+
+            .thumbnail-scroll {
+                flex-direction: row;
+                overflow-x: auto;
+                overflow-y: hidden;
+                justify-content: flex-start;
+            }
+
+            .thumbnail-scroll.many-items {
+                justify-content: flex-start;
+                padding-top: 0;
+                padding-left: 20px;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+                flex-shrink: 0;
+            }
+
+            .grid-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 12px;
+            }
+
+            .timeline-content {
+                padding: 20px;
+                max-width: 95vw;
+                min-width: 320px;
+            }
+
+            .timeline-item {
+                margin-left: 30px;
+                padding: 16px;
+            }
+
+            .timeline-item::before {
+                left: -22px;
+                width: 8px;
+                height: 8px;
+            }
+
+            .timeline-list::before {
+                left: 12px;
+            }
+
+            /* 手機版媒體導航按鈕優化 */
+            .media-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .media-nav-btn.prev {
+                left: 8px;
+            }
+
+            .media-nav-btn.next {
+                right: 8px;
             }
         }
 
-        /* 安全性增強 */
-        .no-select {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        /* 動畫效果增強 */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
         }
 
-        /* 防止右鍵選單 */
-        .no-context {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        .fade-out {
+            animation: fadeOut 0.5s ease-out forwards;
         }
 
-        /* 防截圖水印 */
-        .watermark {
-            position: fixed;
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        @keyframes fadeOut {
+            from { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+            to { 
+                opacity: 0; 
+                transform: translateY(-20px) scale(0.95); 
+            }
+        }
+
+        /* 內容切換動畫 */
+        .content-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .content-transition.fade-out {
+            opacity: 0;
+            transform: scale(0.98) translateY(10px);
+        }
+
+        .content-transition.fade-in {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .typewriter-cursor {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* 滑動視覺回饋 */
+        .swipe-feedback {
+            position: absolute;
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 48px;
-            color: rgba(239, 68, 68, 0.1);
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: rgba(59, 130, 246, 0.8);
+            z-index: 30;
             pointer-events: none;
-            z-index: 9999;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .swipe-feedback.left {
+            left: 20px;
+        }
+
+        .swipe-feedback.right {
+            right: 20px;
+        }
+
+        .swipe-feedback.show {
+            transform: translateY(-50%) scale(1.2);
+            opacity: 1;
+        }
+
+        /* 無障礙支援 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
         }
     </style>
 </head>
-<body class="no-select no-context">
-    <!-- 防截圖水印 -->
-    <div class="watermark">🔒 ENCRYPTED MEMOIR 🔒</div>
-
-    <!-- 加密狀態指示器 -->
-    <div class="encryption-indicator">
-        🔒 加密保護
-    </div>
-
+<body>
     <!-- 載入畫面 -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-animation"></div>
-        <div class="loading-title">🔒 台灣大罷免運動始末</div>
-        <div class="loading-subtitle">加密回憶錄正在載入中...</div>
-        <div class="loading-status" id="loadingStatus">正在初始化安全連接</div>
-    </div>
-
-    <!-- 🔐 密碼輸入模態框 - 關鍵元素！驗證邏輯會檢查這個 ID -->
-    <div class="password-modal hidden" id="passwordModal">
-        <div class="password-modal-content">
-            <div class="modal-icon">🔒</div>
-            <h2 class="modal-title">此回憶錄受密碼保護</h2>
-            <p class="modal-description">請輸入正確的密碼以查看加密內容</p>
-            <div class="password-input-group">
-                <input type="password" id="memoirPassword" class="password-input" placeholder="請輸入密碼" autocomplete="new-password">
-            </div>
-            <div class="modal-buttons">
-                <button class="modal-btn unlock-btn" id="unlockBtn">🔓 解鎖</button>
-                <button class="modal-btn cancel-btn" id="cancelBtn">❌ 取消</button>
-            </div>
-            <div id="passwordError" class="error-message hidden"></div>
-        </div>
+        <div style="color: white; font-size: 18px; margin-bottom: 10px;">正在載入回憶錄</div>
+        <div style="color: #bdc3c7; font-size: 14px;">台灣大罷免運動始末</div>
     </div>
 
     <!-- 主應用程式 -->
-    <div class="container hidden" id="app">
+    <div class="container" id="app">
         <!-- 標題列 -->
         <div class="header">
             <div class="header-content">
@@ -822,7 +1309,7 @@
                 </div>
 
                 <!-- 手機版標題 -->
-                <div class="mobile-title">🔒 台灣大罷免運動始末</div>
+                <div class="mobile-title">台灣大罷免運動始末</div>
                 
                 <!-- 右側導航 -->
                 <div class="header-right">
@@ -830,22 +1317,22 @@
                         <i data-lucide="chevron-left" style="width: 12px; height: 12px;"></i>
                     </div>
                     <div class="event-counter">
-                        <span id="currentEventNum">-</span>/<span id="totalEvents">-</span>
+                        <span id="currentEventNum">1</span>/<span id="totalEvents">1</span>
                     </div>
                     <div class="nav-btn" id="nextEventBtn" title="下一個時間節點">
                         <i data-lucide="chevron-right" style="width: 12px; height: 12px;"></i>
                     </div>
                     <div class="media-counter">
-                        <span id="mediaCount">-</span>媒體
+                        <span id="mediaCount">0</span>媒體
                     </div>
                 </div>
             </div>
 
             <!-- 字幕區域 -->
-            <div class="subtitle-area content-transition hidden" id="subtitleArea">
+            <div class="subtitle-area content-transition" id="subtitleArea">
                 <div class="subtitle-header">
-                    <div class="event-date" id="eventDate">載入中...</div>
-                    <div class="event-title" id="eventTitle">正在解密...</div>
+                    <div class="event-date" id="eventDate">2024年1月1日</div>
+                    <div class="event-title" id="eventTitle">標題</div>
                     <div class="subtitle-toggle">
                         <span style="color: white; font-size: 12px;">字幕</span>
                         <div class="toggle-switch active" id="subtitleToggle">
@@ -853,997 +1340,965 @@
                         </div>
                     </div>
                 </div>
-                <div class="event-description" id="eventDescription">正在解密內容...</div>
+                <div class="event-description" id="eventDescription">描述內容...</div>
+                <!-- 滑動提示 -->
+                <!-- <div class="swipe-hint">← 滑動切換日期 →</div> -->
             </div>
         </div>
 
         <!-- 主要內容區域 -->
-        <div class="main-content content-transition hidden" id="mainContent">
+        <div class="main-content content-transition" id="mainContent">
             <div class="media-area">
+                <!-- 滑動視覺回饋 -->
+                <!-- <div class="swipe-feedback left" id="swipeFeedbackLeft">
+                    <i data-lucide="chevron-left" style="width: 32px; height: 32px;"></i>
+                </div>
+                <div class="swipe-feedback right" id="swipeFeedbackRight">
+                    <i data-lucide="chevron-right" style="width: 32px; height: 32px;"></i>
+                </div> -->
+
                 <!-- 輪播模式 -->
                 <div class="media-carousel" id="mediaCarousel">
                     <div class="main-media content-transition" id="mainMedia">
                         <div class="media-display" id="mediaDisplay">
-                            <div style="text-align: center; color: #9ca3af;">
-                                <div style="font-size: 48px; margin-bottom: 20px;">🔓</div>
-                                <div>內容正在解密中...</div>
+                            <!-- 媒體內容將在這裡動態插入 -->
+                        </div>
+                        
+                        <!-- 導航按鈕 -->
+                        <div class="media-nav-btn prev" id="prevMediaBtn">
+                            <i data-lucide="chevron-left" style="width: 20px; height: 20px;"></i>
+                        </div>
+                        <div class="media-nav-btn next" id="nextMediaBtn">
+                            <i data-lucide="chevron-right" style="width: 20px; height: 20px;"></i>
+                        </div>
+                        
+                        <!-- 媒體計數器 -->
+                        <div class="media-counter-display" id="mediaCounterDisplay">
+                            1 / 1
+                        </div>
+                    </div>
+                    
+                    <!-- 縮圖列表 -->
+                    <div class="thumbnail-list">
+                        <div class="thumbnail-container">
+                            <div class="thumbnail-scroll" id="thumbnailScroll">
+                                <!-- 縮圖將在這裡動態插入 -->
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- 網格模式 -->
+                <div class="media-grid hidden" id="mediaGrid">
+                    <div class="grid-container" id="gridContainer">
+                        <!-- 網格項目將在這裡動態插入 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 設定選單 -->
+        <div class="settings-menu hidden" id="settingsMenu">
+            <div class="menu-item">
+                <span>網格檢視</span>
+                <div class="toggle-switch" id="gridToggle">
+                    <div class="toggle-knob"></div>
+                </div>
+            </div>
+            
+            <button class="menu-button" id="helpBtn">
+                <i data-lucide="help-circle" style="width: 14px; height: 14px;"></i>
+                使用說明
+            </button>
+            
+            <button class="menu-button skip hidden" id="skipTypingBtn">
+                <i data-lucide="skip-forward" style="width: 14px; height: 14px;"></i>
+                跳過打字效果
+            </button>
+        </div>
+
+        <!-- 時間軸導航面板 -->
+        <div class="timeline-panel hidden" id="timelinePanel">
+            <div class="timeline-close" id="timelineClose">
+                <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+            </div>
+            <div class="timeline-content fade-in">
+                <div class="timeline-header">
+                    <div class="timeline-title">
+                        <i data-lucide="calendar" style="width: 24px; height: 24px;"></i>
+                        時間軸導航
+                    </div>
+                </div>
+                <div class="timeline-list" id="timelineList">
+                    <!-- 時間軸項目將在這裡動態插入 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 使用說明面板 -->
+        <div class="help-panel hidden" id="helpPanel">
+            <div class="help-content">
+                <div class="help-header">
+                    <div class="help-title">
+                        <i data-lucide="help-circle" style="width: 20px; height: 20px;"></i>
+                        使用說明
+                    </div>
+                    <div class="help-close" id="helpClose">
+                        <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+                    </div>
+                </div>
+                
+                <div class="help-section">
+                    <h3>🎮 基本操作</h3>
+                    <div class="help-shortcuts">
+                        <div class="help-shortcut">
+                            <span class="help-key">←/→</span>
+                            <span>切換時間節點</span>
+                        </div>
+                        <div class="help-shortcut">
+                            <span class="help-key">滑動</span>
+                            <span>在文字區域左右滑動切換日期</span>
+                        </div>
+                        <div class="help-shortcut">
+                            <span class="help-key">點擊</span>
+                            <span>點擊媒體可全螢幕查看</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h3>👁️ 檢視模式</h3>
+                    <p><strong>輪播模式</strong> - 逐一瀏覽媒體，適合專注欣賞</p>
+                    <p><strong>網格模式</strong> - 一覽所有媒體，適合快速瀏覽</p>
+                    <p><strong>全螢幕模式</strong> - 專注單一媒體，最佳觀看體驗</p>
+                </div>
+
+                <div class="help-section">
+                    <h3>⌨️ 快捷鍵</h3>
+                    <div class="help-shortcuts">
+                        <div class="help-shortcut">
+                            <span class="help-key">G</span>
+                            <span>切換網格模式</span>
+                        </div>
+                        <div class="help-shortcut">
+                            <span class="help-key">ESC</span>
+                            <span>關閉全螢幕/面板</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-section">
+                    <h3>📱 手機版功能</h3>
+                    <p>在文字內容區域或媒體區域<strong>左右滑動</strong>可快速切換不同日期的回憶。滑動時會顯示視覺回饋指示方向。</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 🔐 加密數據注入點 - 關鍵！這是解密腳本的注入位置 -->
-    
-        <script>
-        // 🔐 MemoirFlow 統一前端解密系統 - 強制覆蓋版本
-        (function() {
-            'use strict';
+    <!-- 全螢幕媒體查看器 -->
+    <div class="media-viewer hidden" id="mediaViewer">
+        <div class="viewer-close" id="viewerClose">
+            <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="viewer-content" id="viewerContent">
+            <!-- 全螢幕媒體內容將在這裡顯示 -->
+        </div>
+    </div>
+
+    <script>
+        // 嵌入回憶錄數據
+        const MEMOIR_DATA = {"id":"20ea6cb4-633b-4ed8-9f4a-5d37f1de6f4b","chineseName":"台灣大罷免運動始末","englishName":"mass-recall-taiwan_3","events":[{"id":"1754291389504","date":"2024-02-06","title":"袁紅冰：中共滲透台灣立法院","description":"當時台灣總統大選、立委選舉塵埃落定，對於台灣民眾認為「選舉結果是互相制衡，制衡才是民主」，袁紅冰2月時表示：「在國民黨長期的洗腦和分化瓦解之下，台灣確實是有一種和平主義的幻想。……所謂的統一台灣，也就是征服自由台灣，是習近平寫進中共暴政的憲法、寫進中共黨章的一個基本國策。中共實際上給台灣就兩個選擇：交出你的人民主權，交出決定自己命運和前途的權利，接受中共暴政強加給你香港化的前景，那麼就可以得到屈辱的所謂『和平』。」","media":[{"id":"ca11a228-dac1-403b-a375-90defb19bbcf","type":"image","filename":"175220014685900_P29762931.webp","originalName":"175220014685900_P29762931.webp","path":"D:\\Case\\learn-tauri\\src-tauri\\memoirs\\20ea6cb4-633b-4ed8-9f4a-5d37f1de6f4b\\media\\175220014685900_P29762931.webp","isUrl":false,"url":null}],"order":0},{"id":"1754291482321","date":"2024-04-03","title":"花蓮發生規模7.1強震","description":"2024年花蓮地震（又稱為403花東大地震）發生於當地時間4月3日上午7時58分09秒，震央位於台灣花蓮縣壽豐鄉，芮氏規模7.1，震源深度為19.7公里，並在花蓮縣秀林鄉和平村觀測到中央氣象署地震分級中最大震度6強的地震和麥卡利震度分級中的8（VIII）度，持續搖晃共大約98秒，期間臺灣全島都感受到明顯搖晃。","media":[{"id":"1754291504379","type":"image","filename":"url_1754291504379","originalName":"53643858196_fae8167dd0_b.jpg","path":"https://live.staticflickr.com/65535/53643858196_fae8167dd0_b.jpg","isUrl":true,"url":"https://live.staticflickr.com/65535/53643858196_fae8167dd0_b.jpg"}],"order":1},{"id":"1754291624558","date":"2024-04-27","title":"傅崐萁率國民立院黨團，拜見統戰頭目","description":"傅崐萁罔顧花蓮災情，率團訪問王滬寧，共十七位立委，佔了國民黨五十二席立委近三分之一。除傅崐萁，區域立委包含雙北王鴻薇、羅明才、張智倫、廖先翔，基隆市林沛祥，竹苗地區徐欣瑩、鄭正鈐、邱鎮軍，南投縣游顥、金門縣陳玉珍、連江縣陳雪生，原住民立委有黃仁、鄭天財、盧縣一；不分區則有翁曉玲、林倩綺。同行的還有前國民黨立委張育美。","media":[{"id":"47d5c4a4-ff5a-425c-b972-0c732926bbba","type":"image","filename":"523935988_17887499847316674_5119657940159678143_n.jpg","originalName":"523935988_17887499847316674_5119657940159678143_n.jpg","path":"D:\\Case\\learn-tauri\\src-tauri\\memoirs\\20ea6cb4-633b-4ed8-9f4a-5d37f1de6f4b\\media\\523935988_17887499847316674_5119657940159678143_n.jpg","isUrl":false,"url":null}],"order":2},{"id":"1754291736703","date":"2024-05-28","title":"挾席次優勢, 藍白聯手暴力通過國會擴權法案","description":"立法院職權行使法等法案，下午四點多三讀通過。舉手表決過程中，藍白兩黨挾著人數優勢，讓法案闖關。民進黨立委批評號稱國會改革的法案，卻是黑箱、程序不正義，沒收民主、無限擴權。","media":[{"id":"1754291739621","type":"image","filename":"url_1754291739621","originalName":"1200x800_wmky_049912701131_202405280135000000.jpg","path":"https://imgcdn.cna.com.tw/www/WebPhotos/1024/20240528/1200x800_wmky_049912701131_202405280135000000.jpg","isUrl":true,"url":"https://imgcdn.cna.com.tw/www/WebPhotos/1024/20240528/1200x800_wmky_049912701131_202405280135000000.jpg"}],"order":3},{"id":"1754292021057","date":"2024-11-14","title":"陳玉珍提出離島建設條例","description":"台灣經濟民主連合與台灣公民陣線10月30日在立法院群賢樓門口召開記者會，質疑陳玉珍等人所提離島建設條例修正草案，要設置離島國際醫療特區的第13條之1及之2修正草案，及設置離島自由貿易示範區的第18條之1修正草案，恐讓金馬離島淪為中國一國兩制試驗區，有害國家安全。","media":[{"id":"1754292023555","type":"image","filename":"url_1754292023555","originalName":"w1200","path":"https://today-obs.line-scdn.net/0hJA5spusAFW4ICgQ8t4tqOTBcGR87bA9nKmVbDy8DTFsnJlIwMj5GDS9YGUJ2aQBvKDsKDn4LH1Z1PwU_Ng/w1200","isUrl":true,"url":"https://today-obs.line-scdn.net/0hJA5spusAFW4ICgQ8t4tqOTBcGR87bA9nKmVbDy8DTFsnJlIwMj5GDS9YGUJ2aQBvKDsKDn4LH1Z1PwU_Ng/w1200"}],"order":4},{"id":"1754292133924","date":"2024-12-20","title":"藍白兩黨強行通過憲法訴訟法/選罷法/財劃法","description":"中華民國立法院會20日在中國國民黨（藍）、民眾黨（白）立委聯手下，強行三讀通過《公職人員選舉罷免法》《憲法訴訟法》《財政收支劃分法》，引發爭議。\n\n為反對藍白通過三大爭議法案，台灣多個公民團體20日舉行「冬季青鳥系列：回復國會民主，退回三大惡法」活動，號召青鳥公民運動群眾在立法院外集結，主辦方在晚間9時左右宣布現場有2萬餘人，活動在凌晨12時結束。\n\n中華民國總統賴清德20日晚間於臉書發文說，立法院是國家最高民意機關，象徵台灣的自由民主。但20日強行通過的3項法案，未經充分討論、無視民意，不僅剝奪人民監督的權利，更是侵害司法獨立，甚至衝擊攸關每位國民、國家整體資源分配的公平正義。這是沒收民主國家權力分立的原則，更是悖離民主國家人民作主的真諦。","media":[{"id":"1754292136084","type":"image","filename":"url_1754292136084","originalName":"20241220-001.jpg","path":"https://theinitium.com/wp-content/uploads/2024/12/20241220-001.jpg","isUrl":true,"url":"https://theinitium.com/wp-content/uploads/2024/12/20241220-001.jpg"},{"id":"1754292388788","type":"image","filename":"url_1754292388788","originalName":"id14395196-241220211639100311-600x400.jpg","path":"https://i.epochtimes.com/assets/uploads/2024/12/id14395196-241220211639100311-600x400.jpg","isUrl":true,"url":"https://i.epochtimes.com/assets/uploads/2024/12/id14395196-241220211639100311-600x400.jpg"}],"order":5},{"id":"1754292439173","date":"2024-12-31","title":"藍白強行通過，80歲以上免巴氏量表請外傭","description":"立法院今天三讀通過就業服務法部分修正條文，80歲以上長者聘僱外籍看護免經醫療評估。勞動部對此表示遺憾，認為會更難找到或留下外籍看護工人力，也對於照顧品質造成影響。\n\n巴氏量表目前是長照家庭申請聘僱外籍看護的醫療評估主要依據，立法院今天三讀通過就業服務法部分條文，三讀條文明定，雇主聘僱外國人從事家庭看護工作，被看護者凡年齡80歲以上，或70歲至79歲患有癌症二期以上者，得免經醫療機構之專業評估。","media":[{"id":"1754292466205","type":"image","filename":"url_1754292466205","originalName":"1200x875_wmky_375250911240_202412310044000000.jpg","path":"https://imgcdn.cna.com.tw/www/WebPhotos/800/20241231/1200x875_wmky_375250911240_202412310044000000.jpg","isUrl":true,"url":"https://imgcdn.cna.com.tw/www/WebPhotos/800/20241231/1200x875_wmky_375250911240_202412310044000000.jpg"}],"order":6},{"id":"1754292640363","date":"2025-01-13","title":"藍委游顥等人重提，中配6年改4年，放寬中配取得身分證和親屬來台定居條件","description":"是否放寬中國籍配偶取得台灣身分證年限，朝野暫休戰！藍白本週二（14日）以人數優勢，於程序委員會強勢通關「兩岸人民關係條例」修正案，並順利排入今（17日）議程，然而國民黨團卻於會中提案，將包括縮短中配入籍年限在內的所有報告事項，全部退回程序委員會。\n\n繼國民黨立委許宇甄，游顥本會期再次提出「兩岸人民關係條例第17條修正草案」，建議將中配取得身分證的年限比照外配，從6年縮短為4年，儘管民進黨團提出異議，該案14日仍經立院程序委員會排入17日院會報告事項第11案。","media":[{"id":"1754292642576","type":"image","filename":"url_1754292642576","originalName":"d63d39a2554c787f56a8324eb72802af","path":"https://s.yimg.com/ny/api/res/1.2/77WnhqTbB7ddvC697DD6Pg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MA--/https://media.zenfs.com/zh-tw/mnews_tw_258/d63d39a2554c787f56a8324eb72802af","isUrl":true,"url":"https://s.yimg.com/ny/api/res/1.2/77WnhqTbB7ddvC697DD6Pg--/YXBwaWQ9aGlnaGxhbmRlcjt3PTk2MDtoPTU0MA--/https://media.zenfs.com/zh-tw/mnews_tw_258/d63d39a2554c787f56a8324eb72802af"}],"order":7},{"id":"1754292734965","date":"2025-01-17","title":"中共國台辦大力稱讚藍白砍預算","description":"陳斌華指出，民進黨政府的媒宣預算暴增，反映其「粉飾太平、掩蓋無能」的意圖。他指控，民進黨利用媒宣費豢養網軍，攻擊異己並抹黑中國。他甚至聲稱，「島內各界對此早有公論」。然而，這段發言被台灣網友視為不當干涉內政，並大肆挖苦在野黨的刪預算行為是「獲得祖國認證」「國台辦誇獎奴才」。","media":[{"id":"1754292737320","type":"image","filename":"url_1754292737320","originalName":"b510ca55-6742-4f9e-aa08-8a24dede2532-w2400.webP","path":"https://v3-statics.mirrormedia.mg/images/b510ca55-6742-4f9e-aa08-8a24dede2532-w2400.webP","isUrl":true,"url":"https://v3-statics.mirrormedia.mg/images/b510ca55-6742-4f9e-aa08-8a24dede2532-w2400.webP"}],"order":8},{"id":"1754292961776","date":"2025-01-20","title":"藍白兩黨通過亂刪凍預算，嚴重影響台灣民生、國安","description":"台灣立法院在歷經跨日、20小時不斷電表決下，由在野的國民黨、民眾黨聯手三讀通過2025年中央政府總預算案，總預算歲出由原先編列的3兆1325億（新台幣）減為2兆9248億元，審議結果經主計總處計算，截至1月23日下午17時共計減列約2076億元，刪減金額創下新高，歲入3兆1534億元則是史上首度突破3兆。","media":[{"id":"1754292963823","type":"image","filename":"url_1754292963823","originalName":"4856516c-ba9a-40f2-80a0-85064f6d4948-w1600.webP","path":"https://v3-statics.mirrormedia.mg/images/4856516c-ba9a-40f2-80a0-85064f6d4948-w1600.webP","isUrl":true,"url":"https://v3-statics.mirrormedia.mg/images/4856516c-ba9a-40f2-80a0-85064f6d4948-w1600.webP"}],"order":9},{"id":"1754293050753","date":"2025-02-20","title":"傅崐萁香港返台，稱<完成歷史任務>","description":"國民黨團總召傅崐萁，20日晚間，和妻子花蓮縣長徐榛蔚一起從香港返台，在花蓮機場受訪時，他表示自己又完成了一項歷史任務。只是，他赴中的消息，引發關注，還有人特別來接機，東社發言人陳財能守在機場門口，當面嗆他是中共走狗。","media":[{"id":"1754293053798","type":"image","filename":"url_1754293053798","originalName":"6e9db752-30a8-49c8-8824-777f49287168.jpg","path":"https://cdn.ftvnews.com.tw/manasystem/FileData/News/1/6e9db752-30a8-49c8-8824-777f49287168.jpg","isUrl":true,"url":"https://cdn.ftvnews.com.tw/manasystem/FileData/News/1/6e9db752-30a8-49c8-8824-777f49287168.jpg"}],"order":10},{"id":"1754293127010","date":"2025-03-21","title":"空缺的7名大法官人選, 全數遭藍白所有立委的否決","description":"去年總統賴清德提名的司法院正、副院長及大法官共七名人選，全數遭到立法院否決，為了守護自由民主憲政制度、提升國安案件專業能量並持續推動司法改革，總統依據憲法增修條文第五條規定，重新提名司法院人事；21日由副總統蕭美琴公布全新名單為：司法院長被提名人為蔡秋明、副院長被提名人為蘇素娥以及司法院大法官被提名人為蕭文生、鄭純惠、林麗瑩、陳慈陽及詹鎮榮等人，同時也會在21日當天咨請立法院同意。","media":[{"id":"1754293128877","type":"image","filename":"url_1754293128877","originalName":"2000x1373_wmky_97271473653011_202507250037000000.jpg","path":"https://imgcdn.cna.com.tw/www/WebPhotos/1024/20250725/2000x1373_wmky_97271473653011_202507250037000000.jpg","isUrl":true,"url":"https://imgcdn.cna.com.tw/www/WebPhotos/1024/20250725/2000x1373_wmky_97271473653011_202507250037000000.jpg"}],"order":11},{"id":"1754293293458","date":"2025-04-15","title":"藍白連續319次阻擋強化國安的修法提案","description":"針對國民黨、民眾黨批評近日民進黨內爆發多起共諜案，立法院民進黨團強調，民進黨第一時間將涉案者送辦、開除黨籍絕不寬貸，不積極處理才是包庇，藍白只會譴責受害者，而不去批評加害者，就是背後的中共；甚至在國會阻擋民進黨團所提「國安十法」，光立委赴中納管總計就擋了319次，到底還要擋多久？\n\n民進黨團今舉行「反共諜滲透 就支持國安法案」記者會。民進黨團幹事長吳思瑤表示，共諜就是全民公敵，面對任何型態的共諜，當然要依法究辦、嚴懲，若現行法律不夠嚴格、管理不夠全面，當然要補漏，這是民進黨正努力進行的事。","media":[{"id":"1754293310783","type":"image","filename":"url_1754293310783","originalName":"1200x716_759932592628.jpg","path":"https://imgcdn.cna.com.tw/www/WebPhotos/800/20250417/1200x716_759932592628.jpg","isUrl":true,"url":"https://imgcdn.cna.com.tw/www/WebPhotos/800/20250417/1200x716_759932592628.jpg"}],"order":12},{"id":"1754293564275","date":"2025-05-31","title":"國民黨立委陳永康等提案修訂兩岸人民關係條例，內容偷渡「兩岸內戰狀態」概念","description":"國民黨立委陳永康提案修正《兩岸人民關係條例》第29條，把禁限制水域公告權責由國防部改為海委會，而且立法要旨提及兩岸內戰尚未結束，引起關注。陳永康今（13）日表示，金馬水域已解除軍管，管理也逐步移交海巡署，若禁限制水域劃設權責仍由國防部掌管，不是很奇怪？不過民進黨立委批評，修法在模糊化台灣主權。","media":[{"id":"1754293566435","type":"image","filename":"url_1754293566435","originalName":"32292608.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=800&exp=3600","path":"https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2025/06/13/realtime/32292608.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=800&exp=3600","isUrl":true,"url":"https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2025/06/13/realtime/32292608.jpg&x=0&y=0&sw=0&sh=0&sl=W&fw=800&exp=3600"}],"order":13},{"id":"1754294157202","date":"2025-06-27","title":"藍白推不在籍投票","description":"國民黨、民眾黨推「不在籍投票」，2025年6月27日在立院一讀，針對「台灣本土」進行不在籍投票，在中國的台商不適用，但律師林智群認為，還是會產生嚴重的問題，因為只要提出「身分證正反面影本」，就可以申請「不在籍投票」。","media":[{"id":"1754294158981","type":"image","filename":"url_1754294158981","originalName":"1314x836_wmkn_80395911781_0.jpg","path":"https://imgcdn.cna.com.tw/www/WebPhotos/1024/20240124/1314x836_wmkn_80395911781_0.jpg","isUrl":true,"url":"https://imgcdn.cna.com.tw/www/WebPhotos/1024/20240124/1314x836_wmkn_80395911781_0.jpg"}],"order":14},{"id":"1754294204823","date":"2025-07-10","title":"藍推「國家安全戰略法」，意圖染指總統國安決策","description":"國民黨立委陳永康等藍委提出《國家安全戰略法》，遭批企圖剝奪總統國家安全事務決策權，架空國家安全會議，讓立法院染指國安決策。對此，經民連及罷團召開聯合記者會，痛批修法是對現行體制進行三大違憲顛覆，若此法案通過，不僅破壞憲法權力分立設計，更將讓立法院過度染指國安事務。","media":[{"id":"1754294206480","type":"image","filename":"url_1754294206480","originalName":"FA0A1042-5273-4F50-9754-490ACD31F75B%E6%8B%B7%E8%B2%9D.jpeg?fit=2048%2C1365&ssl=1","path":"https://i0.wp.com/mmedia.com.tw/wp-content/uploads/2024/05/FA0A1042-5273-4F50-9754-490ACD31F75B%E6%8B%B7%E8%B2%9D.jpeg?fit=2048%2C1365&ssl=1","isUrl":true,"url":"https://i0.wp.com/mmedia.com.tw/wp-content/uploads/2024/05/FA0A1042-5273-4F50-9754-490ACD31F75B%E6%8B%B7%E8%B2%9D.jpeg?fit=2048%2C1365&ssl=1"}],"order":15},{"id":"1754294381080","date":"2025-07-18","title":"藍白強行通過立法不周的兒虐防治相關法案","description":"立法院司法及法制委員會6月4日初審通過立委所提刑法部分條文修正草案，有關提高虐童致死刑度最高至死刑或無期徒刑等條文，朝野雖均支持加重刑責，但在立法技術上未達成共識，因此保留交黨團協商。黨團協商後朝野達成共識，包括朝野都支持增訂刑法第272條之1條文，但保留刑法第286條條文送立法院會處理。\n\n國民黨與民眾黨意圖以立法不周的條文，操作民進黨不支持兒童虐待重罰法案。","media":[{"id":"1754294400438","type":"image","filename":"url_1754294400438","originalName":"c431b004a494d5475407c1ccf8a544aa.webp","path":"https://static.kmedia.com.tw/prd/2025/0718/2DB54C953C0482B7D01F7A274ABF25D6/c431b004a494d5475407c1ccf8a544aa.webp","isUrl":true,"url":"https://static.kmedia.com.tw/prd/2025/0718/2DB54C953C0482B7D01F7A274ABF25D6/c431b004a494d5475407c1ccf8a544aa.webp"}],"order":16},{"id":"1754294488771","date":"2025-07-25","title":"再度提名的7名大法官人選, 遭受藍白所有立委的全數否決","description":"憲法法庭持續被癱瘓。\n\n立法院今日（7月25日）上午行使大法官人事同意權投票，被提名人必須要獲得出席立委二分之一同意才能通過。國民黨團在投票前已經表明全數否決，民眾黨團其後也表明全部不同意，民進黨團則是針對陳慈陽與詹鎮榮兩人開放黨籍立委自由投票，最終結果7名大法官提名人全數遭到否決。","media":[{"id":"1754294490677","type":"image","filename":"url_1754294490677","originalName":"wide_tsa918x_S__130441229.jpg","path":"https://rwnews.tw/upload/newstemp_21387/wide_tsa918x_S__130441229.jpg","isUrl":true,"url":"https://rwnews.tw/upload/newstemp_21387/wide_tsa918x_S__130441229.jpg"},{"id":"1754325756672","type":"video","filename":"url_1754325756672","originalName":"Oyv7n7Yu12k?si=NDAcWsbpcE1rbgMx","path":"https://youtu.be/Oyv7n7Yu12k?si=NDAcWsbpcE1rbgMx","isUrl":true,"url":"https://youtu.be/Oyv7n7Yu12k?si=NDAcWsbpcE1rbgMx"}],"order":17}],"createdAt":"2025-08-04T07:07:26.806196300+00:00","lastModified":"2025-08-11T12:16:51.270055100+00:00"};
+        
+        // 全域變數
+        let currentEventIndex = 0;
+        let currentMediaIndex = 0;
+        let showSubtitles = true;
+        let showGrid = false;
+        let typewriterEnabled = true;
+        let isTransitioning = false;
+        let typewriterTimer = null;
+        
+        // 觸控滑動相關變數
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+        let isSwiping = false;
+        const minSwipeDistance = 50; // 最小滑動距離
+        
+        // 排序事件
+        const sortedEvents = MEMOIR_DATA.events.sort((a, b) => 
+            new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+
+        // 觸控滑動處理函數
+        function handleTouchStart(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            isSwiping = false;
+        }
+
+        function handleTouchMove(e) {
+            if (!touchStartX || !touchStartY) return;
             
-            console.log('🔐 解密腳本開始載入...');
+            touchEndX = e.touches[0].clientX;
+            touchEndY = e.touches[0].clientY;
             
-            // 🚨 檢查並避免重複初始化
-            if (window.MemoirFlowDecryptionSystem) {
-                console.warn('⚠️ 解密系統已初始化，跳過重複載入');
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            // 只有當水平滑動距離大於垂直滑動距離時才處理
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 20) {
+                e.preventDefault(); // 防止頁面滾動
+                isSwiping = true;
+            
+            //     // 顯示滑動視覺回饋
+            //     const leftFeedback = document.getElementById('swipeFeedbackLeft');
+            //     const rightFeedback = document.getElementById('swipeFeedbackRight');
+                
+            //     if (deltaX > 0) {
+            //         // 向右滑動
+            //         leftFeedback.classList.add('show');
+            //         rightFeedback.classList.remove('show');
+            //     } else {
+            //         // 向左滑動
+            //         rightFeedback.classList.add('show');
+            //         leftFeedback.classList.remove('show');
+            //     }
+            }
+        }
+
+        function handleTouchEnd(e) {
+            if (!isSwiping || !touchStartX || !touchEndX) {
                 return;
             }
             
-            // 🚨 強制覆蓋標記
-            window.MemoirFlowDecryptionSystem = true;
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
             
-            // 🚨 全域變數管理
-            window.MemoirFlowGlobals = window.MemoirFlowGlobals || {
-                MEMOIR_DATA: null,
-                decryptionAttempts: 0,
-                MAX_ATTEMPTS: 3,
-                isInitialized: false,
-                decryptionMode: null,
-                debugInfo: {}
-            };
-            
-            const globals = window.MemoirFlowGlobals;
-            
-            // 🚨 模式特定的解密邏輯
-            
-            // 🔄 回退模式解密邏輯 - 修正媒體顯示問題
-            globals.decryptionMode = 'fallback';
-            
-            const fallbackData = 'eyJjaGluZXNlTmFtZSI6IuWPsOeBo+Wkp+e9t+WFjemBi+WLleWni+acqyIsImNyZWF0ZWRBdCI6IjIwMjUtMDgtMDRUMDc6MDc6MjYuODA2MTk2MzAwKzAwOjAwIiwiZW5nbGlzaE5hbWUiOiJtYXNzLXJlY2FsbC10YWl3YW5fMyIsImV2ZW50cyI6W3siZGF0ZSI6IjIwMjQtMDItMDYiLCJkZXNjcmlwdGlvbiI6IueVtuaZguWPsOeBo+e4vee1seWkp+mBuOOAgeeri+WnlOmBuOiIieWhteWfg+iQveWumu+8jOWwjeaWvOWPsOeBo+awkeecvuiqjeeCuuOAjOmBuOiIiee1kOaenOaYr+S6kuebuOWItuihoe+8jOWItuihoeaJjeaYr+awkeS4u+OAje+8jOiigee0heWGsDLmnIjmmYLooajnpLrvvJrjgIzlnKjlnIvmsJHpu6jplbfmnJ/nmoTmtJfohablkozliIbljJbnk6bop6PkuYvkuIvvvIzlj7DngaPnorrlr6bmmK/mnInkuIDnqK7lkozlubPkuLvnvqnnmoTlubvmg7PjgILigKbigKbmiYDorILnmoTntbHkuIDlj7DngaPvvIzkuZ/lsLHmmK/lvoHmnI3oh6rnlLHlj7DngaPvvIzmmK/nv5Lov5HlubPlr6vpgLLkuK3lhbHmmrTmlL/nmoTmhrLms5XjgIHlr6vpgLLkuK3lhbHpu6jnq6DnmoTkuIDlgIvln7rmnKzlnIvnrZbjgILkuK3lhbHlr6bpmpvkuIrntablj7DngaPlsLHlhanlgIvpgbjmk4fvvJrkuqTlh7rkvaDnmoTkurrmsJHkuLvmrIrvvIzkuqTlh7rmsbrlrproh6rlt7Hlkb3pgYvlkozliY3pgJTnmoTmrIrliKnvvIzmjqXlj5fkuK3lhbHmmrTmlL/lvLfliqDntabkvaDpppnmuK/ljJbnmoTliY3mma/vvIzpgqPpurzlsLHlj6/ku6XlvpfliLDlsYjovrHnmoTmiYDorILjgI7lkozlubPjgI/jgILjgI0iLCJpZCI6IjE3NTQyOTEzODk1MDQiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiIxNzUyMjAwMTQ2ODU5MDBfUDI5NzYyOTMxLndlYnAiLCJpZCI6ImNhMTFhMjI4LWRhYzEtNDAzYi1hMzc1LTkwZGVmYjE5YmJjZiIsImlzVXJsIjpmYWxzZSwib3JpZ2luYWxOYW1lIjoiMTc1MjIwMDE0Njg1OTAwX1AyOTc2MjkzMS53ZWJwIiwicGF0aCI6Ii4vbWVkaWEvMTc1MjIwMDE0Njg1OTAwX1AyOTc2MjkzMS53ZWJwIiwidHlwZSI6ImltYWdlIiwidXJsIjpudWxsfV0sIm9yZGVyIjowLCJ0aXRsZSI6Iuiigee0heWGsO+8muS4reWFsea7sumAj+WPsOeBo+eri+azlemZoiJ9LHsiZGF0ZSI6IjIwMjQtMDQtMDMiLCJkZXNjcmlwdGlvbiI6IjIwMjTlubToirHok67lnLDpnIfvvIjlj4jnqLHngro0MDPoirHmnbHlpKflnLDpnIfvvInnmbznlJ/mlrznlbblnLDmmYLplpM05pyIM+aXpeS4iuWNiDfmmYI1OOWIhjA556eS77yM6ZyH5aSu5L2N5pa85Y+w54Gj6Iqx6JOu57ij5aO96LGQ6YSJ77yM6Iqu5rCP6KaP5qihNy4x77yM6ZyH5rqQ5rex5bqm54K6MTkuN+WFrOmHjO+8jOS4puWcqOiKseiTrue4o+engOael+mEieWSjOW5s+adkeingOa4rOWIsOS4reWkruawo+ixoee9suWcsOmch+WIhue0muS4reacgOWkp+mch+W6pjblvLfnmoTlnLDpnIflkozpuqXljaHliKnpnIfluqbliIbntJrkuK3nmoQ477yIVklJSe+8ieW6pu+8jOaMgee6jOaQluaZg+WFseWkp+e0hDk456eS77yM5pyf6ZaT6Ie654Gj5YWo5bO26YO95oSf5Y+X5Yiw5piO6aGv5pCW5pmD44CCIiwiaWQiOiIxNzU0MjkxNDgyMzIxIiwibWVkaWEiOlt7ImZpbGVuYW1lIjoidXJsXzE3NTQyOTE1MDQzNzkiLCJpZCI6IjE3NTQyOTE1MDQzNzkiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoiNTM2NDM4NTgxOTZfZmFlODE2N2RkMF9iLmpwZyIsInBhdGgiOiJodHRwczovL2xpdmUuc3RhdGljZmxpY2tyLmNvbS82NTUzNS81MzY0Mzg1ODE5Nl9mYWU4MTY3ZGQwX2IuanBnIiwidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9saXZlLnN0YXRpY2ZsaWNrci5jb20vNjU1MzUvNTM2NDM4NTgxOTZfZmFlODE2N2RkMF9iLmpwZyJ9XSwib3JkZXIiOjEsInRpdGxlIjoi6Iqx6JOu55m855Sf6KaP5qihNy4x5by36ZyHIn0seyJkYXRlIjoiMjAyNC0wNC0yNyIsImRlc2NyaXB0aW9uIjoi5YKF5bSQ6JCB572U6aGn6Iqx6JOu54G95oOF77yM546H5ZyY6Kiq5ZWP546L5rus5a+n77yM5YWx5Y2B5LiD5L2N56uL5aeU77yM5L2U5LqG5ZyL5rCR6buo5LqU5Y2B5LqM5bit56uL5aeU6L+R5LiJ5YiG5LmL5LiA44CC6Zmk5YKF5bSQ6JCB77yM5Y2A5Z+f56uL5aeU5YyF5ZCr6ZuZ5YyX546L6bS76JaH44CB576F5piO5omN44CB5by15pm65YCr44CB5buW5YWI57+U77yM5Z+66ZqG5biC5p6X5rKb56Wl77yM56u56IuX5Zyw5Y2A5b6Q5qyj55Gp44CB6YSt5q2j6YiQ44CB6YKx6Y6u6LuN77yM5Y2X5oqV57ij5ri46aGl44CB6YeR6ZaA57ij6Zmz546J54+N44CB6YCj5rGf57ij6Zmz6Zuq55Sf77yM5Y6f5L2P5rCR56uL5aeU5pyJ6buD5LuB44CB6YSt5aSp6LKh44CB55un57ij5LiA77yb5LiN5YiG5Y2A5YmH5pyJ57+B5puJ546y44CB5p6X5YCp57a644CC5ZCM6KGM55qE6YKE5pyJ5YmN5ZyL5rCR6buo56uL5aeU5by16IKy576O44CCIiwiaWQiOiIxNzU0MjkxNjI0NTU4IiwibWVkaWEiOlt7ImZpbGVuYW1lIjoiNTIzOTM1OTg4XzE3ODg3NDk5ODQ3MzE2Njc0XzUxMTk2NTc5NDAxNTk2NzgxNDNfbi5qcGciLCJpZCI6IjQ3ZDVjNGE0LWZmNWEtNDI1Yy1iOTcyLTBjNzMyOTI2YmJiYSIsImlzVXJsIjpmYWxzZSwib3JpZ2luYWxOYW1lIjoiNTIzOTM1OTg4XzE3ODg3NDk5ODQ3MzE2Njc0XzUxMTk2NTc5NDAxNTk2NzgxNDNfbi5qcGciLCJwYXRoIjoiLi9tZWRpYS81MjM5MzU5ODhfMTc4ODc0OTk4NDczMTY2NzRfNTExOTY1Nzk0MDE1OTY3ODE0M19uLmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6bnVsbH1dLCJvcmRlciI6MiwidGl0bGUiOiLlgoXltJDokIHnjoflnIvmsJHnq4vpmaLpu6jlnJjvvIzmi5zopovntbHmiLDpoK3nm64ifSx7ImRhdGUiOiIyMDI0LTA1LTI4IiwiZGVzY3JpcHRpb24iOiLnq4vms5XpmaLogbfmrIrooYzkvb/ms5XnrYnms5XmoYjvvIzkuIvljYjlm5vpu57lpJrkuInoroDpgJrpgY7jgILoiInmiYvooajmsbrpgY7nqIvkuK3vvIzol43nmb3lhanpu6jmjL7okZfkurrmlbjlhKrli6LvvIzorpPms5XmoYjpl5bpl5zjgILmsJHpgLLpu6jnq4vlp5TmibnoqZXomZ/nqLHlnIvmnIPmlLnpnannmoTms5XmoYjvvIzljbvmmK/pu5HnrrHjgIHnqIvluo/kuI3mraPnvqnvvIzmspLmlLbmsJHkuLvjgIHnhKHpmZDmk7TmrIrjgIIiLCJpZCI6IjE3NTQyOTE3MzY3MDMiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MTczOTYyMSIsImlkIjoiMTc1NDI5MTczOTYyMSIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiIxMjAweDgwMF93bWt5XzA0OTkxMjcwMTEzMV8yMDI0MDUyODAxMzUwMDAwMDAuanBnIiwicGF0aCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy8xMDI0LzIwMjQwNTI4LzEyMDB4ODAwX3dta3lfMDQ5OTEyNzAxMTMxXzIwMjQwNTI4MDEzNTAwMDAwMC5qcGciLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2ltZ2Nkbi5jbmEuY29tLnR3L3d3dy9XZWJQaG90b3MvMTAyNC8yMDI0MDUyOC8xMjAweDgwMF93bWt5XzA0OTkxMjcwMTEzMV8yMDI0MDUyODAxMzUwMDAwMDAuanBnIn1dLCJvcmRlciI6MywidGl0bGUiOiLmjL7luK3mrKHlhKrli6IsIOiXjeeZveiBr+aJi+aatOWKm+mAmumBjuWci+acg+aTtOasiuazleahiCJ9LHsiZGF0ZSI6IjIwMjQtMTEtMTQiLCJkZXNjcmlwdGlvbiI6IuWPsOeBo+e2k+a/n+awkeS4u+mAo+WQiOiIh+WPsOeBo+WFrOawkemZo+e3mjEw5pyIMzDml6XlnKjnq4vms5XpmaLnvqTos6LmqJPploDlj6Plj6zplovoqJjogIXmnIPvvIzos6rnlpHpmbPnjonnj43nrYnkurrmiYDmj5Dpm6Lls7blu7roqK3mop3kvovkv67mraPojYnmoYjvvIzopoHoqK3nva7pm6Lls7blnIvpmpvphqvnmYLnibnljYDnmoTnrKwxM+aineS5izHlj4rkuYsy5L+u5q2j6I2J5qGI77yM5Y+K6Kit572u6Zui5bO26Ieq55Sx6LK/5piT56S656+E5Y2A55qE56ysMTjmop3kuYsx5L+u5q2j6I2J5qGI77yM5oGQ6K6T6YeR6aas6Zui5bO25req54K65Lit5ZyL5LiA5ZyL5YWp5Yi26Kmm6amX5Y2A77yM5pyJ5a6z5ZyL5a625a6J5YWo44CCIiwiaWQiOiIxNzU0MjkyMDIxMDU3IiwibWVkaWEiOlt7ImZpbGVuYW1lIjoidXJsXzE3NTQyOTIwMjM1NTUiLCJpZCI6IjE3NTQyOTIwMjM1NTUiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoidzEyMDAiLCJwYXRoIjoiaHR0cHM6Ly90b2RheS1vYnMubGluZS1zY2RuLm5ldC8waEpBNXNwdXNBRlc0SUNnUTh0NHRxT1RCY0dSODdiQTluS21WYkR5OERURnNuSmxJd01qNUdEUzlZR1VKMmFRQnZLRHNLRG40TEgxWjFQd1VfTmcvdzEyMDAiLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL3RvZGF5LW9icy5saW5lLXNjZG4ubmV0LzBoSkE1c3B1c0FGVzRJQ2dROHQ0dHFPVEJjR1I4N2JBOW5LbVZiRHk4RFRGc25KbEl3TWo1R0RTOVlHVUoyYVFCdktEc0tEbjRMSDFaMVB3VV9OZy93MTIwMCJ9XSwib3JkZXIiOjQsInRpdGxlIjoi6Zmz546J54+N5o+Q5Ye66Zui5bO25bu66Kit5qKd5L6LIn0seyJkYXRlIjoiMjAyNC0xMi0yMCIsImRlc2NyaXB0aW9uIjoi5Lit6I+v5rCR5ZyL56uL5rOV6Zmi5pyDMjDml6XlnKjkuK3lnIvlnIvmsJHpu6jvvIjol43vvInjgIHmsJHnnL7pu6jvvIjnmb3vvInnq4vlp5Toga/miYvkuIvvvIzlvLfooYzkuInoroDpgJrpgY7jgIrlhazogbfkurrlk6HpgbjoiInnvbflhY3ms5XjgIvjgIrmhrLms5XoqLToqJ/ms5XjgIvjgIrosqHmlL/mlLbmlK/lioPliIbms5XjgIvvvIzlvJXnmbzniK3orbDjgIJcblxu54K65Y+N5bCN6JeN55m96YCa6YGO5LiJ5aSn54it6K2w5rOV5qGI77yM5Y+w54Gj5aSa5YCL5YWs5rCR5ZyY6auUMjDml6XoiInooYzjgIzlhqzlraPpnZLps6Xns7vliJfvvJrlm57lvqnlnIvmnIPmsJHkuLvvvIzpgIDlm57kuInlpKfmg6Hms5XjgI3mtLvli5XvvIzomZ/lj6zpnZLps6XlhazmsJHpgYvli5XnvqTnnL7lnKjnq4vms5XpmaLlpJbpm4bntZDvvIzkuLvovqbmlrnlnKjmmZrplpM55pmC5bem5Y+z5a6j5biD54++5aC05pyJMuiQrOmkmOS6uu+8jOa0u+WLleWcqOWHjOaZqDEy5pmC57WQ5p2f44CCXG5cbuS4reiPr+awkeWci+e4vee1seiztOa4heW+tzIw5pel5pma6ZaT5pa86IeJ5pu455m85paH6Kqq77yM56uL5rOV6Zmi5piv5ZyL5a625pyA6auY5rCR5oSP5qmf6Zec77yM6LGh5b615Y+w54Gj55qE6Ieq55Sx5rCR5Li744CC5L2GMjDml6XlvLfooYzpgJrpgY7nmoQz6aCF5rOV5qGI77yM5pyq57aT5YWF5YiG6KiO6KuW44CB54Sh6KaW5rCR5oSP77yM5LiN5YOF5Ymd5aWq5Lq65rCR55uj552j55qE5qyK5Yip77yM5pu05piv5L615a6z5Y+45rOV542o56uL77yM55Sa6Iez6KGd5pOK5pS46Zec5q+P5L2N5ZyL5rCR44CB5ZyL5a625pW06auU6LOH5rqQ5YiG6YWN55qE5YWs5bmz5q2j576p44CC6YCZ5piv5rKS5pS25rCR5Li75ZyL5a625qyK5Yqb5YiG56uL55qE5Y6f5YmH77yM5pu05piv5oKW6Zui5rCR5Li75ZyL5a625Lq65rCR5L2c5Li755qE55yf6Kum44CCIiwiaWQiOiIxNzU0MjkyMTMzOTI0IiwibWVkaWEiOlt7ImZpbGVuYW1lIjoidXJsXzE3NTQyOTIxMzYwODQiLCJpZCI6IjE3NTQyOTIxMzYwODQiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoiMjAyNDEyMjAtMDAxLmpwZyIsInBhdGgiOiJodHRwczovL3RoZWluaXRpdW0uY29tL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDI0LzEyLzIwMjQxMjIwLTAwMS5qcGciLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL3RoZWluaXRpdW0uY29tL3dwLWNvbnRlbnQvdXBsb2Fkcy8yMDI0LzEyLzIwMjQxMjIwLTAwMS5qcGcifSx7ImZpbGVuYW1lIjoidXJsXzE3NTQyOTIzODg3ODgiLCJpZCI6IjE3NTQyOTIzODg3ODgiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoiaWQxNDM5NTE5Ni0yNDEyMjAyMTE2MzkxMDAzMTEtNjAweDQwMC5qcGciLCJwYXRoIjoiaHR0cHM6Ly9pLmVwb2NodGltZXMuY29tL2Fzc2V0cy91cGxvYWRzLzIwMjQvMTIvaWQxNDM5NTE5Ni0yNDEyMjAyMTE2MzkxMDAzMTEtNjAweDQwMC5qcGciLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2kuZXBvY2h0aW1lcy5jb20vYXNzZXRzL3VwbG9hZHMvMjAyNC8xMi9pZDE0Mzk1MTk2LTI0MTIyMDIxMTYzOTEwMDMxMS02MDB4NDAwLmpwZyJ9XSwib3JkZXIiOjUsInRpdGxlIjoi6JeN55m95YWp6buo5by36KGM6YCa6YGO5oay5rOV6Ki06Kif5rOVL+mBuOe9t+azlS/osqHlioPms5UifSx7ImRhdGUiOiIyMDI0LTEyLTMxIiwiZGVzY3JpcHRpb24iOiLnq4vms5XpmaLku4rlpKnkuInoroDpgJrpgY7lsLHmpa3mnI3li5nms5Xpg6jliIbkv67mraPmop3mlofvvIw4MOatsuS7peS4iumVt+iAheiBmOWDseWkluexjeeci+itt+WFjee2k+mGq+eZguipleS8sOOAguWLnuWLlemDqOWwjeatpOihqOekuumBuuaGvu+8jOiqjeeCuuacg+abtOmbo+aJvuWIsOaIlueVmeS4i+Wkluexjeeci+itt+W3peS6uuWKm++8jOS5n+WwjeaWvOeFp+mhp+WTgeizqumAoOaIkOW9semfv+OAglxuXG7lt7TmsI/ph4/ooajnm67liY3mmK/plbfnhaflrrbluq3nlLPoq4vogZjlg7HlpJbnsY3nnIvorbfnmoTphqvnmYLoqZXkvLDkuLvopoHkvp3mk5rvvIznq4vms5XpmaLku4rlpKnkuInoroDpgJrpgY7lsLHmpa3mnI3li5nms5Xpg6jliIbmop3mlofvvIzkuInoroDmop3mlofmmI7lrprvvIzpm4fkuLvogZjlg7HlpJblnIvkurrlvp7kuovlrrbluq3nnIvorbflt6XkvZzvvIzooqvnnIvorbfogIXlh6HlubTpvaE4MOatsuS7peS4iu+8jOaIljcw5q2y6IezNznmrbLmgqPmnInnmYznl4fkuozmnJ/ku6XkuIrogIXvvIzlvpflhY3ntpPphqvnmYLmqZ/mp4vkuYvlsIjmpa3oqZXkvLDjgIIiLCJpZCI6IjE3NTQyOTI0MzkxNzMiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MjQ2NjIwNSIsImlkIjoiMTc1NDI5MjQ2NjIwNSIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiIxMjAweDg3NV93bWt5XzM3NTI1MDkxMTI0MF8yMDI0MTIzMTAwNDQwMDAwMDAuanBnIiwicGF0aCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy84MDAvMjAyNDEyMzEvMTIwMHg4NzVfd21reV8zNzUyNTA5MTEyNDBfMjAyNDEyMzEwMDQ0MDAwMDAwLmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy84MDAvMjAyNDEyMzEvMTIwMHg4NzVfd21reV8zNzUyNTA5MTEyNDBfMjAyNDEyMzEwMDQ0MDAwMDAwLmpwZyJ9XSwib3JkZXIiOjYsInRpdGxlIjoi6JeN55m95by36KGM6YCa6YGO77yMODDmrbLku6XkuIrlhY3lt7TmsI/ph4/ooajoq4vlpJblgq0ifSx7ImRhdGUiOiIyMDI1LTAxLTEzIiwiZGVzY3JpcHRpb24iOiLmmK/lkKbmlL7lr6zkuK3lnIvnsY3phY3lgbblj5blvpflj7DngaPouqvliIborYnlubTpmZDvvIzmnJ3ph47mmqvkvJHmiLDvvIHol43nmb3mnKzpgLHkuozvvIgxNOaXpe+8ieS7peS6uuaVuOWEquWLou+8jOaWvOeoi+W6j+WnlOWToeacg+W8t+WLoumAmumXnOOAjOWFqeWyuOS6uuawkemXnOS/guaineS+i+OAjeS/ruato+ahiO+8jOS4pumghuWIqeaOkuWFpeS7iu+8iDE35pel77yJ6K2w56iL77yM54S26ICM5ZyL5rCR6buo5ZyY5Y275pa85pyD5Lit5o+Q5qGI77yM5bCH5YyF5ous57iu55+t5Lit6YWN5YWl57GN5bm06ZmQ5Zyo5YWn55qE5omA5pyJ5aCx5ZGK5LqL6aCF77yM5YWo6YOo6YCA5Zue56iL5bqP5aeU5ZOh5pyD44CCXG5cbue5vOWci+awkem7qOeri+WnlOioseWuh+eUhO+8jOa4uOmhpeacrOacg+acn+WGjeasoeaPkOWHuuOAjOWFqeWyuOS6uuawkemXnOS/guaineS+i+esrDE35qKd5L+u5q2j6I2J5qGI44CN77yM5bu66K2w5bCH5Lit6YWN5Y+W5b6X6Lqr5YiG6K2J55qE5bm06ZmQ5q+U54Wn5aSW6YWN77yM5b6eNuW5tOe4ruefreeCujTlubTvvIzlhJjnrqHmsJHpgLLpu6jlnJjmj5Dlh7rnlbDorbDvvIzoqbLmoYgxNOaXpeS7jee2k+eri+mZoueoi+W6j+WnlOWToeacg+aOkuWFpTE35pel6Zmi5pyD5aCx5ZGK5LqL6aCF56ysMTHmoYjjgIIiLCJpZCI6IjE3NTQyOTI2NDAzNjMiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MjY0MjU3NiIsImlkIjoiMTc1NDI5MjY0MjU3NiIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiJkNjNkMzlhMjU1NGM3ODdmNTZhODMyNGViNzI4MDJhZiIsInBhdGgiOiJodHRwczovL3MueWltZy5jb20vbnkvYXBpL3Jlcy8xLjIvNzdXbmhxVGJCN2RkdkM2OTdERDZQZy0tL1lYQndhV1E5YUdsbmFHeGhibVJsY2p0M1BUazJNRHRvUFRVME1BLS0vaHR0cHM6Ly9tZWRpYS56ZW5mcy5jb20vemgtdHcvbW5ld3NfdHdfMjU4L2Q2M2QzOWEyNTU0Yzc4N2Y1NmE4MzI0ZWI3MjgwMmFmIiwidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9zLnlpbWcuY29tL255L2FwaS9yZXMvMS4yLzc3V25ocVRiQjdkZHZDNjk3REQ2UGctLS9ZWEJ3YVdROWFHbG5hR3hoYm1SbGNqdDNQVGsyTUR0b1BUVTBNQS0tL2h0dHBzOi8vbWVkaWEuemVuZnMuY29tL3poLXR3L21uZXdzX3R3XzI1OC9kNjNkMzlhMjU1NGM3ODdmNTZhODMyNGViNzI4MDJhZiJ9XSwib3JkZXIiOjcsInRpdGxlIjoi6JeN5aeU5ri46aGl562J5Lq66YeN5o+Q77yM5Lit6YWNNuW5tOaUuTTlubTvvIzmlL7lr6zkuK3phY3lj5blvpfouqvliIborYnlkozopqrlsazkvoblj7DlrprlsYXmop3ku7YifSx7ImRhdGUiOiIyMDI1LTAxLTE3IiwiZGVzY3JpcHRpb24iOiLpmbPmlozoj6/mjIflh7rvvIzmsJHpgLLpu6jmlL/lupznmoTlqpLlrqPpoJDnrpfmmrTlop7vvIzlj43mmKDlhbbjgIznsonpo77lpKrlubPjgIHmjqnok4vnhKHog73jgI3nmoTmhI/lnJbjgILku5bmjIfmjqfvvIzmsJHpgLLpu6jliKnnlKjlqpLlrqPosrvosaLppIrntrLou43vvIzmlLvmk4rnlbDlt7HkuKbmirnpu5HkuK3lnIvjgILku5bnlJroh7PogbLnqLHvvIzjgIzls7blhaflkITnlYzlsI3mraTml6nmnInlhazoq5bjgI3jgILnhLbogIzvvIzpgJnmrrXnmbzoqIDooqvlj7DngaPntrLlj4voppbngrrkuI3nlbblubLmtonlhafmlL/vvIzkuKblpKfogobmjJboi6blnKjph47pu6jnmoTliKrpoJDnrpfooYzngrrmmK/jgIznjbLlvpfnpZblnIvoqo3orYnjgI3jgIzlnIvlj7DovqboqofnjY7lpbTmiY3jgI3jgIIiLCJpZCI6IjE3NTQyOTI3MzQ5NjUiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MjczNzMyMCIsImlkIjoiMTc1NDI5MjczNzMyMCIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiJiNTEwY2E1NS02NzQyLTRmOWUtYWEwOC04YTI0ZGVkZTI1MzItdzI0MDAud2ViUCIsInBhdGgiOiJodHRwczovL3YzLXN0YXRpY3MubWlycm9ybWVkaWEubWcvaW1hZ2VzL2I1MTBjYTU1LTY3NDItNGY5ZS1hYTA4LThhMjRkZWRlMjUzMi13MjQwMC53ZWJQIiwidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly92My1zdGF0aWNzLm1pcnJvcm1lZGlhLm1nL2ltYWdlcy9iNTEwY2E1NS02NzQyLTRmOWUtYWEwOC04YTI0ZGVkZTI1MzItdzI0MDAud2ViUCJ9XSwib3JkZXIiOjgsInRpdGxlIjoi5Lit5YWx5ZyL5Y+w6L6m5aSn5Yqb56ix6K6a6JeN55m956CN6aCQ566XIn0seyJkYXRlIjoiMjAyNS0wMS0yMCIsImRlc2NyaXB0aW9uIjoi5Y+w54Gj56uL5rOV6Zmi5Zyo5q2357aT6Leo5pel44CBMjDlsI/mmYLkuI3mlrfpm7vooajmsbrkuIvvvIznlLHlnKjph47nmoTlnIvmsJHpu6jjgIHmsJHnnL7pu6joga/miYvkuInoroDpgJrpgY4yMDI15bm05Lit5aSu5pS/5bqc57i96aCQ566X5qGI77yM57i96aCQ566X5q2y5Ye655Sx5Y6f5YWI57eo5YiX55qEM+WFhjEzMjXlhITvvIjmlrDlj7DluaPvvInmuJvngroy5YWGOTI0OOWEhOWFg++8jOWvqeitsOe1kOaenOe2k+S4u+ioiOe4veiZleioiOeul++8jOaIquiHszHmnIgyM+aXpeS4i+WNiDE35pmC5YWx6KiI5rib5YiX57SEMjA3NuWEhOWFg++8jOWIqua4m+mHkemhjeWJteS4i+aWsOmrmO+8jOatsuWFpTPlhYYxNTM05YSE5YWD5YmH5piv5Y+y5LiK6aaW5bqm56qB56C0M+WFhuOAgiIsImlkIjoiMTc1NDI5Mjk2MTc3NiIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkyOTYzODIzIiwiaWQiOiIxNzU0MjkyOTYzODIzIiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjQ4NTY1MTZjLWJhOWEtNDBmMi04MGEwLTg1MDY0ZjZkNDk0OC13MTYwMC53ZWJQIiwicGF0aCI6Imh0dHBzOi8vdjMtc3RhdGljcy5taXJyb3JtZWRpYS5tZy9pbWFnZXMvNDg1NjUxNmMtYmE5YS00MGYyLTgwYTAtODUwNjRmNmQ0OTQ4LXcxNjAwLndlYlAiLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL3YzLXN0YXRpY3MubWlycm9ybWVkaWEubWcvaW1hZ2VzLzQ4NTY1MTZjLWJhOWEtNDBmMi04MGEwLTg1MDY0ZjZkNDk0OC13MTYwMC53ZWJQIn1dLCJvcmRlciI6OSwidGl0bGUiOiLol43nmb3lhanpu6jpgJrpgY7kuoLliKrlh43poJDnrpfvvIzlmrTph43lvbHpn7/lj7DngaPmsJHnlJ/jgIHlnIvlrokifSx7ImRhdGUiOiIyMDI1LTAyLTIwIiwiZGVzY3JpcHRpb24iOiLlnIvmsJHpu6jlnJjnuL3lj6zlgoXltJDokIHvvIwyMOaXpeaZmumWk++8jOWSjOWmu+WtkOiKseiTrue4o+mVt+W+kOamm+iUmuS4gOi1t+W+nummmea4r+i/lOWPsO+8jOWcqOiKseiTruapn+WgtOWPl+ioquaZgu+8jOS7luihqOekuuiHquW3seWPiOWujOaIkOS6huS4gOmgheatt+WPsuS7u+WLmeOAguWPquaYr++8jOS7lui1tOS4reeahOa2iOaBr++8jOW8leeZvOmXnOazqO+8jOmChOacieS6uueJueWIpeS+huaOpeapn++8jOadseekvueZvOiogOS6uumZs+iyoeiDveWuiOWcqOapn+WgtOmWgOWPo++8jOeVtumdouWXhuS7luaYr+S4reWFsei1sOeLl+OAgiIsImlkIjoiMTc1NDI5MzA1MDc1MyIsIm1lZGlhIjpbeyJmaWxlbmFtZSI6InVybF8xNzU0MjkzMDUzNzk4IiwiaWQiOiIxNzU0MjkzMDUzNzk4IiwiaXNVcmwiOnRydWUsIm9yaWdpbmFsTmFtZSI6IjZlOWRiNzUyLTMwYTgtNDljOC04ODI0LTc3N2Y0OTI4NzE2OC5qcGciLCJwYXRoIjoiaHR0cHM6Ly9jZG4uZnR2bmV3cy5jb20udHcvbWFuYXN5c3RlbS9GaWxlRGF0YS9OZXdzLzEvNmU5ZGI3NTItMzBhOC00OWM4LTg4MjQtNzc3ZjQ5Mjg3MTY4LmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vY2RuLmZ0dm5ld3MuY29tLnR3L21hbmFzeXN0ZW0vRmlsZURhdGEvTmV3cy8xLzZlOWRiNzUyLTMwYTgtNDljOC04ODI0LTc3N2Y0OTI4NzE2OC5qcGcifV0sIm9yZGVyIjoxMCwidGl0bGUiOiLlgoXltJDokIHpppnmuK/ov5Tlj7DvvIznqLE85a6M5oiQ5q235Y+y5Lu75YuZPiJ9LHsiZGF0ZSI6IjIwMjUtMDMtMjEiLCJkZXNjcmlwdGlvbiI6IuWOu+W5tOe4vee1seiztOa4heW+t+aPkOWQjeeahOWPuOazlemZouato+OAgeWJr+mZoumVt+WPiuWkp+azleWumOWFseS4g+WQjeS6uumBuO+8jOWFqOaVuOmBreWIsOeri+azlemZouWQpuaxuu+8jOeCuuS6huWuiOitt+iHqueUseawkeS4u+aGsuaUv+WItuW6puOAgeaPkOWNh+Wci+WuieahiOS7tuWwiOalreiDvemHj+S4puaMgee6jOaOqOWLleWPuOazleaUuemdqe+8jOe4vee1seS+neaTmuaGsuazleWinuS/ruaineaWh+esrOS6lOaineimj+Wumu+8jOmHjeaWsOaPkOWQjeWPuOazlemZouS6uuS6i++8mzIx5pel55Sx5Ymv57i957Wx6JWt576O55C05YWs5biD5YWo5paw5ZCN5Zau54K677ya5Y+45rOV6Zmi6ZW36KKr5o+Q5ZCN5Lq654K66JSh56eL5piO44CB5Ymv6Zmi6ZW36KKr5o+Q5ZCN5Lq654K66JiH57Sg5ail5Lul5Y+K5Y+45rOV6Zmi5aSn5rOV5a6Y6KKr5o+Q5ZCN5Lq654K66JWt5paH55Sf44CB6YSt57SU5oOg44CB5p6X6bqX55Gp44CB6Zmz5oWI6Zm95Y+K6Km56Y6u5qau562J5Lq677yM5ZCM5pmC5Lmf5pyD5ZyoMjHml6XnlbblpKnlkqjoq4vnq4vms5XpmaLlkIzmhI/jgIIiLCJpZCI6IjE3NTQyOTMxMjcwMTAiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MzEyODg3NyIsImlkIjoiMTc1NDI5MzEyODg3NyIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiIyMDAweDEzNzNfd21reV85NzI3MTQ3MzY1MzAxMV8yMDI1MDcyNTAwMzcwMDAwMDAuanBnIiwicGF0aCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy8xMDI0LzIwMjUwNzI1LzIwMDB4MTM3M193bWt5Xzk3MjcxNDczNjUzMDExXzIwMjUwNzI1MDAzNzAwMDAwMC5qcGciLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2ltZ2Nkbi5jbmEuY29tLnR3L3d3dy9XZWJQaG90b3MvMTAyNC8yMDI1MDcyNS8yMDAweDEzNzNfd21reV85NzI3MTQ3MzY1MzAxMV8yMDI1MDcyNTAwMzcwMDAwMDAuanBnIn1dLCJvcmRlciI6MTEsInRpdGxlIjoi56m657y655qEN+WQjeWkp+azleWumOS6uumBuCwg5YWo5pW46YGt6JeN55m95omA5pyJ56uL5aeU55qE5ZCm5rG6In0seyJkYXRlIjoiMjAyNS0wNC0xNSIsImRlc2NyaXB0aW9uIjoi6Yed5bCN5ZyL5rCR6buo44CB5rCR55y+6buo5om56KmV6L+R5pel5rCR6YCy6buo5YWn54iG55m85aSa6LW35YWx6Kuc5qGI77yM56uL5rOV6Zmi5rCR6YCy6buo5ZyY5by36Kq/77yM5rCR6YCy6buo56ys5LiA5pmC6ZaT5bCH5raJ5qGI6ICF6YCB6L6m44CB6ZaL6Zmk6buo57GN57WV5LiN5a+s6LK477yM5LiN56mN5qW16JmV55CG5omN5piv5YyF5bqH77yM6JeN55m95Y+q5pyD6K206LKs5Y+X5a6z6ICF77yM6ICM5LiN5Y675om56KmV5Yqg5a6z6ICF77yM5bCx5piv6IOM5b6M55qE5Lit5YWx77yb55Sa6Iez5Zyo5ZyL5pyD6Zi75pOL5rCR6YCy6buo5ZyY5omA5o+Q44CM5ZyL5a6J5Y2B5rOV44CN77yM5YWJ56uL5aeU6LW05Lit57SN566h57i96KiI5bCx5pOL5LqGMzE55qyh77yM5Yiw5bqV6YKE6KaB5pOL5aSa5LmF77yfXG5cbuawkemAsum7qOWcmOS7iuiIieihjOOAjOWPjeWFseirnOa7sumAjyDlsLHmlK/mjIHlnIvlronms5XmoYjjgI3oqJjogIXmnIPjgILmsJHpgLLpu6jlnJjlubnkuovplbflkLPmgJ3nkaTooajnpLrvvIzlhbHoq5zlsLHmmK/lhajmsJHlhazmlbXvvIzpnaLlsI3ku7vkvZXlnovmhYvnmoTlhbHoq5zvvIznlbbnhLbopoHkvp3ms5XnqbbovqbjgIHlmrTmh7LvvIzoi6Xnj77ooYzms5XlvovkuI3lpKDlmrTmoLzjgIHnrqHnkIbkuI3lpKDlhajpnaLvvIznlbbnhLbopoHoo5zmvI/vvIzpgJnmmK/msJHpgLLpu6jmraPliqrlipvpgLLooYznmoTkuovjgIIiLCJpZCI6IjE3NTQyOTMyOTM0NTgiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MzMxMDc4MyIsImlkIjoiMTc1NDI5MzMxMDc4MyIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiIxMjAweDcxNl83NTk5MzI1OTI2MjguanBnIiwicGF0aCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy84MDAvMjAyNTA0MTcvMTIwMHg3MTZfNzU5OTMyNTkyNjI4LmpwZyIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy84MDAvMjAyNTA0MTcvMTIwMHg3MTZfNzU5OTMyNTkyNjI4LmpwZyJ9XSwib3JkZXIiOjEyLCJ0aXRsZSI6IuiXjeeZvemAo+e6jDMxOeasoemYu+aTi+W8t+WMluWci+WuieeahOS/ruazleaPkOahiCJ9LHsiZGF0ZSI6IjIwMjUtMDUtMzEiLCJkZXNjcmlwdGlvbiI6IuWci+awkem7qOeri+WnlOmZs+awuOW6t+aPkOahiOS/ruato+OAiuWFqeWyuOS6uuawkemXnOS/guaineS+i+OAi+esrDI55qKd77yM5oqK56aB6ZmQ5Yi25rC05Z+f5YWs5ZGK5qyK6LKs55Sx5ZyL6Ziy6YOo5pS554K65rW35aeU5pyD77yM6ICM5LiU56uL5rOV6KaB5peo5o+Q5Y+K5YWp5bK45YWn5oiw5bCa5pyq57WQ5p2f77yM5byV6LW36Zec5rOo44CC6Zmz5rC45bq35LuK77yIMTPvvInml6XooajnpLrvvIzph5HppqzmsLTln5/lt7Lop6PpmaTou43nrqHvvIznrqHnkIbkuZ/pgJDmraXnp7vkuqTmtbflt6HnvbLvvIzoi6XnpoHpmZDliLbmsLTln5/lioPoqK3mrIrosqzku43nlLHlnIvpmLLpg6jmjoznrqHvvIzkuI3mmK/lvojlpYfmgKrvvJ/kuI3pgY7msJHpgLLpu6jnq4vlp5TmibnoqZXvvIzkv67ms5XlnKjmqKHns4rljJblj7DngaPkuLvmrIrjgIIiLCJpZCI6IjE3NTQyOTM1NjQyNzUiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5MzU2NjQzNSIsImlkIjoiMTc1NDI5MzU2NjQzNSIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiIzMjI5MjYwOC5qcGcmeD0wJnk9MCZzdz0wJnNoPTAmc2w9VyZmdz04MDAmZXhwPTM2MDAiLCJwYXRoIjoiaHR0cHM6Ly9wZ3cudWRuLmNvbS50dy9ndy9waG90by5waHA/dT1odHRwczovL3VjLnVkbi5jb20udHcvcGhvdG8vMjAyNS8wNi8xMy9yZWFsdGltZS8zMjI5MjYwOC5qcGcmeD0wJnk9MCZzdz0wJnNoPTAmc2w9VyZmdz04MDAmZXhwPTM2MDAiLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL3Bndy51ZG4uY29tLnR3L2d3L3Bob3RvLnBocD91PWh0dHBzOi8vdWMudWRuLmNvbS50dy9waG90by8yMDI1LzA2LzEzL3JlYWx0aW1lLzMyMjkyNjA4LmpwZyZ4PTAmeT0wJnN3PTAmc2g9MCZzbD1XJmZ3PTgwMCZleHA9MzYwMCJ9XSwib3JkZXIiOjEzLCJ0aXRsZSI6IuWci+awkem7qOeri+WnlOmZs+awuOW6t+etieaPkOahiOS/ruioguWFqeWyuOS6uuawkemXnOS/guaineS+i++8jOWFp+WuueWBt+a4oeOAjOWFqeWyuOWFp+aIsOeLgOaFi+OAjeamguW/tSJ9LHsiZGF0ZSI6IjIwMjUtMDYtMjciLCJkZXNjcmlwdGlvbiI6IuWci+awkem7qOOAgeawkeecvum7qOaOqOOAjOS4jeWcqOexjeaKleelqOOAje+8jDIwMjXlubQ25pyIMjfml6XlnKjnq4vpmaLkuIDoroDvvIzph53lsI3jgIzlj7DngaPmnKzlnJ/jgI3pgLLooYzkuI3lnKjnsY3mipXnpajvvIzlnKjkuK3lnIvnmoTlj7DllYbkuI3pgannlKjvvIzkvYblvovluKvmnpfmmbrnvqToqo3ngrrvvIzpgoTmmK/mnIPnlKLnlJ/lmrTph43nmoTllY/poYzvvIzlm6Dngrrlj6ropoHmj5Dlh7rjgIzouqvliIborYnmraPlj43pnaLlvbHmnKzjgI3vvIzlsLHlj6/ku6XnlLPoq4vjgIzkuI3lnKjnsY3mipXnpajjgI3jgIIiLCJpZCI6IjE3NTQyOTQxNTcyMDIiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5NDE1ODk4MSIsImlkIjoiMTc1NDI5NDE1ODk4MSIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiIxMzE0eDgzNl93bWtuXzgwMzk1OTExNzgxXzAuanBnIiwicGF0aCI6Imh0dHBzOi8vaW1nY2RuLmNuYS5jb20udHcvd3d3L1dlYlBob3Rvcy8xMDI0LzIwMjQwMTI0LzEzMTR4ODM2X3dta25fODAzOTU5MTE3ODFfMC5qcGciLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL2ltZ2Nkbi5jbmEuY29tLnR3L3d3dy9XZWJQaG90b3MvMTAyNC8yMDI0MDEyNC8xMzE0eDgzNl93bWtuXzgwMzk1OTExNzgxXzAuanBnIn1dLCJvcmRlciI6MTQsInRpdGxlIjoi6JeN55m95o6o5LiN5Zyo57GN5oqV56WoIn0seyJkYXRlIjoiMjAyNS0wNy0xMCIsImRlc2NyaXB0aW9uIjoi5ZyL5rCR6buo56uL5aeU6Zmz5rC45bq3562J6JeN5aeU5o+Q5Ye644CK5ZyL5a625a6J5YWo5oiw55Wl5rOV44CL77yM6YGt5om55LyB5ZyW5Ymd5aWq57i957Wx5ZyL5a625a6J5YWo5LqL5YuZ5rG6562W5qyK77yM5p6256m65ZyL5a625a6J5YWo5pyD6K2w77yM6K6T56uL5rOV6Zmi5p+T5oyH5ZyL5a6J5rG6562W44CC5bCN5q2k77yM57aT5rCR6YCj5Y+K57235ZyY5Y+s6ZaL6IGv5ZCI6KiY6ICF5pyD77yM55eb5om55L+u5rOV5piv5bCN54++6KGM6auU5Yi26YCy6KGM5LiJ5aSn6YGV5oay6aGb6KaG77yM6Iul5q2k5rOV5qGI6YCa6YGO77yM5LiN5YOF56C05aOe5oay5rOV5qyK5Yqb5YiG56uL6Kit6KiI77yM5pu05bCH6K6T56uL5rOV6Zmi6YGO5bqm5p+T5oyH5ZyL5a6J5LqL5YuZ44CCIiwiaWQiOiIxNzU0Mjk0MjA0ODIzIiwibWVkaWEiOlt7ImZpbGVuYW1lIjoidXJsXzE3NTQyOTQyMDY0ODAiLCJpZCI6IjE3NTQyOTQyMDY0ODAiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoiRkEwQTEwNDItNTI3My00RjUwLTk3NTQtNDkwQUNEMzFGNzVCJUU2JThCJUI3JUU4JUIyJTlELmpwZWc/Zml0PTIwNDglMkMxMzY1JnNzbD0xIiwicGF0aCI6Imh0dHBzOi8vaTAud3AuY29tL21tZWRpYS5jb20udHcvd3AtY29udGVudC91cGxvYWRzLzIwMjQvMDUvRkEwQTEwNDItNTI3My00RjUwLTk3NTQtNDkwQUNEMzFGNzVCJUU2JThCJUI3JUU4JUIyJTlELmpwZWc/Zml0PTIwNDglMkMxMzY1JnNzbD0xIiwidHlwZSI6ImltYWdlIiwidXJsIjoiaHR0cHM6Ly9pMC53cC5jb20vbW1lZGlhLmNvbS50dy93cC1jb250ZW50L3VwbG9hZHMvMjAyNC8wNS9GQTBBMTA0Mi01MjczLTRGNTAtOTc1NC00OTBBQ0QzMUY3NUIlRTYlOEIlQjclRTglQjIlOUQuanBlZz9maXQ9MjA0OCUyQzEzNjUmc3NsPTEifV0sIm9yZGVyIjoxNSwidGl0bGUiOiLol43mjqjjgIzlnIvlrrblronlhajmiLDnlaXms5XjgI3vvIzmhI/lnJbmn5PmjIfnuL3ntbHlnIvlronmsbrnrZYifSx7ImRhdGUiOiIyMDI1LTA3LTE4IiwiZGVzY3JpcHRpb24iOiLnq4vms5XpmaLlj7jms5Xlj4rms5XliLblp5Tlk6HmnIM25pyINOaXpeWIneWvqemAmumBjueri+WnlOaJgOaPkOWIkeazlemDqOWIhuaineaWh+S/ruato+iNieahiO+8jOaciemXnOaPkOmrmOiZkOerpeiHtOatu+WIkeW6puacgOmrmOiHs+atu+WIkeaIlueEoeacn+W+kuWIkeetieaineaWh++8jOacnemHjumbluWdh+aUr+aMgeWKoOmHjeWIkeiyrO+8jOS9huWcqOeri+azleaKgOihk+S4iuacqumBlOaIkOWFseitmO+8jOWboOatpOS/neeVmeS6pOm7qOWcmOWNlOWVhuOAgum7qOWcmOWNlOWVhuW+jOacnemHjumBlOaIkOWFseitmO+8jOWMheaLrOacnemHjumDveaUr+aMgeWinuioguWIkeazleesrDI3MuaineS5izHmop3mlofvvIzkvYbkv53nlZnliJHms5XnrKwyODbmop3mop3mlofpgIHnq4vms5XpmaLmnIPomZXnkIbjgIJcblxu5ZyL5rCR6buo6IiH5rCR55y+6buo5oSP5ZyW5Lul56uL5rOV5LiN5ZGo55qE5qKd5paH77yM5pON5L2c5rCR6YCy6buo5LiN5pSv5oyB5YWS56ul6JmQ5b6F6YeN572w5rOV5qGI44CCIiwiaWQiOiIxNzU0Mjk0MzgxMDgwIiwibWVkaWEiOlt7ImZpbGVuYW1lIjoidXJsXzE3NTQyOTQ0MDA0MzgiLCJpZCI6IjE3NTQyOTQ0MDA0MzgiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoiYzQzMWIwMDRhNDk0ZDU0NzU0MDdjMWNjZjhhNTQ0YWEud2VicCIsInBhdGgiOiJodHRwczovL3N0YXRpYy5rbWVkaWEuY29tLnR3L3ByZC8yMDI1LzA3MTgvMkRCNTRDOTUzQzA0ODJCN0QwMUY3QTI3NEFCRjI1RDYvYzQzMWIwMDRhNDk0ZDU0NzU0MDdjMWNjZjhhNTQ0YWEud2VicCIsInR5cGUiOiJpbWFnZSIsInVybCI6Imh0dHBzOi8vc3RhdGljLmttZWRpYS5jb20udHcvcHJkLzIwMjUvMDcxOC8yREI1NEM5NTNDMDQ4MkI3RDAxRjdBMjc0QUJGMjVENi9jNDMxYjAwNGE0OTRkNTQ3NTQwN2MxY2NmOGE1NDRhYS53ZWJwIn1dLCJvcmRlciI6MTYsInRpdGxlIjoi6JeN55m95by36KGM6YCa6YGO56uL5rOV5LiN5ZGo55qE5YWS6JmQ6Ziy5rK755u46Zec5rOV5qGIIn0seyJkYXRlIjoiMjAyNS0wNy0yNSIsImRlc2NyaXB0aW9uIjoi5oay5rOV5rOV5bqt5oyB57qM6KKr55mx55iT44CCXG5cbueri+azlemZouS7iuaXpe+8iDfmnIgyNeaXpe+8ieS4iuWNiOihjOS9v+Wkp+azleWumOS6uuS6i+WQjOaEj+asiuaKleelqO+8jOiiq+aPkOWQjeS6uuW/hemgiOimgeeNsuW+l+WHuuW4reeri+WnlOS6jOWIhuS5i+S4gOWQjOaEj+aJjeiDvemAmumBjuOAguWci+awkem7qOWcmOWcqOaKleelqOWJjeW3sue2k+ihqOaYjuWFqOaVuOWQpuaxuu+8jOawkeecvum7qOWcmOWFtuW+jOS5n+ihqOaYjuWFqOmDqOS4jeWQjOaEj++8jOawkemAsum7qOWcmOWJh+aYr+mHneWwjemZs+aFiOmZveiIh+ipuemOruamruWFqeS6uumWi+aUvum7qOexjeeri+WnlOiHqueUseaKleelqO+8jOacgOe1gue1kOaenDflkI3lpKfms5Xlrpjmj5DlkI3kurrlhajmlbjpga3liLDlkKbmsbrjgIIiLCJpZCI6IjE3NTQyOTQ0ODg3NzEiLCJtZWRpYSI6W3siZmlsZW5hbWUiOiJ1cmxfMTc1NDI5NDQ5MDY3NyIsImlkIjoiMTc1NDI5NDQ5MDY3NyIsImlzVXJsIjp0cnVlLCJvcmlnaW5hbE5hbWUiOiJ3aWRlX3RzYTkxOHhfU19fMTMwNDQxMjI5LmpwZyIsInBhdGgiOiJodHRwczovL3J3bmV3cy50dy91cGxvYWQvbmV3c3RlbXBfMjEzODcvd2lkZV90c2E5MTh4X1NfXzEzMDQ0MTIyOS5qcGciLCJ0eXBlIjoiaW1hZ2UiLCJ1cmwiOiJodHRwczovL3J3bmV3cy50dy91cGxvYWQvbmV3c3RlbXBfMjEzODcvd2lkZV90c2E5MTh4X1NfXzEzMDQ0MTIyOS5qcGcifSx7ImZpbGVuYW1lIjoidXJsXzE3NTQzMjU3NTY2NzIiLCJpZCI6IjE3NTQzMjU3NTY2NzIiLCJpc1VybCI6dHJ1ZSwib3JpZ2luYWxOYW1lIjoiT3l2N243WXUxMms/c2k9TkRBY1dzYnBjRTFyYmdNeCIsInBhdGgiOiJodHRwczovL3lvdXR1LmJlL095djduN1l1MTJrP3NpPU5EQWNXc2JwY0UxcmJnTXgiLCJ0eXBlIjoidmlkZW8iLCJ1cmwiOiJodHRwczovL3lvdXR1LmJlL095djduN1l1MTJrP3NpPU5EQWNXc2JwY0UxcmJnTXgifV0sIm9yZGVyIjoxNywidGl0bGUiOiLlho3luqbmj5DlkI3nmoQ35ZCN5aSn5rOV5a6Y5Lq66YG4LCDpga3lj5fol43nmb3miYDmnInnq4vlp5TnmoTlhajmlbjlkKbmsboifV0sImlkIjoiMjBlYTZjYjQtNjMzYi00ZWQ4LTlmNGEtNWQzN2YxZGU2ZjRiIiwibGFzdE1vZGlmaWVkIjoiMjAyNS0wOC0xMVQxMjoxNjo1MS4yNzAwNTUxMDArMDA6MDAifQ==';
-
-            // 🚨 修正：UTF-8 安全的 Base64 解碼函式
-            function base64DecodeUTF8(base64) {
-                try {
-                    if (typeof TextDecoder !== 'undefined') {
-                        const binaryString = atob(base64);
-                        const bytes = new Uint8Array(binaryString.length);
-                        for (let i = 0; i < binaryString.length; i++) {
-                            bytes[i] = binaryString.charCodeAt(i);
-                        }
-                        const decoder = new TextDecoder('utf-8');
-                        return decoder.decode(bytes);
-                    }
-                    
-                    const binaryString = atob(base64);
-                    const escapedString = binaryString.split('').map(function(char) {
-                        const code = char.charCodeAt(0);
-                        return code < 128 ? char : '%' + ('0' + code.toString(16)).slice(-2);
-                    }).join('');
-                    
-                    return decodeURIComponent(escapedString);
-                    
-                } catch (error) {
-                    console.error('❌ Base64 UTF-8 解碼失敗:', error);
-                    return atob(base64);
-                }
-            }
-
-            // 回退解密函式
-            window.decryptMemoirData = async function() {
-                try {
-                    console.log('🔄 使用回退解密模式...');
-                    
-                    const decodedData = base64DecodeUTF8(fallbackData);
-                    console.log('🔍 解碼後的資料長度:', decodedData.length);
-                    
-                    globals.MEMOIR_DATA = JSON.parse(decodedData);
-                    
-                    // 🚨 重要：驗證和修正媒體路徑
-                    if (globals.MEMOIR_DATA && globals.MEMOIR_DATA.events) {
-                        console.log('🎬 檢查並修正媒體路徑...');
-                        
-                        globals.MEMOIR_DATA.events.forEach(function(event, eventIndex) {
-                            if (event.media && Array.isArray(event.media)) {
-                                event.media.forEach(function(media, mediaIndex) {
-                                    // 🚨 確保媒體路徑正確
-                                    if (media.path && !media.path.startsWith('http')) {
-                                        // 如果路徑不是絕對 URL，確保它是相對於當前頁面的正確路徑
-                                        if (!media.path.startsWith('./') && !media.path.startsWith('media/')) {
-                                            // 修正路徑格式
-                                            const filename = media.path.split('/').pop() || media.filename;
-                                            media.path = './media/' + filename;
-                                            console.log(`🔧 修正媒體路徑 [Event ${eventIndex}, Media ${mediaIndex}]: ${media.path}`);
-                                        } else if (media.path.startsWith('media/')) {
-                                            // 確保有 ./ 前綴
-                                            media.path = './' + media.path;
-                                            console.log(`🔧 添加相對路徑前綴 [Event ${eventIndex}, Media ${mediaIndex}]: ${media.path}`);
-                                        }
-                                    }
-                                    
-                                    // 🚨 確保媒體有必要的屬性
-                                    if (!media.originalName && media.filename) {
-                                        media.originalName = media.filename;
-                                    }
-                                    if (!media.type && media.filename) {
-                                        const ext = media.filename.split('.').pop().toLowerCase();
-                                        media.type = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext) ? 'image' : 'video';
-                                    }
-                                });
-                            }
-                        });
-                        
-                        console.log('✅ 媒體路徑檢查完成');
-                    }
-                    
-                    // 🚨 驗證解碼結果
-                    if (globals.MEMOIR_DATA && globals.MEMOIR_DATA.chineseName) {
-                        console.log('✅ 中文名稱解碼結果:', globals.MEMOIR_DATA.chineseName);
-                        console.log('✅ 事件數量:', globals.MEMOIR_DATA.events ? globals.MEMOIR_DATA.events.length : 0);
-                        
-                        // 🚨 計算媒體檔案總數
-                        let totalMediaCount = 0;
-                        if (globals.MEMOIR_DATA.events) {
-                            globals.MEMOIR_DATA.events.forEach(function(event) {
-                                if (event.media) {
-                                    totalMediaCount += event.media.length;
-                                }
-                            });
-                        }
-                        console.log('✅ 媒體檔案總數:', totalMediaCount);
-                        
-                    } else {
-                        console.warn('⚠️ 回憶錄資料結構異常');
-                    }
-                    
-                    console.log('✅ 回退解密成功');
-                    window.MemoirFlowUtils.initializeApp();
-                    return true;
-                    
-                } catch (error) {
-                    console.error('❌ 回退解密失敗:', error);
-                    console.error('❌ 錯誤詳情:', {
-                        name: error.name,
-                        message: error.message,
-                        stack: error.stack
-                    });
-                    
-                    // 🚨 嘗試備用解碼方法
-                    try {
-                        console.log('🔄 嘗試備用解碼方法...');
-                        const fallbackDecoded = atob(fallbackData);
-                        console.log('🔍 備用解碼結果長度:', fallbackDecoded.length);
-                        
-                        const backupData = JSON.parse(fallbackDecoded);
-                        if (backupData && backupData.chineseName) {
-                            console.log('✅ 備用方法成功');
-                            globals.MEMOIR_DATA = backupData;
-                            
-                            // 🚨 同樣進行媒體路徑修正
-                            if (globals.MEMOIR_DATA.events) {
-                                globals.MEMOIR_DATA.events.forEach(function(event) {
-                                    if (event.media) {
-                                        event.media.forEach(function(media) {
-                                            if (media.path && !media.path.startsWith('http')) {
-                                                if (!media.path.startsWith('./media/')) {
-                                                    const filename = media.path.split('/').pop() || media.filename;
-                                                    media.path = './media/' + filename;
-                                                }
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                            
-                            window.MemoirFlowUtils.initializeApp();
-                            return true;
-                        }
-                    } catch (backupError) {
-                        console.error('❌ 備用方法也失敗:', backupError);
-                    }
-                    
-                    window.MemoirFlowUtils.showDecryptionError('解密失敗，請聯繫技術支援');
-                    return false;
-                }
-            };
-        
-            
-            // 🚨 工具函式（如果未定義）
-            if (!window.MemoirFlowUtils) {
-                window.MemoirFlowUtils = {
-                    initializeApp: function() {
-                        console.log('🚀 MemoirFlowUtils 初始化應用程式');
-                        
-                        const loadingScreen = document.getElementById('loadingScreen');
-                        const passwordModal = document.getElementById('passwordModal');
-                        const app = document.getElementById('app');
-                        
-                        if (loadingScreen) loadingScreen.classList.add('hidden');
-                        if (passwordModal) passwordModal.classList.add('hidden');
-                        if (app) app.classList.remove('hidden');
-                        
-                        // 嘗試呼叫範本中的初始化函式
-                        if (typeof initializeApp === 'function') {
-                            initializeApp();
-                        } else if (typeof window.initializeApp === 'function') {
-                            window.initializeApp();
-                        }
-                        
-                        globals.isInitialized = true;
-                        window.MEMOIR_DATA = globals.MEMOIR_DATA;
-                    },
-                    
-                    showDecryptionError: function(message) {
-                        const errorDiv = document.createElement('div');
-                        errorDiv.className = 'decryption-error';
-                        errorDiv.innerHTML = `
-                            <div class="error-icon">❌</div>
-                            <h1 class="error-title">解密失敗</h1>
-                            <p class="error-description">${message}</p>
-                            <button class="retry-btn" onclick="location.reload()">🔄 重新載入</button>
-                        `;
-                        document.body.appendChild(errorDiv);
-                    }
-                };
-            }
-            
-            // 🚨 確保在下一個事件循環中執行初始化
-            setTimeout(function() {
-                console.log('🔐 開始自動解密流程');
-                if (typeof window.decryptMemoirData === 'function') {
-                    window.decryptMemoirData().catch(function(error) {
-                        console.error('❌ 自動解密失敗:', error);
-                        // 讓具體的解密邏輯處理錯誤顯示
-                    });
+            // 確保是水平滑動且距離足夠
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0) {
+                    // 向右滑動 - 上一個事件
+                    goToEvent(currentEventIndex - 1);
                 } else {
-                    console.error('❌ decryptMemoirData 函式未定義');
-                    window.MemoirFlowUtils.showDecryptionError('解密函式載入失敗');
+                    // 向左滑動 - 下一個事件
+                    goToEvent(currentEventIndex + 1);
                 }
-            }, 100);
+            }
             
-            console.log('✅ 解密腳本載入完成');
-            
-        })();
-        </script>
-        
+            // 重置變數和視覺回饋
+            touchStartX = 0;
+            touchStartY = 0;
+            touchEndX = 0;
+            touchEndY = 0;
+            isSwiping = false;
+        }
 
-    <!-- 🔐 主要解密系統腳本 -->
-    <script>
-        // 🔐 主要解密系統腳本
-        (function() {
-            'use strict';
+        // function resetSwipeFeedback() {
+        //     setTimeout(() => {
+        //         document.getElementById('swipeFeedbackLeft').classList.remove('show');
+        //         document.getElementById('swipeFeedbackRight').classList.remove('show');
+        //     }, 200);
+        // }
+
+        // 初始化應用程式
+        function initApp() {
+            console.log('📖 初始化回憶錄應用程式');
             
-            // 全域變數初始化
-            let MEMOIR_DATA = null;
-            let currentEventIndex = 0;
-            let currentMediaIndex = 0;
-            let showSubtitles = true;
-            let showGrid = false;
-            let typewriterEnabled = true;
-            let isTransitioning = false;
-            let typewriterTimer = null;
-            let decryptionAttempts = 0;
-            const MAX_ATTEMPTS = 3;
-            const ENCRYPTION_ENABLED = "true" === "true";
-            const BACKEND_URL = "https://mastermaso.com/memoirflow";
-            
-            // DOM 元素快取
-            const loadingScreen = document.getElementById('loadingScreen');
-            const passwordModal = document.getElementById('passwordModal');
-            const app = document.getElementById('app');
-            const loadingStatus = document.getElementById('loadingStatus');
-            
-            // 更新載入狀態
-            function updateLoadingStatus(message) {
-                console.log('🔄 狀態更新:', message);
-                if (loadingStatus) {
-                    loadingStatus.textContent = message;
+            try {
+                if (!MEMOIR_DATA || !MEMOIR_DATA.events || MEMOIR_DATA.events.length === 0) {
+                    throw new Error('沒有找到有效的回憶錄數據');
                 }
+
+                // 初始化 UI 事件
+                initEventListeners();
+                
+                // 載入第一個事件
+                loadEvent(0);
+                
+                // 初始化時間軸
+                initTimeline();
+                
+                // 初始化觸控滑動
+                initTouchSwipe();
+                
+                // 隱藏載入畫面
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').classList.add('hidden');
+                }, 800);
+
+                console.log('✅ 回憶錄載入完成');
+            } catch (error) {
+                console.error('❌ 初始化失敗:', error);
+                showError('載入失敗', error.message);
             }
+        }
+
+        // 初始化觸控滑動
+        function initTouchSwipe() {
+            const swipeAreas = [
+                document.getElementById('subtitleArea'),
+                document.getElementById('mainContent'),
+                document.getElementById('mediaArea')
+            ];
             
-            // 🚨 關鍵修正：檢查是否已有解密函數被注入
-            function initializeDecryptionSystem() {
-                console.log('🔐 初始化解密系統...');
-                
-                // 檢查是否有注入的解密函數
-                if (window.MemoirFlowGlobals && window.MemoirFlowGlobals.MEMOIR_DATA) {
-                    console.log('✅ 檢測到注入的解密數據，直接使用');
-                    MEMOIR_DATA = window.MemoirFlowGlobals.MEMOIR_DATA;
-                    window.MEMOIR_DATA = MEMOIR_DATA;
-                    initializeApp();
-                    return;
+            swipeAreas.forEach(area => {
+                if (area) {
+                    area.addEventListener('touchstart', handleTouchStart, { passive: false });
+                    area.addEventListener('touchmove', handleTouchMove, { passive: false });
+                    area.addEventListener('touchend', handleTouchEnd, { passive: false });
                 }
-                
-                // 檢查是否有注入的解密函數並且與模板函數不同
-                if (typeof window.decryptMemoirData === 'function') {
-                    const funcStr = window.decryptMemoirData.toString();
-                    // 檢查是否是注入的函數（不包含"基礎版本"字樣）
-                    if (!funcStr.includes('基礎版本') && !funcStr.includes('應該被實際解密腳本覆蓋')) {
-                        console.log('✅ 檢測到注入的解密函數，開始執行');
-                        window.decryptMemoirData().then(success => {
-                            if (success) {
-                                console.log('✅ 注入的解密函數執行成功');
-                            } else {
-                                console.warn('⚠️ 注入的解密函數執行失敗，使用預設邏輯');
-                                useDefaultDecryption();
-                            }
-                        }).catch(error => {
-                            console.error('❌ 注入的解密函數執行錯誤:', error);
-                            useDefaultDecryption();
-                        });
-                        return;
-                    }
-                }
-                
-                // 如果沒有注入的函數，使用預設邏輯
-                console.log('🔄 使用預設解密邏輯');
-                useDefaultDecryption();
-            }
+            });
+        }
+
+        // 初始化事件監聽器
+        function initEventListeners() {
+            // 導航按鈕
+            document.getElementById('prevEventBtn').addEventListener('click', () => goToEvent(currentEventIndex - 1));
+            document.getElementById('nextEventBtn').addEventListener('click', () => goToEvent(currentEventIndex + 1));
             
-            // 🔐 預設解密函數（僅在沒有注入腳本時使用）
-            function useDefaultDecryption() {
-                console.log('🔐 執行預設解密邏輯');
-                
-                // 延遲處理，給注入腳本更多時間
-                setTimeout(async () => {
-                    try {
-                        // 再次檢查是否有數據被注入
-                        if (window.MemoirFlowGlobals && window.MemoirFlowGlobals.MEMOIR_DATA) {
-                            console.log('✅ 延遲檢查發現注入數據');
-                            MEMOIR_DATA = window.MemoirFlowGlobals.MEMOIR_DATA;
-                            window.MEMOIR_DATA = MEMOIR_DATA;
-                            initializeApp();
-                            return;
-                        }
-                        
-                        console.log('⚠️ 未檢測到有效的解密腳本或數據');
-                        showDecryptionError('解密系統未正確載入，請重新整理頁面');
-                        
-                    } catch (error) {
-                        console.error('❌ 預設解密邏輯失敗:', error);
-                        showDecryptionError('解密初始化失敗: ' + error.message);
-                    }
-                }, 2000); // 給注入腳本2秒的執行時間
-            }
+            // 媒體導航
+            document.getElementById('prevMediaBtn').addEventListener('click', () => goToMedia(currentMediaIndex - 1));
+            document.getElementById('nextMediaBtn').addEventListener('click', () => goToMedia(currentMediaIndex + 1));
             
-            // 🔐 顯示密碼輸入模態框 - 關鍵函數！
-            function showPasswordPrompt(errorMessage = '') {
-                console.log('🔑 顯示密碼輸入提示');
-                
-                if (loadingScreen) loadingScreen.classList.add('hidden');
-                if (passwordModal) {
-                    passwordModal.classList.remove('hidden');
-                    
-                    // 設定錯誤訊息
-                    const errorDiv = document.getElementById('passwordError');
-                    if (errorMessage && errorDiv) {
-                        errorDiv.textContent = errorMessage;
-                        errorDiv.classList.remove('hidden');
-                    } else if (errorDiv) {
-                        errorDiv.classList.add('hidden');
-                    }
-                    
-                    // 焦點到密碼輸入框
-                    const passwordInput = document.getElementById('memoirPassword');
-                    if (passwordInput) {
-                        setTimeout(() => passwordInput.focus(), 100);
-                    }
-                }
-            }
+            // 設定按鈕
+            document.getElementById('settingsBtn').addEventListener('click', toggleSettingsMenu);
+            document.getElementById('subtitleToggle').addEventListener('click', toggleSubtitles);
+            document.getElementById('gridToggle').addEventListener('click', toggleGridMode);
+            document.getElementById('skipTypingBtn').addEventListener('click', skipTypewriter);
             
-            // 🔐 嘗試密碼解密 - 關鍵函數！
-            async function attemptDecryption() {
-                const passwordInput = document.getElementById('memoirPassword');
-                const unlockBtn = document.getElementById('unlockBtn');
-                const errorDiv = document.getElementById('passwordError');
-                
-                const password = passwordInput ? passwordInput.value : '';
-                
-                if (!password) {
-                    if (errorDiv) {
-                        errorDiv.textContent = '請輸入密碼';
-                        errorDiv.classList.remove('hidden');
-                    }
-                    return;
-                }
-                
-                // 更新按鈕狀態
-                if (unlockBtn) {
-                    unlockBtn.textContent = '🔓 解密中...';
-                    unlockBtn.disabled = true;
-                }
-                
-                try {
-                    updateLoadingStatus('正在驗證密碼...');
-                    
-                    // 調用解密函數
-                    let success = false;
-                    
-                    // 如果有注入的解密函數，優先使用
-                    if (typeof window.decryptMemoirData === 'function') {
-                        const funcStr = window.decryptMemoirData.toString();
-                        if (!funcStr.includes('基礎版本')) {
-                            success = await window.decryptMemoirData(password);
-                        }
-                    }
-                    
-                    if (success) {
-                        console.log('✅ 密碼解密成功！');
-                        if (passwordModal) passwordModal.classList.add('hidden');
-                        updateLoadingStatus('解密成功，正在載入內容...');
-                        
-                        setTimeout(() => {
-                            initializeApp();
-                        }, 500);
-                    } else {
-                        throw new Error('密碼不正確');
-                    }
-                } catch (error) {
-                    console.error('❌ 密碼解密失敗:', error);
-                    decryptionAttempts++;
-                    
-                    // 恢復按鈕狀態
-                    if (unlockBtn) {
-                        unlockBtn.textContent = '🔓 解鎖';
-                        unlockBtn.disabled = false;
-                    }
-                    
-                    if (decryptionAttempts >= MAX_ATTEMPTS) {
-                        showDecryptionError('解密嘗試次數過多，請重新整理頁面後再試');
-                        return;
-                    }
-                    
-                    // 顯示錯誤訊息
-                    const errorMessage = `密碼錯誤，請重試 (${decryptionAttempts}/${MAX_ATTEMPTS})`;
-                    showPasswordPrompt(errorMessage);
-                    
-                    // 清空密碼輸入框
-                    if (passwordInput) {
-                        passwordInput.value = '';
-                        setTimeout(() => passwordInput.focus(), 100);
-                    }
-                }
-            }
+            // 時間軸導航
+            document.getElementById('timelineBtn').addEventListener('click', showTimeline);
+            document.getElementById('timelineClose').addEventListener('click', hideTimeline);
             
-            // 顯示解密錯誤頁面
-            function showDecryptionError(message) {
-                console.error('❌ 顯示解密錯誤:', message);
+            // 使用說明
+            document.getElementById('helpBtn').addEventListener('click', showHelp);
+            document.getElementById('helpClose').addEventListener('click', hideHelp);
+            
+            // 全螢幕查看器
+            document.getElementById('viewerClose').addEventListener('click', closeMediaViewer);
+            document.getElementById('mediaViewer').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) closeMediaViewer();
+            });
+            
+            // 鍵盤控制
+            document.addEventListener('keydown', handleKeyPress);
+            
+            // 點擊外部關閉選單
+            document.addEventListener('click', (e) => {
+                const settingsMenu = document.getElementById('settingsMenu');
+                const settingsBtn = document.getElementById('settingsBtn');
+                if (!settingsMenu.contains(e.target) && !settingsBtn.contains(e.target)) {
+                    settingsMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // 初始化時間軸
+        function initTimeline() {
+            const timelineList = document.getElementById('timelineList');
+            timelineList.innerHTML = '';
+            
+            sortedEvents.forEach((event, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = `timeline-item ${index === currentEventIndex ? 'active' : ''}`;
+                timelineItem.addEventListener('click', () => {
+                    goToEvent(index);
+                    hideTimeline();
+                });
                 
-                // 隱藏其他元素
-                if (loadingScreen) loadingScreen.classList.add('hidden');
-                if (passwordModal) passwordModal.classList.add('hidden');
-                if (app) app.classList.add('hidden');
+                const eventDate = new Date(event.date).toLocaleDateString('zh-TW', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
                 
-                const errorPage = document.createElement('div');
-                errorPage.className = 'decryption-error';
-                errorPage.innerHTML = `
-                    <div class="error-icon">🚫</div>
-                    <h1 class="error-title">解密失敗</h1>
-                    <p class="error-description">很抱歉，無法解密此回憶錄的內容。</p>
-                    <div class="error-details">
-                        <div><strong>錯誤原因：</strong> ${message}</div>
-                        <div style="margin-top: 15px;"><strong>可能解決方案：</strong></div>
-                        <ul style="margin-top: 8px; padding-left: 20px; text-align: left;">
-                            <li>檢查密碼是否正確</li>
-                            <li>確認網路連接正常</li>
-                            <li>重新整理頁面後再試</li>
-                            <li>聯繫回憶錄作者取得協助</li>
-                        </ul>
-                    </div>
-                    <button class="retry-btn" onclick="location.reload()">🔄 重新載入</button>
+                timelineItem.innerHTML = `
+                    <div class="timeline-item-date">${eventDate}</div>
+                    <div class="timeline-item-title">${event.title}</div>
+                    <div class="timeline-item-description">${event.description}</div>
                 `;
                 
-                document.body.appendChild(errorPage);
-            }
-            
-            // 🚀 初始化應用程式 - 解密成功後調用
-            function initializeApp() {
-                console.log('🚀 初始化加密回憶錄應用程式');
-                
-                try {
-                    // 從多個可能的來源獲取數據
-                    if (!MEMOIR_DATA) {
-                        if (window.MemoirFlowGlobals && window.MemoirFlowGlobals.MEMOIR_DATA) {
-                            MEMOIR_DATA = window.MemoirFlowGlobals.MEMOIR_DATA;
-                        } else if (window.MEMOIR_DATA) {
-                            MEMOIR_DATA = window.MEMOIR_DATA;
-                        }
-                    }
-                    
-                    if (!MEMOIR_DATA) {
-                        throw new Error('MEMOIR_DATA 為空');
-                    }
+                timelineList.appendChild(timelineItem);
+            });
+        }
 
-                    console.log('📊 載入的回憶錄數據:', {
-                        name: MEMOIR_DATA.chineseName,
-                        events: MEMOIR_DATA.events ? MEMOIR_DATA.events.length : 0
-                    });
-
-                    // 顯示主應用程式
-                    if (app) app.classList.remove('hidden');
-                    
-                    const subtitleArea = document.getElementById('subtitleArea');
-                    const mainContent = document.getElementById('mainContent');
-                    
-                    if (subtitleArea) subtitleArea.classList.remove('hidden');
-                    if (mainContent) mainContent.classList.remove('hidden');
-                    
-                    // 🚨 關鍵修正：初始化完整的 UI 和媒體顯示邏輯
-                    initEventListeners();
-                    
-                    // 載入第一個事件
-                    if (MEMOIR_DATA.events && MEMOIR_DATA.events.length > 0) {
-                        loadEvent(0);
-                    } else {
-                        console.log('📝 沒有事件數據，顯示空狀態');
-                        showEmptyState();
-                    }
-                    
-                    // 初始化觸控滑動
-                    initTouchSwipe();
-                    
-                    // 隱藏載入畫面
-                    setTimeout(() => {
-                        if (loadingScreen) loadingScreen.classList.add('hidden');
-                    }, 1000);
-
-                    console.log('✅ 加密回憶錄應用程式初始化完成');
-                } catch (error) {
-                    console.error('❌ 應用程式初始化失敗:', error);
-                    showDecryptionError(`初始化失敗: ${error.message}`);
-                }
-            }
+        // 載入事件 - 添加動畫效果
+        function loadEvent(eventIndex) {
+            if (eventIndex < 0 || eventIndex >= sortedEvents.length || isTransitioning) return;
             
-            // 事件監聽器初始化
-            function initEventListeners() {
-                console.log('🔧 初始化事件監聽器');
-                
-                // 導航按鈕
-                const prevEventBtn = document.getElementById('prevEventBtn');
-                const nextEventBtn = document.getElementById('nextEventBtn');
-                
-                if (prevEventBtn) {
-                    prevEventBtn.addEventListener('click', () => {
-                        if (currentEventIndex > 0) {
-                            loadEvent(currentEventIndex - 1);
-                        }
-                    });
-                }
-                
-                if (nextEventBtn) {
-                    nextEventBtn.addEventListener('click', () => {
-                        if (currentEventIndex < MEMOIR_DATA.events.length - 1) {
-                            loadEvent(currentEventIndex + 1);
-                        }
-                    });
-                }
-                
-                // 鍵盤控制
-                document.addEventListener('keydown', handleKeyPress);
-            }
+            const event = sortedEvents[eventIndex];
+            if (!event || !event.media || event.media.length === 0) return;
             
-            // 簡化版的核心功能
-            function loadEvent(eventIndex) {
-                if (!MEMOIR_DATA || !MEMOIR_DATA.events || MEMOIR_DATA.events.length === 0) {
-                    console.warn('⚠️ 沒有事件數據可載入');
-                    return;
-                }
-                
-                const sortedEvents = MEMOIR_DATA.events.sort((a, b) => 
-                    new Date(a.date).getTime() - new Date(b.date).getTime()
-                );
-                
-                if (eventIndex < 0 || eventIndex >= sortedEvents.length) {
-                    console.warn('⚠️ 事件索引超出範圍:', eventIndex);
-                    return;
-                }
-                
-                const event = sortedEvents[eventIndex];
+            // 設置轉場狀態
+            isTransitioning = true;
+            
+            // 開始淡出動畫
+            const mainContent = document.getElementById('mainContent');
+            const subtitleArea = document.getElementById('subtitleArea');
+            const mainMedia = document.getElementById('mainMedia');
+            
+            mainContent.classList.add('transitioning');
+            subtitleArea.classList.add('fade-out');
+            if (mainMedia) mainMedia.classList.add('transitioning');
+            
+            // 延遲載入新內容
+            setTimeout(() => {
                 currentEventIndex = eventIndex;
                 currentMediaIndex = 0;
                 
-                console.log(`📅 載入事件: ${event.title} (${eventIndex + 1}/${sortedEvents.length})`);
-                
                 // 更新 UI
                 updateEventInfo(event);
-                updateNavigationButtons(sortedEvents.length);
+                updateNavigationButtons();
+                updateTimelineActive();
                 
-                // 🚨 關鍵：載入並顯示媒體
-                if (event.media && event.media.length > 0) {
-                    displayMedia(event.media[0]); // 顯示第一個媒體
+                if (showGrid) {
+                    loadGridMode(event.media);
                 } else {
-                    showNoMediaMessage();
+                    loadCarouselMode(event.media);
                 }
-            }
+                
+                // 重置打字機效果
+                if (typewriterEnabled && showSubtitles) {
+                    startTypewriter(event.description);
+                }
+                
+                // 淡入新內容
+                setTimeout(() => {
+                    mainContent.classList.remove('transitioning');
+                    subtitleArea.classList.remove('fade-out');
+                    subtitleArea.classList.add('fade-in');
+                    if (mainMedia) mainMedia.classList.remove('transitioning');
+                    
+                    // 清除動畫類
+                    setTimeout(() => {
+                        subtitleArea.classList.remove('fade-in');
+                        isTransitioning = false;
+                    }, 500);
+                }, 100);
+            }, 250);
+        }
 
-            // 🚨 核心函數：媒體顯示邏輯
-            function displayMedia(media) {
-                const mediaDisplay = document.getElementById('mediaDisplay');
-                
-                if (!mediaDisplay) {
-                    console.error('❌ 找不到媒體顯示容器');
-                    return;
-                }
-                
-                console.log('🎬 顯示媒體:', media);
-                
-                // 清空現有內容
-                mediaDisplay.innerHTML = '';
-                
-                try {
-                    let mediaElement;
-                    
-                    if (media.type === 'image' || media.media_type === 'image') {
-                        // 創建圖片元素
-                        mediaElement = document.createElement('img');
-                        mediaElement.style.maxWidth = '100%';
-                        mediaElement.style.maxHeight = '100%';
-                        mediaElement.style.objectFit = 'contain';
-                        mediaElement.alt = media.originalName || media.filename || 'Image';
-                        
-                        // 設置圖片載入事件
-                        mediaElement.onload = function() {
-                            console.log('✅ 圖片載入成功:', media.path);
-                        };
-                        
-                        mediaElement.onerror = function() {
-                            console.error('❌ 圖片載入失敗:', media.path);
-                            showMediaError(mediaDisplay, '圖片載入失敗');
-                        };
-                        
-                    } else if (media.type === 'video' || media.media_type === 'video') {
-                        // 創建影片元素
-                        mediaElement = document.createElement('video');
-                        mediaElement.style.maxWidth = '100%';
-                        mediaElement.style.maxHeight = '100%';
-                        mediaElement.style.objectFit = 'contain';
-                        mediaElement.controls = true;
-                        
-                        // 設置影片載入事件
-                        mediaElement.onloadeddata = function() {
-                            console.log('✅ 影片載入成功:', media.path);
-                        };
-                        
-                        mediaElement.onerror = function() {
-                            console.error('❌ 影片載入失敗:', media.path);
-                            showMediaError(mediaDisplay, '影片載入失敗');
-                        };
-                    }
-                    
-                    if (mediaElement) {
-                        // 🚨 關鍵：設置媒體源
-                        setMediaSource(mediaElement, media);
-                        mediaDisplay.appendChild(mediaElement);
-                    } else {
-                        showMediaError(mediaDisplay, '不支援的媒體格式');
-                    }
-                    
-                } catch (error) {
-                    console.error('❌ 媒體顯示錯誤:', error);
-                    showMediaError(mediaDisplay, `媒體顯示錯誤: ${error.message}`);
-                }
+        // 更新事件資訊
+        function updateEventInfo(event) {
+            document.getElementById('currentEventNum').textContent = currentEventIndex + 1;
+            document.getElementById('totalEvents').textContent = sortedEvents.length;
+            document.getElementById('mediaCount').textContent = event.media.length;
+            
+            const eventDate = new Date(event.date).toLocaleDateString('zh-TW', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('eventDate').textContent = eventDate;
+            document.getElementById('eventTitle').textContent = event.title;
+            
+            if (!typewriterEnabled || !showSubtitles) {
+                document.getElementById('eventDescription').textContent = event.description;
             }
+        }
 
-            // 🚨 關鍵函數：設置媒體源
-            function setMediaSource(mediaElement, media) {
-                console.log('🔗 設置媒體源:', media);
-                
-                // 檢查是否為 URL 媒體
-                if (media.isUrl || media.is_url) {
-                    console.log('🌐 URL 媒體:', media.url || media.path);
-                    
-                    // YouTube 影片特殊處理
-                    if (media.url && (media.url.includes('youtube.com') || media.url.includes('youtu.be'))) {
-                        handleYouTubeVideo(mediaElement.parentElement, media.url);
-                        return;
-                    }
-                    
-                    // 直接使用 URL
-                    mediaElement.src = media.url || media.path;
-                    
+        // 更新導航按鈕狀態
+        function updateNavigationButtons() {
+            const prevEventBtn = document.getElementById('prevEventBtn');
+            const nextEventBtn = document.getElementById('nextEventBtn');
+            
+            if (currentEventIndex === 0) {
+                prevEventBtn.classList.add('disabled');
+            } else {
+                prevEventBtn.classList.remove('disabled');
+            }
+            
+            if (currentEventIndex === sortedEvents.length - 1) {
+                nextEventBtn.classList.add('disabled');
+            } else {
+                nextEventBtn.classList.remove('disabled');
+            }
+        }
+
+        // 更新時間軸激活狀態
+        function updateTimelineActive() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+                if (index === currentEventIndex) {
+                    item.classList.add('active');
                 } else {
-                    // 本地媒體檔案
-                    console.log('📁 本地媒體:', media.path);
-                    
-                    // 🚨 確保路徑格式正確
-                    let mediaSrc = media.path;
-                    
-                    // 如果路徑不是以 ./ 開頭，添加前綴
-                    if (!mediaSrc.startsWith('./') && !mediaSrc.startsWith('http')) {
-                        if (mediaSrc.startsWith('media/')) {
-                            mediaSrc = './' + mediaSrc;
-                        } else {
-                            mediaSrc = './media/' + (mediaSrc.split('/').pop() || mediaSrc);
-                        }
-                    }
-                    
-                    console.log('🔧 修正後的媒體路徑:', mediaSrc);
-                    mediaElement.src = mediaSrc;
+                    item.classList.remove('active');
                 }
-            }
-            // YouTube 影片處理
-            function handleYouTubeVideo(container, url) {
-                const videoId = extractYouTubeId(url);
-                if (videoId) {
-                    const iframe = document.createElement('iframe');
-                    iframe.src = `https://www.youtube.com/embed/${videoId}`;
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.border = 'none';
-                    iframe.setAttribute('allowfullscreen', '');
-                    container.innerHTML = '';
-                    container.appendChild(iframe);
-                    console.log('✅ YouTube 影片嵌入成功:', videoId);
-                }
-            }
+            });
+        }
 
-            function extractYouTubeId(url) {
-                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                const match = url.match(regExp);
-                return (match && match[2].length === 11) ? match[2] : null;
+        // 載入輪播模式
+        function loadCarouselMode(media) {
+            const mediaDisplay = document.getElementById('mediaDisplay');
+            const thumbnailScroll = document.getElementById('thumbnailScroll');
+            
+            // 清空現有內容
+            mediaDisplay.innerHTML = '';
+            thumbnailScroll.innerHTML = '';
+            
+            // 根據媒體數量決定縮圖排列方式
+            if (media.length > 3) {
+                thumbnailScroll.classList.add('many-items');
+            } else {
+                thumbnailScroll.classList.remove('many-items');
             }
+            
+            // 載入主要媒體
+            loadMediaIntoElement(media[currentMediaIndex], mediaDisplay, true);
+            
+            // 載入縮圖
+            media.forEach((item, index) => {
+                const thumbnail = createThumbnailElement(item, index);
+                thumbnailScroll.appendChild(thumbnail);
+            });
+            
+            updateMediaNavigation(media);
+            updateMediaCounter();
+        }
 
-            // 顯示媒體錯誤
-            function showMediaError(container, message) {
-                container.innerHTML = `
-                    <div style="text-align: center; color: #ef4444; padding: 40px;">
-                        <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
-                        <div style="font-size: 16px;">${message}</div>
-                    </div>
-                `;
-            }
+        // 載入網格模式
+        function loadGridMode(media) {
+            const gridContainer = document.getElementById('gridContainer');
+            gridContainer.innerHTML = '';
+            
+            media.forEach((item, index) => {
+                const gridItem = createGridItemElement(item, index);
+                gridContainer.appendChild(gridItem);
+            });
+        }
 
-            // 顯示無媒體訊息
-            function showNoMediaMessage() {
-                const mediaDisplay = document.getElementById('mediaDisplay');
-                if (mediaDisplay) {
-                    mediaDisplay.innerHTML = `
-                        <div style="text-align: center; color: #9ca3af; padding: 40px;">
-                            <div style="font-size: 48px; margin-bottom: 20px;">📷</div>
-                            <div style="font-size: 16px;">此時間節點沒有媒體內容</div>
+        // 創建媒體元素
+        function loadMediaIntoElement(mediaItem, container, isMainDisplay = false) {
+            container.innerHTML = '';
+            
+            if (mediaItem.type === 'image') {
+                const img = document.createElement('img');
+                img.src = mediaItem.isUrl ? mediaItem.url : `media/${getMediaFileName(mediaItem)}`;
+                img.alt = mediaItem.originalName;
+                img.style.cursor = 'pointer';
+                
+                img.onerror = function() {
+                    container.innerHTML = `
+                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; color: #666;">
+                            ❌ 圖片載入失敗
                         </div>
                     `;
-                }
-            }
-
-            // 更新事件信息
-            function updateEventInfo(event) {
-                const elements = {
-                    currentEventNum: document.getElementById('currentEventNum'),
-                    totalEvents: document.getElementById('totalEvents'),
-                    mediaCount: document.getElementById('mediaCount'),
-                    eventDate: document.getElementById('eventDate'),
-                    eventTitle: document.getElementById('eventTitle'),
-                    eventDescription: document.getElementById('eventDescription')
                 };
                 
-                if (elements.currentEventNum) elements.currentEventNum.textContent = currentEventIndex + 1;
-                if (elements.totalEvents) elements.totalEvents.textContent = MEMOIR_DATA.events.length;
-                if (elements.mediaCount) elements.mediaCount.textContent = event.media ? event.media.length : 0;
-                
-                if (elements.eventDate) {
-                    try {
-                        const eventDate = new Date(event.date).toLocaleDateString('zh-TW', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        });
-                        elements.eventDate.textContent = eventDate;
-                    } catch (e) {
-                        elements.eventDate.textContent = event.date;
-                    }
+                if (isMainDisplay) {
+                    img.addEventListener('click', () => openMediaViewer(mediaItem));
                 }
                 
-                if (elements.eventTitle) elements.eventTitle.textContent = event.title;
-                if (elements.eventDescription) elements.eventDescription.textContent = event.description;
-            }
-            
-            // 更新導航按鈕
-            function updateNavigationButtons(totalEvents) {
-                const prevBtn = document.getElementById('prevEventBtn');
-                const nextBtn = document.getElementById('nextEventBtn');
-                
-                if (prevBtn) {
-                    if (currentEventIndex === 0) {
-                        prevBtn.classList.add('disabled');
+                container.appendChild(img);
+            } else if (mediaItem.type === 'video') {
+                if (mediaItem.isUrl && (mediaItem.url.includes('youtube.com') || mediaItem.url.includes('youtu.be'))) {
+                    // YouTube 影片
+                    const videoId = extractYouTubeId(mediaItem.url);
+                    if (videoId) {
+                        const iframe = document.createElement('iframe');
+                        // 使用 youtube-nocookie.com 提高兼容性
+                        iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?enablejsapi=1&rel=0&modestbranding=1`;
+                        iframe.style.width = '100%';
+                        iframe.style.height = '100%';
+                        iframe.style.border = 'none';
+                        iframe.allowFullscreen = true;
+                        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+                        iframe.title = mediaItem.originalName;
+                        
+                        // 錯誤處理
+                        iframe.onerror = function() {
+                            container.innerHTML = `
+                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: #1a1a2e; color: white; text-align: center;">
+                                    <div style="font-size: 48px; margin-bottom: 20px;">📺</div>
+                                    <div style="margin-bottom: 10px; font-size: 16px; font-weight: bold;">YouTube 影片</div>
+                                    <div style="margin-bottom: 15px; font-size: 14px; opacity: 0.8;">${mediaItem.originalName}</div>
+                                    <a href="${mediaItem.url}" target="_blank" rel="noopener noreferrer" 
+                                    style="padding: 10px 20px; background: #e74c3c; color: white; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                                        🚀 在新視窗觀看
+                                    </a>
+                                </div>
+                            `;
+                        };
+                        
+                        container.appendChild(iframe);
                     } else {
-                        prevBtn.classList.remove('disabled');
+                        // 無法解析 YouTube ID
+                        container.innerHTML = `
+                            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; background: #1a1a2e; color: white; text-align: center;">
+                                <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
+                                <div style="margin-bottom: 10px; font-size: 16px;">無效的 YouTube 連結</div>
+                                <a href="${mediaItem.url}" target="_blank" rel="noopener noreferrer" 
+                                style="padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                                    🔗 查看原連結
+                                </a>
+                            </div>
+                        `;
                     }
-                }
-                
-                if (nextBtn) {
-                    if (currentEventIndex === totalEvents - 1) {
-                        nextBtn.classList.add('disabled');
-                    } else {
-                        nextBtn.classList.remove('disabled');
-                    }
-                }
-            }
-            
-            function goToEvent(eventIndex) {
-                if (!MEMOIR_DATA || !MEMOIR_DATA.events) return;
-                const totalEvents = MEMOIR_DATA.events.length;
-                if (eventIndex >= 0 && eventIndex < totalEvents && eventIndex !== currentEventIndex) {
-                    loadEvent(eventIndex);
-                }
-            }
-            
-            function toggleSubtitles() {
-                showSubtitles = !showSubtitles;
-                const toggle = document.getElementById('subtitleToggle');
-                const eventDescription = document.getElementById('eventDescription');
-                
-                if (showSubtitles) {
-                    if (toggle) toggle.classList.add('active');
-                    if (eventDescription) eventDescription.style.display = 'block';
                 } else {
-                    if (toggle) toggle.classList.remove('active');
-                    if (eventDescription) eventDescription.style.display = 'none';
-                }
-            }
-            
-            function handleKeyPress(e) {
-                switch (e.key) {
-                    case 'ArrowLeft':
-                        e.preventDefault();
-                        if (currentEventIndex > 0) {
-                            loadEvent(currentEventIndex - 1);
-                        }
-                        break;
-                    case 'ArrowRight':
-                        e.preventDefault();
-                        if (currentEventIndex < MEMOIR_DATA.events.length - 1) {
-                            loadEvent(currentEventIndex + 1);
-                        }
-                        break;
-                    case 'Escape':
-                        e.preventDefault();
-                        break;
-                }
-            }
-            
-            function showEmptyState() {
-                const mediaDisplay = document.getElementById('mediaDisplay');
-                if (mediaDisplay) {
-                    mediaDisplay.innerHTML = `
-                        <div style="text-align: center; color: #9ca3af; padding: 40px;">
-                            <div style="font-size: 48px; margin-bottom: 20px;">📖</div>
-                            <div style="font-size: 18px; margin-bottom: 10px;">回憶錄已解密</div>
-                            <div style="font-size: 14px;">但暫時沒有時間節點內容</div>
-                        </div>
-                    `;
-                }
-            }
-            
-            // 觸控滑動支援
-            function initTouchSwipe() {
-                let touchStartX = 0;
-                let touchEndX = 0;
-                const minSwipeDistance = 50;
-                
-                const swipeArea = document.getElementById('subtitleArea') || document.body;
-                
-                swipeArea.addEventListener('touchstart', (e) => {
-                    touchStartX = e.touches[0].clientX;
-                }, { passive: true });
-                
-                swipeArea.addEventListener('touchend', (e) => {
-                    touchEndX = e.changedTouches[0].clientX;
-                    const deltaX = touchEndX - touchStartX;
+                    // 一般影片
+                    const video = document.createElement('video');
+                    video.src = mediaItem.isUrl ? mediaItem.url : `media/${getMediaFileName(mediaItem)}`;
+                    video.controls = true;
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.style.cursor = 'pointer';
                     
-                    if (Math.abs(deltaX) > minSwipeDistance) {
-                        if (deltaX > 0 && currentEventIndex > 0) {
-                            loadEvent(currentEventIndex - 1);
-                        } else if (deltaX < 0 && currentEventIndex < MEMOIR_DATA.events.length - 1) {
-                            loadEvent(currentEventIndex + 1);
-                        }
-                    }
-                }, { passive: true });
-            }
-            
-            // 將關鍵函數暴露到全域作用域
-            window.showPasswordPrompt = showPasswordPrompt;
-            window.attemptDecryption = attemptDecryption;
-            window.initializeApp = initializeApp;
-            
-            // 🔐 主要初始化流程
-            document.addEventListener('DOMContentLoaded', function() {
-                console.log('🔐 MemoirFlow 加密回憶錄載入中...');
-                console.log('⚙️ 加密狀態:', ENCRYPTION_ENABLED);
-                console.log('🌐 後端 URL:', BACKEND_URL);
-                
-                updateLoadingStatus('正在準備解密系統...');
-                
-                // 初始化 Lucide 圖標
-                if (typeof lucide !== 'undefined') {
-                    try {
-                        lucide.createIcons();
-                    } catch (e) {
-                        console.warn('⚠️ Lucide 圖標初始化失敗:', e);
-                    }
-                }
-                
-                // 延遲啟動解密流程，給注入腳本時間執行
-                setTimeout(() => {
-                    updateLoadingStatus('正在檢查存取權限...');
+                    video.onerror = function() {
+                        container.innerHTML = `
+                            <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #f0f0f0; color: #666;">
+                                ❌ 影片載入失敗
+                            </div>
+                        `;
+                    };
                     
-                    // 開始解密流程
-                    setTimeout(() => {
-                        console.log('🔐 開始解密流程');
-                        initializeDecryptionSystem(); // 使用新的初始化函數
-                    }, 800);
-                }, 1500);
-            });
-            
-            // 錯誤處理
-            window.addEventListener('error', function(e) {
-                console.error('❌ 頁面錯誤:', e.error);
-                if (!app || app.classList.contains('hidden')) {
-                    showDecryptionError(`系統錯誤: ${e.error?.message || '未知錯誤'}`);
+                    if (isMainDisplay) {
+                        video.addEventListener('click', () => openMediaViewer(mediaItem));
+                    }
+                    
+                    container.appendChild(video);
                 }
-            });
-            
-            window.addEventListener('unhandledrejection', function(e) {
-                console.error('❌ Promise 錯誤:', e.reason);
-                if (!app || app.classList.contains('hidden')) {
-                    showDecryptionError(`載入錯誤: ${e.reason?.message || '網路連接問題'}`);
-                }
-            });
-        })();
-    </script>
+            }
+        }
 
-    <!-- 🔐 安全性增強腳本 -->
-    <script>
-        // 安全性保護
-        (function() {
-            'use strict';
+        // 創建縮圖元素
+        function createThumbnailElement(mediaItem, index) {
+            const thumbnail = document.createElement('div');
+            thumbnail.className = `thumbnail ${index === currentMediaIndex ? 'active' : ''}`;
+            thumbnail.addEventListener('click', () => goToMedia(index));
             
-            // 防止右鍵選單
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
+            loadMediaIntoElement(mediaItem, thumbnail, false);
+            
+            const indexLabel = document.createElement('div');
+            indexLabel.className = 'thumbnail-index';
+            indexLabel.textContent = index + 1;
+            thumbnail.appendChild(indexLabel);
+            
+            return thumbnail;
+        }
+
+        // 創建網格項目元素
+        function createGridItemElement(mediaItem, index) {
+            const gridItem = document.createElement('div');
+            gridItem.className = `grid-item ${index === currentMediaIndex ? 'active' : ''}`;
+            gridItem.addEventListener('click', () => goToMedia(index));
+            gridItem.addEventListener('dblclick', () => openMediaViewer(mediaItem));
+            
+            loadMediaIntoElement(mediaItem, gridItem, false);
+            
+            const info = document.createElement('div');
+            info.className = 'grid-item-info';
+            
+            const name = document.createElement('div');
+            name.className = 'grid-item-name';
+            name.textContent = mediaItem.originalName;
+            info.appendChild(name);
+            
+            gridItem.appendChild(info);
+            
+            return gridItem;
+        }
+
+        // 更新媒體導航
+        function updateMediaNavigation(media) {
+            const prevBtn = document.getElementById('prevMediaBtn');
+            const nextBtn = document.getElementById('nextMediaBtn');
+            
+            if (currentMediaIndex === 0) {
+                prevBtn.classList.add('disabled');
+            } else {
+                prevBtn.classList.remove('disabled');
+            }
+            
+            if (currentMediaIndex === media.length - 1) {
+                nextBtn.classList.add('disabled');
+            } else {
+                nextBtn.classList.remove('disabled');
+            }
+        }
+
+        // 更新媒體計數器
+        function updateMediaCounter() {
+            const counter = document.getElementById('mediaCounterDisplay');
+            const currentEvent = sortedEvents[currentEventIndex];
+            counter.textContent = `${currentMediaIndex + 1} / ${currentEvent.media.length}`;
+        }
+
+        // 切換到指定事件
+        function goToEvent(eventIndex) {
+            if (eventIndex >= 0 && eventIndex < sortedEvents.length && eventIndex !== currentEventIndex && !isTransitioning) {
+                loadEvent(eventIndex);
+            }
+        }
+
+        // 切換到指定媒體
+        function goToMedia(mediaIndex) {
+            const currentEvent = sortedEvents[currentEventIndex];
+            if (mediaIndex >= 0 && mediaIndex < currentEvent.media.length && mediaIndex !== currentMediaIndex) {
+                currentMediaIndex = mediaIndex;
+                
+                if (showGrid) {
+                    updateGridSelection();
+                } else {
+                    const mediaDisplay = document.getElementById('mediaDisplay');
+                    loadMediaIntoElement(currentEvent.media[currentMediaIndex], mediaDisplay, true);
+                    updateThumbnailSelection();
+                    updateMediaNavigation(currentEvent.media);
+                    updateMediaCounter();
+                }
+            }
+        }
+
+        // 更新縮圖選擇狀態
+        function updateThumbnailSelection() {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach((thumb, index) => {
+                if (index === currentMediaIndex) {
+                    thumb.classList.add('active');
+                } else {
+                    thumb.classList.remove('active');
+                }
             });
+        }
+
+        // 更新網格選擇狀態
+        function updateGridSelection() {
+            const gridItems = document.querySelectorAll('.grid-item');
+            gridItems.forEach((item, index) => {
+                if (index === currentMediaIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        }
+
+        // 切換設定選單
+        function toggleSettingsMenu() {
+            const menu = document.getElementById('settingsMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // 切換字幕顯示
+        function toggleSubtitles() {
+            showSubtitles = !showSubtitles;
+            const toggle = document.getElementById('subtitleToggle');
+            const eventDescription = document.getElementById('eventDescription');
             
-            // 防止開發者工具快捷鍵
-            // document.addEventListener('keydown', function(e) {
-            //     if (e.key === 'F12' || 
-            //         (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) ||
-            //         (e.ctrlKey && e.key === 'U') ||
-            //         (e.ctrlKey && e.key === 'S')) {
-            //         e.preventDefault();
-            //         return false;
-            //     }
-            // });
+            if (showSubtitles) {
+                toggle.classList.add('active');
+                eventDescription.style.display = 'block';
+                
+                // 重新開始打字機效果
+                if (typewriterEnabled) {
+                    const currentEvent = sortedEvents[currentEventIndex];
+                    startTypewriter(currentEvent.description);
+                }
+            } else {
+                toggle.classList.remove('active');
+                eventDescription.style.display = 'none';
+            }
+        }
+
+        // 切換網格模式
+        function toggleGridMode() {
+            showGrid = !showGrid;
+            const toggle = document.getElementById('gridToggle');
+            const carousel = document.getElementById('mediaCarousel');
+            const grid = document.getElementById('mediaGrid');
+            const mainContent = document.getElementById('mainContent');
+            const subtitleArea = document.getElementById('subtitleArea');
             
-            // 防止文字選取和拖曳
-            document.addEventListener('selectstart', e => e.preventDefault());
-            document.addEventListener('dragstart', e => e.preventDefault());
+            if (showGrid) {
+                toggle.classList.add('active');
+                carousel.classList.add('hidden');
+                grid.classList.remove('hidden');
+                mainContent.classList.add('grid-mode');
+                subtitleArea.style.display = 'none';
+                
+                const currentEvent = sortedEvents[currentEventIndex];
+                loadGridMode(currentEvent.media);
+            } else {
+                toggle.classList.remove('active');
+                carousel.classList.remove('hidden');
+                grid.classList.add('hidden');
+                mainContent.classList.remove('grid-mode');
+                subtitleArea.style.display = 'block';
+                
+                const currentEvent = sortedEvents[currentEventIndex];
+                loadCarouselMode(currentEvent.media);
+            }
+        }
+
+        // 顯示時間軸
+        function showTimeline() {
+            const timelinePanel = document.getElementById('timelinePanel');
+            timelinePanel.classList.remove('hidden');
             
-            // 清理控制台
-            // if (typeof console !== 'undefined') {
-            //     setTimeout(() => {
-            //         console.clear();
-            //         console.log('%c🔒 MemoirFlow 加密回憶錄', 'color: #3b82f6; font-size: 16px; font-weight: bold;');
-            //         console.log('%c此內容受到加密保護，未經授權的存取將被記錄', 'color: #ef4444; font-size: 12px;');
-            //     }, 2000);
-            // }
-        })();
-    </script>
-    
-    <!-- 版權與安全聲明 -->
-    <script>
-        console.log('%c🔐 生成時間: 2025-08-11T20:40:34.343740600+00:00', 'color: #6b7280; font-size: 10px;');
-        console.log('%c🛡️ 版權所有 © MemoirFlow - 未經授權禁止存取', 'color: #6b7280; font-size: 10px;');
+            // 添加淡入動畫
+            setTimeout(() => {
+                const timelineContent = timelinePanel.querySelector('.timeline-content');
+                timelineContent.classList.add('fade-in');
+            }, 10);
+        }
+
+        // 隱藏時間軸
+        function hideTimeline() {
+            const timelinePanel = document.getElementById('timelinePanel');
+            const timelineContent = timelinePanel.querySelector('.timeline-content');
+            
+            timelineContent.classList.remove('fade-in');
+            timelineContent.classList.add('fade-out');
+            
+            setTimeout(() => {
+                timelinePanel.classList.add('hidden');
+                timelineContent.classList.remove('fade-out');
+            }, 300);
+        }
+
+        // 顯示使用說明
+        function showHelp() {
+            document.getElementById('helpPanel').classList.remove('hidden');
+        }
+
+        // 隱藏使用說明
+        function hideHelp() {
+            document.getElementById('helpPanel').classList.add('hidden');
+        }
+
+        // 打字機效果
+        function startTypewriter(text) {
+            const element = document.getElementById('eventDescription');
+            element.innerHTML = '';
+            
+            clearTimeout(typewriterTimer);
+            
+            let index = 0;
+            const speed = 50;
+            
+            function typeChar() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    typewriterTimer = setTimeout(typeChar, speed);
+                } else {
+                    // 完成打字，隱藏跳過按鈕
+                    document.getElementById('skipTypingBtn').classList.add('hidden');
+                }
+            }
+            
+            // 顯示跳過按鈕
+            document.getElementById('skipTypingBtn').classList.remove('hidden');
+            typeChar();
+        }
+
+        // 跳過打字機效果
+        function skipTypewriter() {
+            clearTimeout(typewriterTimer);
+            const currentEvent = sortedEvents[currentEventIndex];
+            document.getElementById('eventDescription').textContent = currentEvent.description;
+            document.getElementById('skipTypingBtn').classList.add('hidden');
+        }
+
+        // 開啟全螢幕媒體查看器
+        function openMediaViewer(mediaItem) {
+            const viewer = document.getElementById('mediaViewer');
+            const content = document.getElementById('viewerContent');
+            
+            loadMediaIntoElement(mediaItem, content, false);
+            viewer.classList.remove('hidden');
+        }
+
+        // 關閉全螢幕媒體查看器
+        function closeMediaViewer() {
+            document.getElementById('mediaViewer').classList.add('hidden');
+        }
+
+        // 鍵盤事件處理
+        function handleKeyPress(e) {
+            const viewer = document.getElementById('mediaViewer');
+            const timelinePanel = document.getElementById('timelinePanel');
+            const helpPanel = document.getElementById('helpPanel');
+            const settingsMenu = document.getElementById('settingsMenu');
+            
+            // 如果有面板開啟，只處理 ESC 鍵
+            if (!viewer.classList.contains('hidden') || 
+                !timelinePanel.classList.contains('hidden') || 
+                !helpPanel.classList.contains('hidden') ||
+                !settingsMenu.classList.contains('hidden')) {
+                if (e.key === 'Escape') {
+                    closeMediaViewer();
+                    hideTimeline();
+                    hideHelp();
+                    settingsMenu.classList.add('hidden');
+                }
+                return;
+            }
+            
+            // 如果正在轉場，忽略鍵盤事件
+            if (isTransitioning) return;
+            
+            switch (e.key) {
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    goToEvent(currentEventIndex - 1);
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    goToEvent(currentEventIndex + 1);
+                    break;
+                case 'g':
+                case 'G':
+                    e.preventDefault();
+                    toggleGridMode();
+                    break;
+                case 'Escape':
+                    e.preventDefault();
+                    if (showGrid) {
+                        toggleGridMode();
+                    }
+                    break;
+            }
+        }
+
+        // 輔助函數
+        function getMediaFileName(mediaItem) {
+            const currentEvent = sortedEvents[currentEventIndex];
+            const extension = mediaItem.path.split('.').pop();
+            return `${currentEvent.id}_${mediaItem.id}.${extension}`;
+        }
+
+        function extractYouTubeId(url) {
+            const patterns = [
+                /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/,
+                /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[2] && match[2].length === 11) {
+                    return match[2];
+                }
+            }
+            
+            return null;
+        }
+
+        function showError(title, message) {
+            alert(`${title}: ${message}`);
+        }
+
+        // 初始化 Lucide 圖標
+        lucide.createIcons();
+
+        // 等待 DOM 載入後初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initApp);
+        } else {
+            initApp();
+        }
     </script>
 </body>
 </html>
