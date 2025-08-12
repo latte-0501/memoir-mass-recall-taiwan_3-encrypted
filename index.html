@@ -350,19 +350,7 @@
             flex: 1;
             white-space: nowrap;
             overflow: hidden;
-            position: relative;
             text-overflow: ellipsis;
-        }
-
-        .mobile-title.scrolling {
-            animation: marquee 8s linear infinite;
-        }
-
-        .mobile-title.scrolling::before {
-            content: attr(data-text);
-            position: absolute;
-            white-space: nowrap;
-            animation: marquee 8s linear infinite;
         }
 
         .title-box {
@@ -596,35 +584,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            position: relative;
-        }
-
-        .event-title.scrolling {
-            animation: marquee 6s linear infinite;
-        }
-
-        .event-title.scrolling::before {
-            content: attr(data-text);
-            position: absolute;
-            white-space: nowrap;
-            animation: marquee 6s linear infinite;
-        }
-
-        /* 跑馬燈動畫 */
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* 手機版特定調整 */
-        @media (max-width: 768px) {
-            .mobile-title.scrolling {
-                animation-duration: 10s; /* 手機版稍慢一點 */
-            }
-            
-            .event-title.scrolling {
-                animation-duration: 8s;
-            }
         }
 
         .subtitle-toggle {
@@ -2388,56 +2347,7 @@
                     typeNextChar();
                 });
             }
-
-            // 檢測文字是否溢出並啟用跑馬燈
-            function checkTextOverflow(element) {
-                if (!element) return false;
-                return element.scrollWidth > element.clientWidth;
-            }
-
-            // 啟用/禁用跑馬燈效果
-            function toggleMarquee(element, text) {
-                if (!element) return;
-                
-                element.setAttribute('data-text', text);
-                element.textContent = text;
-                
-                // 移除現有動畫類
-                element.classList.remove('scrolling');
-                
-                // 強制重新計算布局
-                element.offsetHeight;
-                
-                // 檢查是否需要跑馬燈
-                if (checkTextOverflow(element)) {
-                    element.classList.add('scrolling');
-                }
-            }
-
-            // 初始化跑馬燈檢測
-            function initMarqueeDetection() {
-                // 監聽視窗大小變化
-                window.addEventListener('resize', () => {
-                    const mobileTitle = document.querySelector('.mobile-title');
-                    const eventTitle = document.querySelector('.event-title');
-                    
-                    if (mobileTitle) {
-                        toggleMarquee(mobileTitle, mobileTitle.getAttribute('data-text') || mobileTitle.textContent);
-                    }
-                    
-                    if (eventTitle) {
-                        toggleMarquee(eventTitle, eventTitle.getAttribute('data-text') || eventTitle.textContent);
-                    }
-                });
-            }
-
-            // 初始化手機版標題跑馬燈
-            const mobileTitle = document.querySelector('.mobile-title');
-            if (mobileTitle) {
-                const titleText = mobileTitle.textContent;
-                toggleMarquee(mobileTitle, titleText);
-            }
-
+            
             function stopTypewriter() {
                 if (typewriterTimer) {
                     clearTimeout(typewriterTimer);
@@ -2825,7 +2735,7 @@
                 
                 // 更新標題
                 if (elements.eventTitle) {
-                    toggleMarquee(elements.eventTitle, event.title);
+                    elements.eventTitle.textContent = event.title;
                 }
                 
                 // 更新描述（使用打字機效果）
@@ -3384,7 +3294,6 @@
                     
                     // 初始化 UI
                     initEventListeners();
-                    initMarqueeDetection();
                     updateGridToggle();
                     updateSubtitleToggle();
                     updateSubtitleVisibility();
@@ -3479,7 +3388,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-12T17:52:47.958970300+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-12T17:59:39.437943800+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
