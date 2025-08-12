@@ -3474,7 +3474,7 @@
                             elements.loadingScreen.classList.add('hidden');
                         }
                     }, 1000);
-                    
+
                     setTimeout(() => {
                         initExpandableTitle(); // 添加這行
                     }, 100);
@@ -3529,7 +3529,9 @@
                             // 非加密模式或已解密，直接初始化應用程式
                             initializeApp();
                         }
+
                         // 加密模式會透過回調函數初始化
+                        initExpandableTitle(); // 標題可展開性初始化
                         
                     }, 800);
                 }, 1500);
@@ -3554,7 +3556,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-12T18:16:44.369930400+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-12T18:19:07.178751200+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
