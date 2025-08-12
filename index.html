@@ -270,7 +270,7 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 50; /* 提高 header 的 z-index */
+            z-index: 50;
             background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.9) 70%, transparent 100%);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(107, 114, 128, 0.3);
@@ -315,7 +315,7 @@
             transform: scale(1.05);
         }
 
-        /* 🔐 加密狀態指示器 - 可選移除 */
+        /* 🔐 加密狀態指示器 */
         .encryption-indicator {
             position: absolute;
             top: -2px;
@@ -348,9 +348,16 @@
             font-weight: bold;
             text-align: center;
             flex: 1;
-            white-space: nowrap;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            line-height: 1.2;
+            padding: 0 4px;
+            max-height: 2.4em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .title-box {
@@ -362,16 +369,25 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             text-align: center;
             position: relative;
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* 移除標題前的鎖頭圖示 */
         .title-text {
             color: white;
             font-size: 14px;
             font-weight: bold;
-            white-space: nowrap;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            line-height: 1.2;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
+            text-align: center;
         }
 
         .header-right {
@@ -423,7 +439,7 @@
             border: 1px solid rgba(107, 114, 128, 0.3);
         }
 
-        /* 設定選單 - 修正 z-index 問題 */
+        /* 設定選單 */
         .settings-menu {
             position: absolute;
             top: 48px;
@@ -541,7 +557,7 @@
             font-weight: 600;
         }
 
-        /* 移除字幕區域的加密保護水印 */
+        /* 字幕區域 */
         .subtitle-area {
             padding: 12px 16px;
             background: linear-gradient(to right, rgba(31, 41, 55, 0.6), rgba(55, 65, 81, 0.6));
@@ -554,6 +570,7 @@
             opacity: 1;
             position: relative;
             z-index: 10;
+            min-height: 80px;
         }
 
         .subtitle-area.transitioning {
@@ -563,16 +580,20 @@
 
         .subtitle-header {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             gap: 12px;
             margin-bottom: 8px;
+            flex-wrap: wrap;
         }
 
         .event-date {
             color: rgb(209, 213, 219);
             font-size: 12px;
             flex-shrink: 0;
+            white-space: normal;
+            line-height: 1.3;
+            min-width: 80px;
         }
 
         .event-title {
@@ -581,9 +602,14 @@
             font-weight: bold;
             flex: 1;
             min-width: 0;
+            overflow: visible;
+            text-overflow: clip;
+            white-space: normal;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
 
         .subtitle-toggle {
@@ -598,6 +624,13 @@
             font-size: 12px;
             line-height: 1.5;
             transition: opacity 0.3s ease;
+            white-space: normal;
+            overflow: visible;
+            display: -webkit-box;
+            -webkit-line-clamp: 6;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-height: 7.2em;
         }
 
         .typewriter-cursor {
@@ -615,7 +648,7 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            padding-top: 140px;
+            padding-top: 160px;
             transition: all 0.5s ease;
         }
 
@@ -672,7 +705,7 @@
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 比例 */
+            padding-bottom: 56.25%;
             overflow: hidden;
             border-radius: 8px;
         }
@@ -684,55 +717,6 @@
             width: 100%;
             height: 100%;
             border: none;
-        }
-
-        @media (max-width: 768px) {
-            .media-display {
-                inset: 8px; /* 減少邊距 */
-            }
-            
-            .youtube-container {
-                padding-bottom: 56.25%; /* 保持 16:9 比例 */
-                border-radius: 6px;
-            }
-            
-            /* 確保 YouTube 縮圖在手機版正確顯示 */
-            .thumbnail-item {
-                width: 48px;
-                height: 48px;
-                flex-shrink: 0;
-            }
-            
-            .thumbnail-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover; /* 確保圖片填滿容器且不變形 */
-                object-position: center; /* 居中顯示 */
-            }
-            
-            /* 網格模式下的 YouTube 調整 */
-            .grid-item-content {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden; /* 防止內容溢出 */
-            }
-            
-            .grid-item-content .youtube-container {
-                padding-bottom: 100%; /* 網格中使用正方形比例 */
-            }
-        }
-
-        @media (max-width: 480px) {
-            .youtube-container {
-                padding-bottom: 75%; /* 調整為 4:3 比例，更適合小螢幕 */
-            }
-            
-            .media-display {
-                inset: 4px;
-            }
         }
 
         .media-display img,
@@ -798,7 +782,7 @@
             z-index: 20;
         }
 
-        /* 媒體縮圖導航 - 改進顯示邏輯和排列 */
+        /* 媒體縮圖導航 */
         .media-thumbnails {
             width: 80px;
             position: relative;
@@ -863,6 +847,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center;
         }
 
         .thumbnail-video-icon {
@@ -933,6 +918,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .grid-item-content img,
@@ -940,6 +926,10 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .grid-item-content .youtube-container {
+            padding-bottom: 100%;
         }
 
         .grid-item-info {
@@ -965,7 +955,7 @@
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.5);
-            z-index: 101;
+            z-index: 40;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1290,45 +1280,82 @@
             object-fit: contain;
         }
 
-        /* 響應式設計 */
+        /* 響應式設計 - 手機版改進 */
         @media (max-width: 768px) {
             .title-area {
                 display: none;
             }
 
             .mobile-title {
-                display: block;
+                display: -webkit-box;
             }
 
             .header-content {
                 padding: 8px 12px;
-                min-height: 56px;
+                min-height: 64px;
+                align-items: flex-start;
+                padding-top: 12px;
             }
             
             .control-btn {
                 width: 28px;
                 height: 28px;
+                margin-top: 2px;
             }
 
             .subtitle-area {
                 margin: 0 8px 8px 8px;
-                padding: 10px 12px;
+                padding: 12px;
+                min-height: 100px;
+            }
+
+            .subtitle-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
 
             .event-title {
                 font-size: 13px;
+                -webkit-line-clamp: none;
+                max-height: none;
+                width: 100%;
+                margin-bottom: 4px;
             }
 
             .event-date {
                 font-size: 11px;
+                min-width: auto;
+                width: 100%;
             }
 
             .event-description {
                 font-size: 11px;
+                -webkit-line-clamp: 8;
+                max-height: 8.8em;
             }
 
             .main-content {
-                padding-top: 120px;
+                padding-top: 140px;
+            }
+
+            .main-content.grid-mode {
+                padding-top: 100px;
+            }
+
+            .media-display {
+                inset: 8px;
+            }
+            
+            .youtube-container {
+                padding-bottom: 56.25%;
+                border-radius: 6px;
+            }
+            
+            .thumbnail-item {
+                width: 48px;
+                height: 48px;
+                flex-shrink: 0;
             }
 
             /* 手機版：縮圖移到底部 */
@@ -1405,6 +1432,51 @@
 
             .password-subtitle {
                 font-size: 14px;
+            }
+        }
+
+        /* 更小螢幕的進一步優化 */
+        @media (max-width: 480px) {
+            .youtube-container {
+                padding-bottom: 75%;
+            }
+            
+            .media-display {
+                inset: 4px;
+            }
+
+            .mobile-title {
+                font-size: 12px;
+                line-height: 1.1;
+            }
+
+            .event-title {
+                font-size: 12px;
+            }
+
+            .event-date {
+                font-size: 10px;
+            }
+
+            .event-description {
+                font-size: 10px;
+                -webkit-line-clamp: 6;
+                max-height: 6.6em;
+            }
+
+            .header-content {
+                min-height: 60px;
+                padding: 6px 8px;
+            }
+
+            .subtitle-area {
+                margin: 0 6px 6px 6px;
+                padding: 10px;
+                min-height: 90px;
+            }
+
+            .main-content {
+                padding-top: 120px;
             }
         }
 
@@ -1586,6 +1658,7 @@
                 </div>
                 <div class="event-description" id="eventDescription">正在載入加密內容...</div>
             </div>
+
             <!-- 設定選單 -->
             <div class="settings-menu" id="settingsMenu">
                 <div class="settings-item">
@@ -1655,6 +1728,121 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 時間軸面板 -->
+    <div class="timeline-panel" id="timelinePanel">
+        <div class="timeline-content">
+            <div class="timeline-header">
+                <div class="timeline-title">
+                    <i data-lucide="calendar" style="width: 20px; height: 20px;"></i>
+                    時間軸導航
+                </div>
+                <div class="timeline-close" id="timelineClose">
+                    <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+                </div>
+            </div>
+            <div class="timeline-scroll" id="timelineScroll">
+                <div class="timeline-line"></div>
+                <!-- 時間軸項目將由 JavaScript 動態生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 說明面板 -->
+    <div class="help-panel" id="helpPanel">
+        <div class="help-content">
+            <div class="help-header">
+                <div class="help-title">
+                    <i data-lucide="help-circle" style="width: 20px; height: 20px;"></i>
+                    使用說明
+                </div>
+                <div class="timeline-close" id="helpClose">
+                    <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+                </div>
+            </div>
+            
+            <div class="help-section">
+                <h3>🔐 加密保護功能</h3>
+                <div class="help-item">
+                    <div class="help-key">🔒</div>
+                    <span>此回憶錄使用 AES-256-GCM 加密保護</span>
+                </div>
+                <div class="help-item">
+                    <div class="help-key">🛡️</div>
+                    <span>防止未經授權的內容訪問</span>
+                </div>
+                <div class="help-item">
+                    <div class="help-key">🔐</div>
+                    <span>媒體檔案經過混淆處理</span>
+                </div>
+            </div>
+            
+            <div class="help-section">
+                <h3>🎮 基本操作</h3>
+                <div class="help-item">
+                    <div class="help-key">←/→</div>
+                    <span>切換時間節點</span>
+                </div>
+                <div class="help-item">
+                    <div class="help-key">點擊</div>
+                    <span>點擊媒體可全螢幕查看</span>
+                </div>
+                <div class="help-item">
+                    <div class="help-key">拖曳</div>
+                    <span>縮圖列表可上下滑動</span>
+                </div>
+            </div>
+            
+            <div class="help-section">
+                <h3>👁️ 檢視模式</h3>
+                <div class="help-item">
+                    <div style="width: 16px; height: 16px; background: #3b82f6; border-radius: 4px; margin-right: 8px;"></div>
+                    <span><strong>輪播模式</strong> - 逐一瀏覽媒體，適合專注欣賞</span>
+                </div>
+                <div class="help-item">
+                    <div style="width: 16px; height: 16px; background: #10b981; border-radius: 4px; margin-right: 8px;"></div>
+                    <span><strong>網格模式</strong> - 一覽所有媒體，適合快速瀏覽</span>
+                </div>
+            </div>
+            
+            <div class="help-section">
+                <h3>⌨️ 快捷鍵</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                    <div class="help-item">
+                        <div class="help-key">G</div>
+                        <span>切換網格模式</span>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-key">T</div>
+                        <span>開啟時間軸</span>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-key">ESC</div>
+                        <span>關閉面板</span>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-key">Space</div>
+                        <span>播放/暫停</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="help-tip">
+                <h4>🔐 安全提示</h4>
+                <p>此回憶錄受到高級加密保護。內容已使用 AES-256-GCM 加密技術處理，即使在離線狀態下也能確保隱私安全。請妥善保管您的訪問密碼。</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全螢幕媒體檢視器 -->
+    <div class="media-viewer" id="mediaViewer">
+        <div class="media-viewer-close" id="mediaViewerClose">
+            <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+        </div>
+        <div class="media-viewer-content" id="mediaViewerContent">
+            <!-- 媒體內容將由 JavaScript 動態生成 -->
         </div>
     </div>
 
@@ -2046,132 +2234,6 @@
         });
     </script>
 
-    <!-- 時間軸面板 -->
-    <div class="timeline-panel" id="timelinePanel">
-        <div class="timeline-content">
-            <div class="timeline-header">
-                <div class="timeline-title">
-                    <i data-lucide="calendar" style="width: 20px; height: 20px;"></i>
-                    時間軸導航
-                </div>
-                <div class="timeline-close" id="timelineClose">
-                    <i data-lucide="x" style="width: 16px; height: 16px;"></i>
-                </div>
-            </div>
-            <div class="timeline-scroll" id="timelineScroll">
-                <div class="timeline-line"></div>
-                <!-- 時間軸項目將由 JavaScript 動態生成 -->
-            </div>
-        </div>
-    </div>
-
-    <!-- 說明面板 -->
-    <div class="help-panel" id="helpPanel">
-        <div class="help-content">
-            <div class="help-header">
-                <div class="help-title">
-                    <i data-lucide="help-circle" style="width: 20px; height: 20px;"></i>
-                    使用說明
-                </div>
-                <div class="timeline-close" id="helpClose">
-                    <i data-lucide="x" style="width: 16px; height: 16px;"></i>
-                </div>
-            </div>
-            
-            <div class="help-section">
-                <h3>🔐 加密保護功能</h3>
-                <div class="help-item">
-                    <div class="help-key">🔒</div>
-                    <span>此回憶錄使用 AES-256-GCM 加密保護</span>
-                </div>
-                <div class="help-item">
-                    <div class="help-key">🛡️</div>
-                    <span>防止未經授權的內容訪問</span>
-                </div>
-                <div class="help-item">
-                    <div class="help-key">🔐</div>
-                    <span>媒體檔案經過混淆處理</span>
-                </div>
-            </div>
-            
-            <div class="help-section">
-                <h3>🎮 基本操作</h3>
-                <div class="help-item">
-                    <div class="help-key">←/→</div>
-                    <span>切換時間節點</span>
-                </div>
-                <div class="help-item">
-                    <div class="help-key">點擊</div>
-                    <span>點擊媒體可全螢幕查看</span>
-                </div>
-                <div class="help-item">
-                    <div class="help-key">拖曳</div>
-                    <span>縮圖列表可上下滑動</span>
-                </div>
-            </div>
-            
-            <div class="help-section">
-                <h3>👁️ 檢視模式</h3>
-                <div class="help-item">
-                    <div style="width: 16px; height: 16px; background: #3b82f6; border-radius: 4px; margin-right: 8px;"></div>
-                    <span><strong>輪播模式</strong> - 逐一瀏覽媒體，適合專注欣賞</span>
-                </div>
-                <div class="help-item">
-                    <div style="width: 16px; height: 16px; background: #10b981; border-radius: 4px; margin-right: 8px;"></div>
-                    <span><strong>網格模式</strong> - 一覽所有媒體，適合快速瀏覽</span>
-                </div>
-            </div>
-            
-            <div class="help-section">
-                <h3>⌨️ 快捷鍵</h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-                    <div class="help-item">
-                        <div class="help-key">G</div>
-                        <span>切換網格模式</span>
-                    </div>
-                    <div class="help-item">
-                        <div class="help-key">T</div>
-                        <span>開啟時間軸</span>
-                    </div>
-                    <div class="help-item">
-                        <div class="help-key">ESC</div>
-                        <span>關閉面板</span>
-                    </div>
-                    <div class="help-item">
-                        <div class="help-key">Space</div>
-                        <span>播放/暫停</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="help-tip">
-                <h4>🔐 安全提示</h4>
-                <p>此回憶錄受到高級加密保護。內容已使用 AES-256-GCM 加密技術處理，即使在離線狀態下也能確保隱私安全。請妥善保管您的訪問密碼。</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- 全螢幕媒體檢視器 -->
-    <div class="media-viewer" id="mediaViewer">
-        <div class="media-viewer-close" id="mediaViewerClose">
-            <i data-lucide="x" style="width: 20px; height: 20px;"></i>
-        </div>
-        <div class="media-viewer-content" id="mediaViewerContent">
-            <!-- 媒體內容將由 JavaScript 動態生成 -->
-        </div>
-    </div>
-
-    <!-- 數據注入點 -->
-    
-                <script>
-                // 🔐 加密模式：數據將透過解密腳本載入
-                console.log('🔐 加密模式初始化');
-                window.MEMOIR_DATA = null; // 將由解密腳本設定
-                </script>
-            
-
-
-    
     <!-- 主要腳本 -->
     <script>
         (function() {
@@ -2311,1031 +2373,6 @@
                 `;
             }
             
-            // 打字機效果
-            function startTypewriter(text, element, speed = 50) {
-                if (!typewriterEnabled || !text || !element) {
-                    if (element) element.textContent = text || '';
-                    return Promise.resolve();
-                }
-                
-                return new Promise((resolve) => {
-                    typewriterText = text;
-                    typewriterIndex = 0;
-                    isTyping = true;
-                    element.textContent = '';
-                    
-                    // 顯示跳過按鈕
-                    if (elements.skipTypingBtn) {
-                        elements.skipTypingBtn.classList.remove('hidden');
-                    }
-                    
-                    function typeNextChar() {
-                        if (typewriterIndex < typewriterText.length && isTyping) {
-                            element.textContent = typewriterText.slice(0, typewriterIndex + 1) + '|';
-                            typewriterIndex++;
-                            typewriterTimer = setTimeout(typeNextChar, speed);
-                        } else {
-                            element.textContent = typewriterText;
-                            isTyping = false;
-                            if (elements.skipTypingBtn) {
-                                elements.skipTypingBtn.classList.add('hidden');
-                            }
-                            resolve();
-                        }
-                    }
-                    
-                    typeNextChar();
-                });
-            }
-            
-            function stopTypewriter() {
-                if (typewriterTimer) {
-                    clearTimeout(typewriterTimer);
-                    typewriterTimer = null;
-                }
-                isTyping = false;
-                if (elements.skipTypingBtn) {
-                    elements.skipTypingBtn.classList.add('hidden');
-                }
-                if (elements.eventDescription && typewriterText) {
-                    elements.eventDescription.textContent = typewriterText;
-                }
-            }
-            
-            // 初始化事件監聽器
-            function initEventListeners() {
-                console.log('🔧 初始化事件監聽器');
-                
-                // 設定按鈕
-                if (elements.settingsBtn) {
-                    elements.settingsBtn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        toggleSettingsMenu();
-                    });
-                }
-                
-                // 點擊其他地方關閉設定選單
-                document.addEventListener('click', () => {
-                    if (elements.settingsMenu) {
-                        elements.settingsMenu.classList.remove('visible');
-                    }
-                });
-                
-                // 網格切換
-                if (elements.gridToggle) {
-                    elements.gridToggle.addEventListener('click', toggleGridMode);
-                }
-                
-                // 字幕切換
-                if (elements.subtitleToggle) {
-                    elements.subtitleToggle.addEventListener('click', toggleSubtitles);
-                }
-                
-                // 時間軸按鈕
-                if (elements.timelineBtn) {
-                    elements.timelineBtn.addEventListener('click', showTimeline);
-                }
-                
-                // 說明按鈕
-                if (elements.helpBtn) {
-                    elements.helpBtn.addEventListener('click', showHelp);
-                }
-                
-                // 跳過打字效果
-                if (elements.skipTypingBtn) {
-                    elements.skipTypingBtn.addEventListener('click', skipTyping);
-                }
-                
-                // 導航按鈕
-                if (elements.prevEventBtn) {
-                    elements.prevEventBtn.addEventListener('click', () => {
-                        if (currentEventIndex > 0) {
-                            goToEvent(currentEventIndex - 1);
-                        }
-                    });
-                }
-                
-                if (elements.nextEventBtn) {
-                    elements.nextEventBtn.addEventListener('click', () => {
-                        if (MEMOIR_DATA && currentEventIndex < MEMOIR_DATA.events.length - 1) {
-                            goToEvent(currentEventIndex + 1);
-                        }
-                    });
-                }
-                
-                if (elements.prevMediaBtn) {
-                    elements.prevMediaBtn.addEventListener('click', () => {
-                        if (currentMediaIndex > 0) {
-                            goToMedia(currentMediaIndex - 1);
-                        }
-                    });
-                }
-                
-                if (elements.nextMediaBtn) {
-                    elements.nextMediaBtn.addEventListener('click', () => {
-                        const currentEvent = getCurrentEvent();
-                        if (currentEvent && currentMediaIndex < currentEvent.media.length - 1) {
-                            goToMedia(currentMediaIndex + 1);
-                        }
-                    });
-                }
-                
-                // 面板關閉
-                if (elements.timelineClose) {
-                    elements.timelineClose.addEventListener('click', hideTimeline);
-                }
-                
-                if (elements.helpClose) {
-                    elements.helpClose.addEventListener('click', hideHelp);
-                }
-                
-                if (elements.mediaViewerClose) {
-                    elements.mediaViewerClose.addEventListener('click', hideMediaViewer);
-                }
-                
-                // 點擊檢視器背景關閉
-                if (elements.mediaViewer) {
-                    elements.mediaViewer.addEventListener('click', (e) => {
-                        if (e.target === elements.mediaViewer) {
-                            hideMediaViewer();
-                        }
-                    });
-                }
-                
-                // 鍵盤控制
-                document.addEventListener('keydown', handleKeyPress);
-                
-                // 觸控滑動
-                initTouchSwipe();
-            }
-            
-            // 🔐 解密成功回調
-            window.onDecryptionSuccess = function(decryptedData) {
-                console.log('✅ 解密成功');
-                MEMOIR_DATA = decryptedData;
-                isUnlocked = true;
-                
-                // 隱藏密碼模態框
-                if (elements.passwordModal) {
-                    elements.passwordModal.classList.add('hidden');
-                }
-                
-                // 初始化應用程式
-                setTimeout(() => {
-                    initializeApp();
-                }, 500);
-            };
-            
-            // 🔐 解密失敗回調
-            window.onDecryptionError = function(errorMessage) {
-                console.error('❌ 解密失敗:', errorMessage);
-                
-                if (elements.passwordModal && !elements.passwordModal.classList.contains('hidden')) {
-                    // 顯示密碼錯誤
-                    window.showPasswordPrompt(errorMessage || '密碼錯誤，請重新輸入');
-                } else {
-                    showError(`解密失敗: ${errorMessage || '未知錯誤'}`);
-                }
-            };
-            
-            // 切換設定選單
-            function toggleSettingsMenu() {
-                if (elements.settingsMenu) {
-                    elements.settingsMenu.classList.toggle('visible');
-                }
-            }
-            
-            // 切換網格模式
-            function toggleGridMode() {
-                showGrid = !showGrid;
-                updateGridToggle();
-                updateViewMode();
-            }
-            
-            function updateGridToggle() {
-                if (elements.gridToggle) {
-                    if (showGrid) {
-                        elements.gridToggle.classList.add('active');
-                    } else {
-                        elements.gridToggle.classList.remove('active');
-                    }
-                }
-            }
-            
-            function updateViewMode() {
-                if (showGrid) {
-                    if (elements.mediaCarousel) elements.mediaCarousel.style.display = 'none';
-                    if (elements.mediaGrid) elements.mediaGrid.style.display = 'block';
-                    if (elements.mainContent) elements.mainContent.classList.add('grid-mode');
-                    renderGridView();
-                } else {
-                    if (elements.mediaCarousel) elements.mediaCarousel.style.display = 'flex';
-                    if (elements.mediaGrid) elements.mediaGrid.style.display = 'none';
-                    if (elements.mainContent) elements.mainContent.classList.remove('grid-mode');
-                }
-            }
-            
-            // 切換字幕
-            function toggleSubtitles() {
-                showSubtitles = !showSubtitles;
-                updateSubtitleToggle();
-                updateSubtitleVisibility();
-            }
-            
-            function updateSubtitleToggle() {
-                if (elements.subtitleToggle) {
-                    if (showSubtitles) {
-                        elements.subtitleToggle.classList.add('active');
-                    } else {
-                        elements.subtitleToggle.classList.remove('active');
-                    }
-                }
-            }
-            
-            function updateSubtitleVisibility() {
-                if (elements.eventDescription) {
-                    elements.eventDescription.style.display = showSubtitles ? 'block' : 'none';
-                }
-            }
-            
-            // 跳過打字效果
-            function skipTyping() {
-                stopTypewriter();
-            }
-            
-            // 顯示/隱藏面板
-            function showTimeline() {
-                renderTimeline();
-                if (elements.timelinePanel) {
-                    elements.timelinePanel.classList.add('visible');
-                }
-            }
-            
-            function hideTimeline() {
-                if (elements.timelinePanel) {
-                    elements.timelinePanel.classList.remove('visible');
-                }
-            }
-            
-            function showHelp() {
-                if (elements.helpPanel) {
-                    elements.helpPanel.classList.add('visible');
-                }
-            }
-            
-            function hideHelp() {
-                if (elements.helpPanel) {
-                    elements.helpPanel.classList.remove('visible');
-                }
-            }
-            
-            function showMediaViewer(mediaSrc, mediaType) {
-                if (elements.mediaViewerContent) {
-                    elements.mediaViewerContent.innerHTML = '';
-                    
-                    let mediaElement;
-                    if (mediaType === 'image') {
-                        mediaElement = document.createElement('img');
-                        mediaElement.src = mediaSrc;
-                        mediaElement.alt = 'Full screen image';
-                    } else if (mediaType === 'video') {
-                        mediaElement = document.createElement('video');
-                        mediaElement.src = mediaSrc;
-                        mediaElement.controls = true;
-                        mediaElement.autoplay = false;
-                    }
-                    
-                    if (mediaElement) {
-                        elements.mediaViewerContent.appendChild(mediaElement);
-                    }
-                }
-                
-                if (elements.mediaViewer) {
-                    elements.mediaViewer.classList.add('visible');
-                }
-            }
-            
-            function hideMediaViewer() {
-                if (elements.mediaViewer) {
-                    elements.mediaViewer.classList.remove('visible');
-                }
-            }
-            
-            // 獲取當前事件
-            function getCurrentEvent() {
-                if (!MEMOIR_DATA || !MEMOIR_DATA.events) return null;
-                const sortedEvents = getSortedEvents();
-                return sortedEvents[currentEventIndex] || null;
-            }
-            
-            function getSortedEvents() {
-                if (!MEMOIR_DATA || !MEMOIR_DATA.events) return [];
-                return [...MEMOIR_DATA.events].sort((a, b) => 
-                    new Date(a.date).getTime() - new Date(b.date).getTime()
-                );
-            }
-            
-            // 事件導航
-            function goToEvent(eventIndex) {
-                if (!MEMOIR_DATA || !MEMOIR_DATA.events) return;
-                
-                const sortedEvents = getSortedEvents();
-                if (eventIndex < 0 || eventIndex >= sortedEvents.length || eventIndex === currentEventIndex) return;
-                
-                console.log(`📅 切換到事件: ${eventIndex + 1}/${sortedEvents.length}`);
-                
-                // 開始轉場動畫
-                if (elements.subtitleArea) elements.subtitleArea.classList.add('transitioning');
-                if (elements.mainContent) elements.mainContent.classList.add('transitioning');
-                
-                isTransitioning = true;
-                stopTypewriter();
-                
-                setTimeout(() => {
-                    currentEventIndex = eventIndex;
-                    currentMediaIndex = 0;
-                    loadEvent();
-                    
-                    setTimeout(() => {
-                        if (elements.subtitleArea) elements.subtitleArea.classList.remove('transitioning');
-                        if (elements.mainContent) elements.mainContent.classList.remove('transitioning');
-                        isTransitioning = false;
-                    }, 300);
-                }, 150);
-            }
-            
-            // 媒體導航
-            function goToMedia(mediaIndex) {
-                const currentEvent = getCurrentEvent();
-                if (!currentEvent || !currentEvent.media) return;
-                
-                if (mediaIndex < 0 || mediaIndex >= currentEvent.media.length || mediaIndex === currentMediaIndex) return;
-                
-                console.log(`🎬 切換到媒體: ${mediaIndex + 1}/${currentEvent.media.length}`);
-                
-                currentMediaIndex = mediaIndex;
-                displayMedia();
-                updateMediaNavigation();
-                renderThumbnails();
-                
-                if (showGrid) {
-                    renderGridView();
-                }
-            }
-            
-            // 載入事件
-            function loadEvent() {
-                const currentEvent = getCurrentEvent();
-                if (!currentEvent) {
-                    console.warn('⚠️ 沒有當前事件');
-                    return;
-                }
-                
-                console.log(`📅 載入事件: ${currentEvent.title}`);
-                
-                // 更新事件信息
-                updateEventInfo(currentEvent);
-                updateEventNavigation();
-                
-                // 載入媒體
-                displayMedia();
-                updateMediaNavigation();
-                renderThumbnails();
-                
-                if (showGrid) {
-                    renderGridView();
-                }
-            }
-            
-            // 更新事件信息
-            function updateEventInfo(event) {
-                if (elements.currentEventNum) {
-                    elements.currentEventNum.textContent = currentEventIndex + 1;
-                }
-                if (elements.totalEvents) {
-                    elements.totalEvents.textContent = getSortedEvents().length;
-                }
-                if (elements.mediaCount) {
-                    elements.mediaCount.textContent = event.media ? event.media.length : 0;
-                }
-                
-                // 更新日期
-                if (elements.eventDate) {
-                    try {
-                        const eventDate = new Date(event.date).toLocaleDateString('zh-TW', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        });
-                        elements.eventDate.textContent = eventDate;
-                    } catch (e) {
-                        elements.eventDate.textContent = event.date;
-                    }
-                }
-                
-                // 更新標題
-                if (elements.eventTitle) {
-                    elements.eventTitle.textContent = event.title;
-                }
-                
-                // 更新描述（使用打字機效果）
-                if (elements.eventDescription && showSubtitles) {
-                    startTypewriter(event.description, elements.eventDescription);
-                }
-            }
-            
-            // 更新事件導航按鈕
-            function updateEventNavigation() {
-                const totalEvents = getSortedEvents().length;
-                
-                if (elements.prevEventBtn) {
-                    if (currentEventIndex === 0) {
-                        elements.prevEventBtn.classList.add('disabled');
-                    } else {
-                        elements.prevEventBtn.classList.remove('disabled');
-                    }
-                }
-                
-                if (elements.nextEventBtn) {
-                    if (currentEventIndex === totalEvents - 1) {
-                        elements.nextEventBtn.classList.add('disabled');
-                    } else {
-                        elements.nextEventBtn.classList.remove('disabled');
-                    }
-                }
-            }
-            
-            // 顯示媒體
-            function displayMedia() {
-                const currentEvent = getCurrentEvent();
-                if (!currentEvent || !currentEvent.media || currentEvent.media.length === 0) {
-                    showNoMediaMessage();
-                    return;
-                }
-
-                const media = currentEvent.media[currentMediaIndex];
-                if (!media) {
-                    showNoMediaMessage();
-                    return;
-                }
-
-                console.log('🎬 顯示媒體:', media);
-
-                if (elements.mediaDisplay) {
-                    elements.mediaDisplay.innerHTML = '';
-
-                    try {
-                        let mediaElement;
-
-                        if (media.type === 'image' || media.media_type === 'image') {
-                            mediaElement = document.createElement('img');
-                            mediaElement.style.maxWidth = '100%';
-                            mediaElement.style.maxHeight = '100%';
-                            mediaElement.style.objectFit = 'contain';
-                            mediaElement.style.cursor = 'pointer';
-                            mediaElement.alt = media.originalName || media.filename || 'Image';
-
-                            mediaElement.onclick = () => {
-                                showMediaViewer(getMediaSrc(media), 'image');
-                            };
-
-                            mediaElement.onload = () => {
-                                console.log('✅ 圖片載入成功');
-                            };
-
-                            mediaElement.onerror = () => {
-                                console.error('❌ 圖片載入失敗:', media.path);
-                                showMediaError('圖片載入失敗');
-                            };
-
-                        } else if (media.type === 'video' || media.media_type === 'video') {
-                            if (media.isUrl && (media.url?.includes('youtube.com') || media.url?.includes('youtu.be'))) {
-                                // YouTube 影片 - 使用響應式容器
-                                const videoId = extractYouTubeId(media.url);
-                                if (videoId) {
-                                    // 創建響應式容器
-                                    const youtubeContainer = document.createElement('div');
-                                    youtubeContainer.className = 'youtube-container';
-                                    
-                                    const iframe = document.createElement('iframe');
-                                    iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
-                                    iframe.setAttribute('allowfullscreen', '');
-                                    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-                                    iframe.style.border = 'none';
-                                    
-                                    youtubeContainer.appendChild(iframe);
-                                    elements.mediaDisplay.appendChild(youtubeContainer);
-                                    
-                                    console.log('✅ YouTube 影片嵌入成功');
-                                    return;
-                                }
-                            } else {
-                                // 一般影片
-                                mediaElement = document.createElement('video');
-                                mediaElement.style.maxWidth = '100%';
-                                mediaElement.style.maxHeight = '100%';
-                                mediaElement.style.objectFit = 'contain';
-                                mediaElement.style.cursor = 'pointer';
-                                mediaElement.controls = true;
-                                mediaElement.muted = true;
-                                mediaElement.playsInline = true;
-
-                                mediaElement.onclick = () => {
-                                    showMediaViewer(getMediaSrc(media), 'video');
-                                };
-
-                                mediaElement.onloadeddata = () => {
-                                    console.log('✅ 影片載入成功');
-                                };
-
-                                mediaElement.onerror = () => {
-                                    console.error('❌ 影片載入失敗:', media.path);
-                                    showMediaError('影片載入失敗');
-                                };
-                            }
-                        }
-
-                        if (mediaElement) {
-                            mediaElement.src = getMediaSrc(media);
-                            elements.mediaDisplay.appendChild(mediaElement);
-                        }
-
-                    } catch (error) {
-                        console.error('❌ 媒體顯示錯誤:', error);
-                        showMediaError(`媒體顯示錯誤: ${error.message}`);
-                    }
-                }
-            }
-            
-            // 獲取媒體源
-            function getMediaSrc(media) {
-                if (media.isUrl || media.is_url) {
-                    return media.url || media.path;
-                } else {
-                    // 本地媒體檔案
-                    let mediaSrc = media.path;
-                    
-                    // 確保路徑格式正確
-                    if (!mediaSrc.startsWith('./') && !mediaSrc.startsWith('http')) {
-                        if (mediaSrc.startsWith('media/')) {
-                            mediaSrc = './' + mediaSrc;
-                        } else {
-                            mediaSrc = './media/' + (mediaSrc.split('/').pop() || mediaSrc);
-                        }
-                    }
-                    
-                    return mediaSrc;
-                }
-            }
-            
-            // 提取 YouTube ID
-            function extractYouTubeId(url) {
-                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                const match = url.match(regExp);
-                return (match && match[2].length === 11) ? match[2] : null;
-            }
-            
-            // 顯示媒體錯誤
-            function showMediaError(message) {
-                if (elements.mediaDisplay) {
-                    elements.mediaDisplay.innerHTML = `
-                        <div style="text-align: center; color: #ef4444; padding: 40px;">
-                            <div style="font-size: 48px; margin-bottom: 20px;">❌</div>
-                            <div style="font-size: 16px;">${message}</div>
-                        </div>
-                    `;
-                }
-            }
-            
-            // 顯示無媒體訊息
-            function showNoMediaMessage() {
-                if (elements.mediaDisplay) {
-                    const icon = ENCRYPTION_ENABLED ? '🔒' : '📷';
-                    elements.mediaDisplay.innerHTML = `
-                        <div style="text-align: center; color: #9ca3af; padding: 40px;">
-                            <div style="font-size: 48px; margin-bottom: 20px;">${icon}</div>
-                            <div style="font-size: 16px;">此時間節點沒有媒體內容</div>
-                        </div>
-                    `;
-                }
-            }
-            
-            // 更新媒體導航 - 修改顯示邏輯
-            function updateMediaNavigation() {
-                const currentEvent = getCurrentEvent();
-                const mediaCount = currentEvent?.media?.length || 0;
-                
-                // 更新媒體計數器
-                if (elements.mediaCounterOverlay) {
-                    if (mediaCount > 0) {
-                        elements.mediaCounterOverlay.textContent = `${currentMediaIndex + 1} / ${mediaCount}`;
-                        // 修改：只有在多於1個媒體時才顯示計數器
-                        elements.mediaCounterOverlay.style.display = mediaCount > 1 ? 'block' : 'none';
-                    } else {
-                        elements.mediaCounterOverlay.style.display = 'none';
-                    }
-                }
-                
-                // 更新導航按鈕
-                if (elements.prevMediaBtn) {
-                    if (currentMediaIndex === 0 || mediaCount <= 1) {
-                        elements.prevMediaBtn.classList.add('disabled');
-                    } else {
-                        elements.prevMediaBtn.classList.remove('disabled');
-                    }
-                    // 修改：只有在多於1個媒體時才顯示按鈕
-                    elements.prevMediaBtn.style.display = mediaCount > 1 ? 'flex' : 'none';
-                }
-                
-                if (elements.nextMediaBtn) {
-                    if (currentMediaIndex === mediaCount - 1 || mediaCount <= 1) {
-                        elements.nextMediaBtn.classList.add('disabled');
-                    } else {
-                        elements.nextMediaBtn.classList.remove('disabled');
-                    }
-                    // 修改：只有在多於1個媒體時才顯示按鈕
-                    elements.nextMediaBtn.style.display = mediaCount > 1 ? 'flex' : 'none';
-                }
-            }
-            
-            // 渲染縮圖 - 修改為總是顯示，包含單一媒體
-            function renderThumbnails() {
-                const currentEvent = getCurrentEvent();
-                if (!currentEvent || !elements.thumbnailsScroll) return;
-
-                elements.thumbnailsScroll.innerHTML = '';
-
-                if (!currentEvent.media || currentEvent.media.length === 0) {
-                    return;
-                }
-
-                currentEvent.media.forEach((media, index) => {
-                    const thumbnailItem = document.createElement('div');
-                    thumbnailItem.className = `thumbnail-item ${index === currentMediaIndex ? 'active' : ''}`;
-                    thumbnailItem.onclick = () => goToMedia(index);
-
-                    const thumbnailImage = document.createElement('img');
-                    thumbnailImage.className = 'thumbnail-image';
-                    
-                    // 檢查是否為 YouTube 影片，使用 YouTube 縮圖
-                    if ((media.type === 'video' || media.media_type === 'video') && 
-                        media.isUrl && (media.url?.includes('youtube.com') || media.url?.includes('youtu.be'))) {
-                        
-                        const videoId = extractYouTubeId(media.url);
-                        if (videoId) {
-                            // 使用 YouTube 高品質縮圖
-                            thumbnailImage.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-                            thumbnailImage.alt = media.originalName || `YouTube Video ${index + 1}`;
-                            
-                            // 備用縮圖（防止高品質縮圖載入失敗）
-                            thumbnailImage.onerror = () => {
-                                thumbnailImage.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
-                                thumbnailImage.onerror = () => {
-                                    // 最後備用方案
-                                    thumbnailImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIHZpZXdCb3g9IjAgMCA1NiA1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiBmaWxsPSIjZmYwMDAwIi8+Cjx0ZXh0IHg9IjI4IiB5PSIzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMjQiPuWwul08L3RleHQ+Cjwvc3ZnPgo=';
-                                };
-                            };
-                        }
-                    } else {
-                        // 非 YouTube 影片，使用原來的邏輯
-                        thumbnailImage.src = getMediaSrc(media);
-                        thumbnailImage.alt = media.originalName || `Media ${index + 1}`;
-                        
-                        thumbnailImage.onerror = () => {
-                            thumbnailImage.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNTYiIHZpZXdCb3g9IjAgMCA1NiA1NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjU2IiBoZWlnaHQ9IjU2IiBmaWxsPSIjMzc0MTUxIi8+Cjx0ZXh0IHg9IjI4IiB5PSIzMiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iIzlDQTNBRiIgZm9udC1zaXplPSIyNCI+8J+TtwopPC90ZXh0Pgo8L3N2Zz4K';
-                        };
-                    }
-
-                    thumbnailItem.appendChild(thumbnailImage);
-
-                    // 影片圖標
-                    if (media.type === 'video' || media.media_type === 'video') {
-                        const videoIcon = document.createElement('div');
-                        videoIcon.className = 'thumbnail-video-icon';
-                        videoIcon.innerHTML = '<i data-lucide="play" style="width: 8px; height: 8px;"></i>';
-                        thumbnailItem.appendChild(videoIcon);
-                    }
-
-                    // 索引
-                    const thumbnailIndex = document.createElement('div');
-                    thumbnailIndex.className = 'thumbnail-index';
-                    thumbnailIndex.textContent = index + 1;
-                    thumbnailItem.appendChild(thumbnailIndex);
-
-                    elements.thumbnailsScroll.appendChild(thumbnailItem);
-                });
-
-                // 重新初始化圖標
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
-
-            // 渲染網格視圖
-            function renderGridView() {
-                const currentEvent = getCurrentEvent();
-                if (!currentEvent || !elements.gridContainer) return;
-
-                elements.gridContainer.innerHTML = '';
-
-                if (!currentEvent.media || currentEvent.media.length === 0) {
-                    const icon = ENCRYPTION_ENABLED ? '🔒' : '📷';
-                    elements.gridContainer.innerHTML = `
-                        <div style="grid-column: 1 / -1; text-align: center; color: #9ca3af; padding: 40px;">
-                            <div style="font-size: 48px; margin-bottom: 20px;">${icon}</div>
-                            <div>此時間節點沒有媒體內容</div>
-                        </div>
-                    `;
-                    return;
-                }
-
-                currentEvent.media.forEach((media, index) => {
-                    const gridItem = document.createElement('div');
-                    gridItem.className = `grid-item ${index === currentMediaIndex ? 'active' : ''}`;
-
-                    const gridContent = document.createElement('div');
-                    gridContent.className = 'grid-item-content';
-
-                    // 檢查是否為 YouTube 影片
-                    if ((media.type === 'video' || media.media_type === 'video') && 
-                        media.isUrl && (media.url?.includes('youtube.com') || media.url?.includes('youtu.be'))) {
-                        
-                        const videoId = extractYouTubeId(media.url);
-                        if (videoId) {
-                            const mediaElement = document.createElement('img');
-                            mediaElement.src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-                            mediaElement.alt = media.originalName || `YouTube Video ${index + 1}`;
-                            
-                            mediaElement.onerror = () => {
-                                mediaElement.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
-                            };
-                            
-                            gridContent.appendChild(mediaElement);
-                        }
-                    } else {
-                        // 非 YouTube 內容
-                        const mediaElement = document.createElement('img');
-                        mediaElement.src = getMediaSrc(media);
-                        mediaElement.alt = media.originalName || `Media ${index + 1}`;
-
-                        mediaElement.onerror = () => {
-                            mediaElement.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMzc0MTUxIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMTEwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjOUNBM0FGIiBmb250LXNpemU9IjQ4Ij7wn5O3PC90ZXh0Pgo8L3N2Zz4K';
-                        };
-                        
-                        gridContent.appendChild(mediaElement);
-                    }
-
-                    gridItem.appendChild(gridContent);
-
-                    // 媒體信息
-                    const gridInfo = document.createElement('div');
-                    gridInfo.className = 'grid-item-info';
-
-                    const gridName = document.createElement('div');
-                    gridName.className = 'grid-item-name';
-                    gridName.textContent = media.originalName || media.filename || `媒體 ${index + 1}`;
-                    gridInfo.appendChild(gridName);
-
-                    gridItem.appendChild(gridInfo);
-
-                    // 影片圖標
-                    if (media.type === 'video' || media.media_type === 'video') {
-                        const videoIcon = document.createElement('div');
-                        videoIcon.style.cssText = `
-                            position: absolute;
-                            top: 8px;
-                            right: 8px;
-                            background: rgba(17, 24, 39, 0.8);
-                            border: 1px solid rgba(107, 114, 128, 0.5);
-                            border-radius: 50%;
-                            padding: 4px;
-                            color: white;
-                        `;
-                        videoIcon.innerHTML = '<i data-lucide="play" style="width: 12px; height: 12px;"></i>';
-                        gridItem.appendChild(videoIcon);
-                    }
-
-                    // 事件監聽
-                    gridItem.onclick = () => goToMedia(index);
-                    gridItem.ondblclick = () => {
-                        if ((media.type === 'video' || media.media_type === 'video') && 
-                            media.isUrl && (media.url?.includes('youtube.com') || media.url?.includes('youtu.be'))) {
-                            // YouTube 影片直接在當前視圖播放，不用全螢幕檢視器
-                            goToMedia(index);
-                        } else {
-                            showMediaViewer(getMediaSrc(media), media.type || media.media_type || 'image');
-                        }
-                    };
-
-                    elements.gridContainer.appendChild(gridItem);
-                });
-
-                // 重新初始化圖標
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
-            
-            // 渲染時間軸
-            function renderTimeline() {
-                if (!MEMOIR_DATA || !elements.timelineScroll) return;
-                
-                const sortedEvents = getSortedEvents();
-                elements.timelineScroll.innerHTML = '<div class="timeline-line"></div>';
-                
-                sortedEvents.forEach((event, index) => {
-                    const timelineItem = document.createElement('div');
-                    timelineItem.className = `timeline-item ${index === currentEventIndex ? 'active' : ''}`;
-                    
-                    timelineItem.innerHTML = `
-                        <div class="timeline-node"></div>
-                        <div class="timeline-event">
-                            <div class="timeline-event-content">
-                                <div class="timeline-event-header">
-                                    <div class="timeline-event-date">${new Date(event.date).toLocaleDateString('zh-TW')}</div>
-                                    <div class="timeline-event-title">${event.title}</div>
-                                </div>
-                                <div class="timeline-event-description">${event.description}</div>
-                                <div class="timeline-event-media">
-                                    <i data-lucide="grid-3x3" style="width: 12px; height: 12px;"></i>
-                                    ${event.media ? event.media.length : 0} 個媒體
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    
-                    timelineItem.onclick = () => {
-                        goToEvent(index);
-                        hideTimeline();
-                    };
-                    
-                    elements.timelineScroll.appendChild(timelineItem);
-                });
-                
-                // 重新初始化圖標
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
-            
-            // 鍵盤控制
-            function handleKeyPress(e) {
-                // 如果有面板開啟，只處理 ESC 鍵
-                if (elements.timelinePanel?.classList.contains('visible') || 
-                    elements.helpPanel?.classList.contains('visible') || 
-                    elements.mediaViewer?.classList.contains('visible')) {
-                    if (e.key === 'Escape') {
-                        e.preventDefault();
-                        hideTimeline();
-                        hideHelp();
-                        hideMediaViewer();
-                    }
-                    return;
-                }
-                
-                switch (e.key) {
-                    case 'ArrowLeft':
-                        e.preventDefault();
-                        if (currentEventIndex > 0) {
-                            goToEvent(currentEventIndex - 1);
-                        }
-                        break;
-                    case 'ArrowRight':
-                        e.preventDefault();
-                        if (MEMOIR_DATA && currentEventIndex < getSortedEvents().length - 1) {
-                            goToEvent(currentEventIndex + 1);
-                        }
-                        break;
-                    case 'g':
-                    case 'G':
-                        e.preventDefault();
-                        toggleGridMode();
-                        break;
-                    case 't':
-                    case 'T':
-                        e.preventDefault();
-                        showTimeline();
-                        break;
-                    case 'h':
-                    case 'H':
-                    case '?':
-                        e.preventDefault();
-                        showHelp();
-                        break;
-                    case 'Escape':
-                        e.preventDefault();
-                        if (showGrid) {
-                            toggleGridMode();
-                        }
-                        break;
-                    case ' ':
-                        e.preventDefault();
-                        // 播放/暫停影片
-                        const video = elements.mediaDisplay?.querySelector('video');
-                        if (video) {
-                            if (video.paused) {
-                                video.play();
-                            } else {
-                                video.pause();
-                            }
-                        }
-                        break;
-                }
-            }
-            
-            // 觸控滑動支援
-            function initTouchSwipe() {
-                let touchStartX = 0;
-                let touchEndX = 0;
-                const minSwipeDistance = 50;
-                
-                const swipeArea = elements.subtitleArea || document.body;
-                
-                swipeArea.addEventListener('touchstart', (e) => {
-                    touchStartX = e.touches[0].clientX;
-                }, { passive: true });
-                
-                swipeArea.addEventListener('touchend', (e) => {
-                    touchEndX = e.changedTouches[0].clientX;
-                    const deltaX = touchEndX - touchStartX;
-                    
-                    if (Math.abs(deltaX) > minSwipeDistance) {
-                        if (deltaX > 0 && currentEventIndex > 0) {
-                            goToEvent(currentEventIndex - 1);
-                        } else if (deltaX < 0 && MEMOIR_DATA && currentEventIndex < getSortedEvents().length - 1) {
-                            goToEvent(currentEventIndex + 1);
-                        }
-                    }
-                }, { passive: true });
-            }
-            
-            // 初始化應用程式
-            function initializeApp() {
-                console.log('🚀 初始化回憶錄應用程式');
-                
-                try {
-                    // 檢查數據
-                    if (!MEMOIR_DATA) {
-                        if (window.MEMOIR_DATA) {
-                            MEMOIR_DATA = window.MEMOIR_DATA;
-                        } else {
-                            throw new Error('MEMOIR_DATA 未定義');
-                        }
-                    }
-                    
-                    console.log('📊 載入的回憶錄數據:', {
-                        name: MEMOIR_DATA.chineseName,
-                        events: MEMOIR_DATA.events ? MEMOIR_DATA.events.length : 0,
-                        encrypted: ENCRYPTION_ENABLED
-                    });
-                    
-                    // 顯示主應用程式
-                    if (elements.app) elements.app.classList.remove('hidden');
-                    
-                    // 初始化 UI
-                    initEventListeners();
-                    updateGridToggle();
-                    updateSubtitleToggle();
-                    updateSubtitleVisibility();
-                    
-                    // 載入第一個事件
-                    if (MEMOIR_DATA.events && MEMOIR_DATA.events.length > 0) {
-                        loadEvent();
-                    } else {
-                        console.log('📝 沒有事件數據');
-                        showEmptyState();
-                    }
-                    
-                    // 隱藏載入畫面
-                    setTimeout(() => {
-                        if (elements.loadingScreen) {
-                            elements.loadingScreen.classList.add('hidden');
-                        }
-                    }, 1000);
-                    
-                    console.log('✅ 回憶錄應用程式初始化完成');
-                    
-                } catch (error) {
-                    console.error('❌ 應用程式初始化失敗:', error);
-                    showError(`應用程式初始化失敗: ${error.message}`);
-                }
-            }
-            
-            // 顯示空狀態
-            function showEmptyState() {
-                if (elements.mediaDisplay) {
-                    const icon = ENCRYPTION_ENABLED ? '🔒' : '📖';
-                    const status = ENCRYPTION_ENABLED ? '加密回憶錄已載入' : '回憶錄已載入';
-                    elements.mediaDisplay.innerHTML = `
-                        <div style="text-align: center; color: #9ca3af; padding: 40px;">
-                            <div style="font-size: 48px; margin-bottom: 20px;">${icon}</div>
-                            <div style="font-size: 18px; margin-bottom: 10px;">${status}</div>
-                            <div style="font-size: 14px;">但暫時沒有時間節點內容</div>
-                        </div>
-                    `;
-                }
-            }
-            
             // 主要初始化流程
             document.addEventListener('DOMContentLoaded', function() {
                 console.log('🔒 MemoirFlow 加密回憶錄載入中...');
@@ -3369,6 +2406,73 @@
                 }, 1500);
             });
             
+            // 初始化應用程式
+            function initializeApp() {
+                console.log('🚀 初始化回憶錄應用程式');
+                
+                try {
+                    // 檢查數據
+                    if (!MEMOIR_DATA) {
+                        if (window.MEMOIR_DATA) {
+                            MEMOIR_DATA = window.MEMOIR_DATA;
+                        } else {
+                            throw new Error('MEMOIR_DATA 未定義');
+                        }
+                    }
+                    
+                    console.log('📊 載入的回憶錄數據:', {
+                        name: MEMOIR_DATA.chineseName,
+                        events: MEMOIR_DATA.events ? MEMOIR_DATA.events.length : 0,
+                        encrypted: ENCRYPTION_ENABLED
+                    });
+                    
+                    // 顯示主應用程式
+                    if (elements.app) elements.app.classList.remove('hidden');
+                    
+                    // 隱藏載入畫面
+                    setTimeout(() => {
+                        if (elements.loadingScreen) {
+                            elements.loadingScreen.classList.add('hidden');
+                        }
+                    }, 1000);
+                    
+                    console.log('✅ 回憶錄應用程式初始化完成');
+                    
+                } catch (error) {
+                    console.error('❌ 應用程式初始化失敗:', error);
+                    showError(`應用程式初始化失敗: ${error.message}`);
+                }
+            }
+            
+            // 🔐 解密成功回調
+            window.onDecryptionSuccess = function(decryptedData) {
+                console.log('✅ 解密成功');
+                MEMOIR_DATA = decryptedData;
+                isUnlocked = true;
+                
+                // 隱藏密碼模態框
+                if (elements.passwordModal) {
+                    elements.passwordModal.classList.add('hidden');
+                }
+                
+                // 初始化應用程式
+                setTimeout(() => {
+                    initializeApp();
+                }, 500);
+            };
+            
+            // 🔐 解密失敗回調
+            window.onDecryptionError = function(errorMessage) {
+                console.error('❌ 解密失敗:', errorMessage);
+                
+                if (elements.passwordModal && !elements.passwordModal.classList.contains('hidden')) {
+                    // 顯示密碼錯誤
+                    window.showPasswordPrompt(errorMessage || '密碼錯誤，請重新輸入');
+                } else {
+                    showError(`解密失敗: ${errorMessage || '未知錯誤'}`);
+                }
+            };
+            
             // 錯誤處理
             window.addEventListener('error', function(e) {
                 console.error('❌ 頁面錯誤:', e.error);
@@ -3386,9 +2490,18 @@
         })();
     </script>
     
+    <!-- 數據注入點 -->
+    
+                <script>
+                // 🔐 加密模式：數據將透過解密腳本載入
+                console.log('🔐 加密模式初始化');
+                window.MEMOIR_DATA = null; // 將由解密腳本設定
+                </script>
+            
+    
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-12T08:43:56.806360400+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-12T16:51:56.214749200+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
