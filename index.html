@@ -934,50 +934,72 @@
                 if (!elements.headerContent || !elements.header) return;
                 
                 if (isHeaderCollapsed) {
-                    // 收合動畫
-                    const currentHeight = elements.headerContent.offsetHeight;
+                    // 收合動畫 - 將所有尺寸設為 0
+                    const currentHeight = elements.headerContent.scrollHeight;
                     
-                    // 先設置當前高度
+                    // 設置初始狀態
                     elements.headerContent.style.height = currentHeight + 'px';
                     elements.headerContent.style.overflow = 'hidden';
                     
                     // 強制重繪
                     elements.headerContent.offsetHeight;
                     
-                    // 開始收合動畫
-                    elements.headerContent.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    // 開始收合動畫 - 所有尺寸都設為 0
+                    elements.headerContent.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
                     elements.headerContent.style.height = '0px';
+                    elements.headerContent.style.minHeight = '0px';
+                    elements.headerContent.style.maxHeight = '0px';
                     elements.headerContent.style.paddingTop = '0px';
                     elements.headerContent.style.paddingBottom = '0px';
+                    elements.headerContent.style.paddingLeft = '0px';
+                    elements.headerContent.style.paddingRight = '0px';
                     elements.headerContent.style.marginTop = '0px';
                     elements.headerContent.style.marginBottom = '0px';
+                    elements.headerContent.style.marginLeft = '0px';
+                    elements.headerContent.style.marginRight = '0px';
+                    elements.headerContent.style.borderTopWidth = '0px';
+                    elements.headerContent.style.borderBottomWidth = '0px';
                     elements.headerContent.style.opacity = '0';
+                    elements.headerContent.style.transform = 'scaleY(0)';
                     
-                    // 動畫完成後設置 pointer-events
+                    // 動畫完成後設置 pointer-events 和 visibility
                     setTimeout(() => {
-                        elements.headerContent.style.pointerEvents = 'none';
-                        elements.headerContent.style.visibility = 'hidden';
-                    }, 300);
+                        if (isHeaderCollapsed) { // 確保狀態沒有改變
+                            elements.headerContent.style.pointerEvents = 'none';
+                            elements.headerContent.style.visibility = 'hidden';
+                            elements.headerContent.style.display = 'none';
+                        }
+                    }, 400);
                     
                     elements.header.classList.add('collapsed');
                     updateToggleButtonIcon(true);
                     console.log('📤 Header 已收合');
                     
                 } else {
-                    // 展開動畫
+                    // 展開動畫 - 恢復所有原始樣式
+                    elements.headerContent.style.display = 'flex';
                     elements.headerContent.style.visibility = 'visible';
                     elements.headerContent.style.pointerEvents = 'all';
-                    elements.headerContent.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    elements.headerContent.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
                     
-                    // 恢復原始樣式
+                    // 恢復原始樣式（從 CSS 中讀取）
                     elements.headerContent.style.height = 'auto';
+                    elements.headerContent.style.minHeight = '60px'; // 對應 CSS 中的 min-height
+                    elements.headerContent.style.maxHeight = 'none';
                     elements.headerContent.style.paddingTop = '12px';
                     elements.headerContent.style.paddingBottom = '12px';
-                    elements.headerContent.style.marginTop = '';
-                    elements.headerContent.style.marginBottom = '';
+                    elements.headerContent.style.paddingLeft = '16px';
+                    elements.headerContent.style.paddingRight = '16px';
+                    elements.headerContent.style.marginTop = '0px';
+                    elements.headerContent.style.marginBottom = '0px';
+                    elements.headerContent.style.marginLeft = '0px';
+                    elements.headerContent.style.marginRight = '0px';
+                    elements.headerContent.style.borderTopWidth = '';
+                    elements.headerContent.style.borderBottomWidth = '';
                     elements.headerContent.style.opacity = '1';
+                    elements.headerContent.style.transform = 'scaleY(1)';
                     
-                    // 計算自然高度並設置
+                    // 計算自然高度並設置動畫
                     const naturalHeight = elements.headerContent.scrollHeight;
                     elements.headerContent.style.height = '0px';
                     elements.headerContent.offsetHeight; // 強制重繪
@@ -985,9 +1007,12 @@
                     
                     // 動畫完成後設置為 auto
                     setTimeout(() => {
-                        elements.headerContent.style.height = 'auto';
-                        elements.headerContent.style.overflow = '';
-                    }, 300);
+                        if (!isHeaderCollapsed) { // 確保狀態沒有改變
+                            elements.headerContent.style.height = 'auto';
+                            elements.headerContent.style.overflow = '';
+                            elements.headerContent.style.transition = '';
+                        }
+                    }, 400);
                     
                     elements.header.classList.remove('collapsed');
                     updateToggleButtonIcon(false);
@@ -2418,7 +2443,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T17:24:05.308541800+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T17:30:57.368345100+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
