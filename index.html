@@ -86,34 +86,37 @@
     <div class="container hidden" id="app">
         <!-- 標題列 -->
         <div class="header">
-            <!-- 標題 -->
+            <!-- 標題容器 -->
             <div id="title-container">
                 <!-- 桌面版標題 -->
                 <div class="title-area">
                     <div class="title-box">
                         <div class="title-text truncate-one-line">台灣大罷免運動始末</div>
-                        <!-- 新增：展開/收合按鈕 -->
-                        <button class="header-toggle-btn" id="headerToggleBtn" title="展開/收合控制面板">
-                            <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
+                        <!-- 展開/收合按鈕 -->
+                        <button class="header-toggle-btn" id="headerToggleBtn" title="收合控制面板">
+                            <i data-lucide="chevron-down" style="width: 14px; height: 14px;"></i>
                         </button>
                     </div>
                 </div>
+                
                 <!-- 手機版標題 -->
-                <div class="mobile-title truncate-one-line">台灣大罷免運動始末</div>
-                <!-- 手機版也加入按鈕 -->
-                <button class="header-toggle-btn mobile" id="mobileHeaderToggleBtn" title="展開/收合控制面板">
-                    <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
-                </button>
+                <div class="mobile-title truncate-one-line">
+                    台灣大罷免運動始末
+                    <!-- 手機版按鈕 -->
+                    <button class="header-toggle-btn mobile" id="mobileHeaderToggleBtn" title="收合控制面板">
+                        <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
+                    </button>
+                </div>
             </div>
 
             <!-- header-content 區域（可展開/收合） -->
             <div class="header-content" id="headerContent">
+                <!-- 現有的 header-content 內容保持不變 -->
                 <!-- 左側控制按鈕 -->
                 <div class="header-left">
                     <!-- 設定按鈕 -->
                     <div class="control-btn" id="settingsBtn" title="設定選單">
                         <i data-lucide="settings" style="width: 14px; height: 14px;"></i>
-                        <!-- 🔐 加密狀態指示器 -->
                         <div class="encryption-indicator" title="內容已加密保護"></div>
                     </div>
                     
@@ -951,6 +954,37 @@
                 }
             }
 
+            // 更新切換按鈕圖示
+            function updateToggleButtonIcon(collapsed) {
+                const buttons = [elements.headerToggleBtn, elements.mobileHeaderToggleBtn];
+                
+                buttons.forEach(btn => {
+                    if (btn) {
+                        const icon = btn.querySelector('i[data-lucide]');
+                        if (icon) {
+                            if (collapsed) {
+                                btn.classList.add('collapsed');
+                                btn.title = '展開控制面板';
+                                icon.setAttribute('data-lucide', 'chevron-up');
+                            } else {
+                                btn.classList.remove('collapsed');
+                                btn.title = '收合控制面板';
+                                icon.setAttribute('data-lucide', 'chevron-down');
+                            }
+                        }
+                    }
+                });
+                
+                // 重新初始化 Lucide 圖標
+                if (typeof lucide !== 'undefined') {
+                    try {
+                        lucide.createIcons();
+                    } catch (e) {
+                        console.warn('⚠️ Lucide 圖標更新失敗:', e);
+                    }
+                }
+            }
+
             // 🔐 加密檢測和初始化
             function initializeEncryption() {
                 console.log('🔐 初始化加密系統，狀態:', ENCRYPTION_ENABLED);
@@ -1236,6 +1270,9 @@
             // 初始化事件監聽器
             function initEventListeners() {
                 console.log('🔧 初始化事件監聽器');
+
+                // 初始化 Header 收合功能
+                initHeaderCollapse();
 
                 // 動態調整內容高度
                 document.addEventListener('DOMContentLoaded', syncMainContentOffset);
@@ -2333,7 +2370,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T16:27:46.442528400+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T16:36:59.191120100+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
