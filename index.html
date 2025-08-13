@@ -246,6 +246,25 @@
         </div>
     </div>
 
+    <div class="progress-indicator" id="progressIndicator">
+        <div class="progress-container">
+            <div class="progress-info">
+                <div class="progress-label">
+                    <span>📍</span>
+                    <span>時間軸進度</span>
+                </div>
+                <div class="progress-stats">
+                    <span id="currentPosition">1</span>/<span id="totalEvents">1</span>
+                    <span>•</span>
+                    <span id="currentDate">載入中...</span>
+                </div>
+            </div>
+            <div class="progress-dots" id="progressDots">
+                <!-- 格子會由 JavaScript 動態生成 -->
+            </div>
+        </div>
+    </div>
+
     <!-- 🔐 解密腳本注入點 - 關鍵！這是解密腳本的注入位置 -->
     
         <script>
@@ -696,23 +715,7 @@
                     <i data-lucide="x" style="width: 16px; height: 16px;"></i>
                 </div>
             </div>
-            
-            <div class="help-section">
-                <h3>🔐 加密保護功能</h3>
-                <div class="help-item">
-                    <div class="help-key">🔒</div>
-                    <span>此回憶錄使用 AES-256-GCM 加密保護</span>
-                </div>
-                <div class="help-item">
-                    <div class="help-key">🛡️</div>
-                    <span>防止未經授權的內容訪問</span>
-                </div>
-                <div class="help-item">
-                    <div class="help-key">🔐</div>
-                    <span>媒體檔案經過混淆處理</span>
-                </div>
-            </div>
-            
+
             <div class="help-section">
                 <h3>🎮 基本操作</h3>
                 <div class="help-item">
@@ -760,9 +763,37 @@
                         <div class="help-key">Space</div>
                         <span>播放/暫停</span>
                     </div>
+                    <div class="help-item">
+                        <div class="help-key">Home</div>
+                        <span>跳到第一個事件</span>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-key">End</div>
+                        <span>跳到最後一個事件</span>
+                    </div>
                 </div>
             </div>
-            
+
+            <div class="help-section">
+                <h3>📊 進度指示器</h3>
+                <div class="help-item">
+                    <div class="help-key">🔵</div>
+                    <span>當前位置 - 發光的藍色格子</span>
+                </div>
+                <div class="help-item">
+                    <div class="help-key">🟢</div>
+                    <span>已瀏覽 - 綠色格子表示已看過的事件</span>
+                </div>
+                <div class="help-item">
+                    <div class="help-key">⚪</div>
+                    <span>未瀏覽 - 灰色格子表示未看過的事件</span>
+                </div>
+                <div class="help-item">
+                    <div class="help-key">點擊</div>
+                    <span>點擊任意格子可直接跳轉到該事件</span>
+                </div>
+            </div>            
+
             <div class="help-tip">
                 <h4>🔐 安全提示</h4>
                 <p>此回憶錄受到高級加密保護。內容已使用 AES-256-GCM 加密技術處理，即使在離線狀態下也能確保隱私安全。請妥善保管您的訪問密碼。</p>
@@ -887,7 +918,125 @@
                 mobileHeaderToggleBtn: document.getElementById('mobileHeaderToggleBtn'),
                 headerContent: document.getElementById('headerContent'),
                 header: document.querySelector('.header'),            
+
+                // 進度指示器
+                progressIndicator: document.getElementById('progressIndicator'),
+                progressDots: document.getElementById('progressDots'),
+                currentPosition: document.getElementById('currentPosition'),
+                totalEvents: document.getElementById('totalEvents'),
+                currentDate: document.getElementById('currentDate'),
             };
+
+            // 渲染進度指示器
+            function renderProgressIndicator() {
+                if (!elements.progressDots || !MEMOIR_DATA || !MEMOIR_DATA.events) return;
+                
+                const sortedEvents = getSortedEvents();
+                const totalCount = sortedEvents.length;
+                
+                // 更新統計信息
+                if (elements.currentPosition) {
+                    elements.currentPosition.textContent = currentEventIndex + 1;
+                }
+                if (elements.totalEvents) {
+                    elements.totalEvents.textContent = totalCount;
+                }
+                
+                // 更新當前日期
+                if (elements.currentDate && sortedEvents[currentEventIndex]) {
+                    const currentEvent = sortedEvents[currentEventIndex];
+                    try {
+                        const eventDate = new Date(currentEvent.date).toLocaleDateString('zh-TW', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        elements.currentDate.textContent = eventDate;
+                    } catch (e) {
+                        elements.currentDate.textContent = currentEvent.date;
+                    }
+                }
+                
+                // 清空現有格子
+                elements.progressDots.innerHTML = '';
+                
+                // 決定是否使用滾動模式（超過40個格子）
+                const useScrollMode = totalCount > 40;
+                if (useScrollMode) {
+                    elements.progressDots.classList.add('scrollable');
+                } else {
+                    elements.progressDots.classList.remove('scrollable');
+                }
+                
+                // 生成格子
+                for (let i = 0; i < totalCount; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'progress-dot';
+                    
+                    // 設置狀態
+                    if (i < currentEventIndex) {
+                        dot.classList.add('completed');
+                    } else if (i === currentEventIndex) {
+                        dot.classList.add('current');
+                    }
+                    
+                    // 添加工具提示
+                    const event = sortedEvents[i];
+                    if (event) {
+                        try {
+                            const eventDate = new Date(event.date).toLocaleDateString('zh-TW');
+                            const tooltip = `${event.title} - ${eventDate}`;
+                            dot.setAttribute('data-tooltip', tooltip);
+                        } catch (e) {
+                            const tooltip = `${event.title} - ${event.date}`;
+                            dot.setAttribute('data-tooltip', tooltip);
+                        }
+                    }
+                    
+                    // 點擊事件
+                    dot.addEventListener('click', () => {
+                        goToEventFromProgress(i);
+                    });
+                    
+                    elements.progressDots.appendChild(dot);
+                }
+                
+                // 如果使用滾動模式，滾動到當前位置
+                if (useScrollMode) {
+                    setTimeout(() => {
+                        const currentDot = elements.progressDots.children[currentEventIndex];
+                        if (currentDot) {
+                            currentDot.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'nearest',
+                                inline: 'center'
+                            });
+                        }
+                    }, 100);
+                }
+            }
+
+            // 從進度指示器跳轉到事件
+            function goToEventFromProgress(index) {
+                if (!MEMOIR_DATA || !MEMOIR_DATA.events) return;
+                
+                const sortedEvents = getSortedEvents();
+                if (index >= 0 && index < sortedEvents.length) {
+                    // 添加點擊反饋動畫
+                    const dots = document.querySelectorAll('.progress-dot');
+                    if (dots[index]) {
+                        dots[index].style.transform = dots[index].classList.contains('current') ? 'scale(1.6)' : 'scale(1.5)';
+                        setTimeout(() => {
+                            dots[index].style.transform = '';
+                        }, 200);
+                    }
+                    
+                    // 跳轉到指定事件
+                    goToEvent(index);
+                }
+            }
+
+
 
             // 新增：Header 收合狀態管理
             const HEADER_COLLAPSED_KEY = 'memoirflow:header-collapsed';
@@ -1681,6 +1830,9 @@
                     currentMediaIndex = 0;
                     loadEvent();
                     
+                    // 更新進度指示器
+                    renderProgressIndicator();
+                    
                     setTimeout(() => {
                         if (elements.subtitleArea) elements.subtitleArea.classList.remove('transitioning');
                         if (elements.mainContent) elements.mainContent.classList.remove('transitioning');
@@ -1721,6 +1873,9 @@
                 // 更新事件信息
                 updateEventInfo(currentEvent);
                 updateEventNavigation();
+                
+                // 更新進度指示器
+                renderProgressIndicator();
                 
                 // 載入媒體
                 displayMedia();
@@ -2205,7 +2360,7 @@
                     lucide.createIcons();
                 }
             }
-            
+
             // 鍵盤控制
             function handleKeyPress(e) {
                 // 如果有面板開啟，只處理 ESC 鍵
@@ -2221,11 +2376,11 @@
                     return;
                 }
 
-                // ✅ 常見縮放快捷鍵（僅在沒有面板開啟時生效）
+                // 常見縮放快捷鍵
                 if (!(elements.timelinePanel?.classList.contains('visible') ||
                     elements.helpPanel?.classList.contains('visible') ||
                     elements.mediaViewer?.classList.contains('visible'))) {
-                    const withCtrl = (e.ctrlKey || e.metaKey); // macOS 也支援 Command
+                    const withCtrl = (e.ctrlKey || e.metaKey);
                     if (withCtrl && (e.key === '+' || e.key === '=')) {
                         e.preventDefault();
                         setFontSize(fontSize === 'small' ? 'medium' : 'large');
@@ -2254,6 +2409,18 @@
                         e.preventDefault();
                         if (MEMOIR_DATA && currentEventIndex < getSortedEvents().length - 1) {
                             goToEvent(currentEventIndex + 1);
+                        }
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        if (MEMOIR_DATA && MEMOIR_DATA.events) {
+                            goToEvent(0);
+                        }
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        if (MEMOIR_DATA && MEMOIR_DATA.events) {
+                            goToEvent(getSortedEvents().length - 1);
                         }
                         break;
                     case 'g':
@@ -2360,6 +2527,8 @@
                     // 載入第一個事件
                     if (MEMOIR_DATA.events && MEMOIR_DATA.events.length > 0) {
                         loadEvent();
+                        // 初始化進度指示器
+                        renderProgressIndicator();
                     } else {
                         console.log('📝 沒有事件數據');
                         showEmptyState();
@@ -2445,7 +2614,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T17:57:26.389387800+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T18:14:33.334035500+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
