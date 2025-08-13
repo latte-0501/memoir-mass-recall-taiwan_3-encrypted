@@ -92,12 +92,22 @@
                 <div class="title-area">
                     <div class="title-box">
                         <div class="title-text truncate-one-line">台灣大罷免運動始末</div>
+                        <!-- 新增：展開/收合按鈕 -->
+                        <button class="header-toggle-btn" id="headerToggleBtn" title="展開/收合控制面板">
+                            <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
+                        </button>
                     </div>
                 </div>
                 <!-- 手機版標題 -->
                 <div class="mobile-title truncate-one-line">台灣大罷免運動始末</div>
+                <!-- 手機版也加入按鈕 -->
+                <button class="header-toggle-btn mobile" id="mobileHeaderToggleBtn" title="展開/收合控制面板">
+                    <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
+                </button>
             </div>
-            <div class="header-content">
+
+            <!-- header-content 區域（可展開/收合） -->
+            <div class="header-content" id="headerContent">
                 <!-- 左側控制按鈕 -->
                 <div class="header-left">
                     <!-- 設定按鈕 -->
@@ -112,7 +122,6 @@
                         <i data-lucide="calendar" style="width: 14px; height: 14px;"></i>
                     </div>
                 </div>
-                
                 
                 <!-- 右側導航 -->
                 <div class="header-right">
@@ -868,9 +877,80 @@
                 helpClose: document.getElementById('helpClose'),
                 mediaViewer: document.getElementById('mediaViewer'),
                 mediaViewerClose: document.getElementById('mediaViewerClose'),
-                mediaViewerContent: document.getElementById('mediaViewerContent')
+                mediaViewerContent: document.getElementById('mediaViewerContent'),
+
+                // 新增：展開/收合按鈕
+                headerToggleBtn: document.getElementById('headerToggleBtn'),
+                mobileHeaderToggleBtn: document.getElementById('mobileHeaderToggleBtn'),
+                headerContent: document.getElementById('headerContent'),
+                header: document.querySelector('.header'),            
             };
-            
+
+            // 新增：Header 收合狀態管理
+            const HEADER_COLLAPSED_KEY = 'memoirflow:header-collapsed';
+            let isHeaderCollapsed = localStorage.getItem(HEADER_COLLAPSED_KEY) === 'true';
+
+            // 初始化 Header 收合功能
+            function initHeaderCollapse() {
+                console.log('🔧 初始化 Header 收合功能');
+                
+                // 應用初始狀態
+                applyHeaderCollapseState();
+                
+                // 桌面版按鈕事件
+                if (elements.headerToggleBtn) {
+                    elements.headerToggleBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleHeaderCollapse();
+                    });
+                }
+                
+                // 手機版按鈕事件
+                if (elements.mobileHeaderToggleBtn) {
+                    elements.mobileHeaderToggleBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleHeaderCollapse();
+                    });
+                }
+            }
+
+            // 切換 Header 收合狀態
+            function toggleHeaderCollapse() {
+                isHeaderCollapsed = !isHeaderCollapsed;
+                localStorage.setItem(HEADER_COLLAPSED_KEY, String(isHeaderCollapsed));
+                applyHeaderCollapseState();
+                
+                // 延遲調整主內容高度，等待動畫完成
+                setTimeout(() => {
+                    syncMainContentOffset();
+                }, 400);
+            }
+
+            // 應用 Header 收合狀態
+            function applyHeaderCollapseState() {
+                if (!elements.headerContent || !elements.header) return;
+                
+                if (isHeaderCollapsed) {
+                    // 收合狀態
+                    elements.headerContent.classList.add('collapsed');
+                    elements.header.classList.add('collapsed');
+                    
+                    // 更新按鈕圖示
+                    updateToggleButtonIcon(true);
+                    
+                    console.log('📤 Header 已收合');
+                } else {
+                    // 展開狀態
+                    elements.headerContent.classList.remove('collapsed');
+                    elements.header.classList.remove('collapsed');
+                    
+                    // 更新按鈕圖示
+                    updateToggleButtonIcon(false);
+                    
+                    console.log('📥 Header 已展開');
+                }
+            }
+
             // 🔐 加密檢測和初始化
             function initializeEncryption() {
                 console.log('🔐 初始化加密系統，狀態:', ENCRYPTION_ENABLED);
@@ -2253,7 +2333,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T16:20:05.238686700+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T16:27:46.442528400+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
