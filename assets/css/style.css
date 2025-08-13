@@ -52,58 +52,58 @@ html[data-font="large"] {
 @media (max-width: 768px) {
     :root {
         /* 手機版中字體 */
-        --mf-title-size: 25px;
-        --mf-subtitle-title-size: 25px;
-        --mf-subtitle-text-size: 20px;
-        --mf-date-size: 18px;
+        --mf-title-size: 22px;
+        --mf-subtitle-title-size: 14px;
+        --mf-subtitle-text-size: 12px;
+        --mf-date-size: 11px;
     }
 
     html[data-font="small"] {
         /* 手機版小字體 */
-        --mf-title-size: 20px;
-        --mf-subtitle-title-size: 20px;
-        --mf-subtitle-text-size: 16px;
-        --mf-date-size: 14px;
+        --mf-title-size: 18px;
+        --mf-subtitle-title-size: 12px;
+        --mf-subtitle-text-size: 10px;
+        --mf-date-size: 9px;
     }
 
     html[data-font="medium"] {
         /* 手機版中字體 */
-        --mf-title-size: 25px;
-        --mf-subtitle-title-size: 25px;
-        --mf-subtitle-text-size: 20px;
-        --mf-date-size: 18px;
+        --mf-title-size: 22px;
+        --mf-subtitle-title-size: 14px;
+        --mf-subtitle-text-size: 12px;
+        --mf-date-size: 11px;
     }
 
     html[data-font="large"] {
         /* 手機版大字體 */
-        --mf-title-size: 30px;
-        --mf-subtitle-title-size: 30px;
-        --mf-subtitle-text-size: 24px;
-        --mf-date-size: 20px;
+        --mf-title-size: 28px;
+        --mf-subtitle-title-size: 18px;
+        --mf-subtitle-text-size: 16px;
+        --mf-date-size: 13px;
     }
 }
 
 @media (max-width: 480px) {
     :root {
         /* 超小螢幕調整 */
-        --mf-title-size: 16px;
-        --mf-subtitle-title-size: 16px;
-        --mf-subtitle-text-size: 14px;
-        --mf-date-size: 12px;
+        --mf-title-size: 20px;
+        --mf-subtitle-title-size: 13px;
+        --mf-subtitle-text-size: 11px;
+        --mf-date-size: 10px;
     }
 
     html[data-font="small"] {
-        --mf-title-size: 20px;
-        --mf-subtitle-title-size: 20px;
-        --mf-subtitle-text-size: 18px;
-        --mf-date-size: 14px;
+        --mf-title-size: 16px;
+        --mf-subtitle-title-size: 11px;
+        --mf-subtitle-text-size: 9px;
+        --mf-date-size: 8px;
     }
 
     html[data-font="large"] {
-        --mf-title-size: 24px;
-        --mf-subtitle-title-size: 24px;
-        --mf-subtitle-text-size: 20px;
-        --mf-date-size: 16px;
+        --mf-title-size: 26px;
+        --mf-subtitle-title-size: 16px;
+        --mf-subtitle-text-size: 14px;
+        --mf-date-size: 12px;
     }
 }
 
@@ -1704,18 +1704,6 @@ body {
     
     .header.collapsed .subtitle-area {
         margin-top: 6px;
-    }
-
-    .event-title {
-        font-size: 13px;
-    }
-
-    .event-date {
-        font-size: 11px;
-    }
-
-    .event-description {
-        font-size: 11px;
     }
 
     /* Media Display */
