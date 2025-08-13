@@ -487,18 +487,17 @@ body {
 }
 
 .header-content.collapsed {
-    display: none;
-    max-height: 0;
-    min-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    opacity: 0;
-    visibility: hidden;
-    border-top: 0;
-    border-bottom: 0;
-    pointer-events: none;
+    max-height: 0 !important;
+    min-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    pointer-events: none !important;
 }
 
 .header-content:not(.collapsed) {
