@@ -1966,3 +1966,106 @@ html[data-font="large"] {
         display: none;
     }
 }
+
+/* 修正 header-content 收合狀態 */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    gap: 8px;
+    min-height: 60px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top;
+}
+
+.header-content.collapsed {
+    /* 完全隱藏且不占用空間 */
+    display: none;
+    /* 或者使用以下方式實現動畫效果 */
+    /*
+    max-height: 0;
+    min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+    opacity: 0;
+    transform: scaleY(0);
+    pointer-events: none;
+    */
+}
+
+/* 如果你想要動畫效果，使用這個版本 */
+.header-content.collapsed-animated {
+    max-height: 0;
+    min-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: scaleY(0);
+    pointer-events: none;
+    border: none;
+}
+
+/* 展開狀態 */
+.header-content:not(.collapsed) {
+    max-height: 200px;
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+/* 移除固定的 padding-top，改為動態調整 */
+.main-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* 移除固定的 padding-top: 140px; */
+    transition: all 0.5s ease;
+    /* 讓內容填滿可用空間 */
+    flex: 1;
+}
+
+/* 根據 header 收合狀態調整間距 */
+.header.collapsed + .main-content {
+    /* 收合時減少上邊距 */
+}
+
+/* 確保字幕區域正確定位 */
+.subtitle-area {
+    padding: 12px 16px;
+    backdrop-filter: blur(4px);
+    border-radius: 12px;
+    margin: 0 16px 12px 16px;
+    border: 1px solid rgba(107, 114, 128, 0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    opacity: 1;
+    position: relative;
+    z-index: 10;
+    /* 確保在收合時有適當的上邊距 */
+    margin-top: 12px;
+}
+
+/* 當 header-content 收合時，減少字幕區域的上邊距 */
+.header.collapsed .subtitle-area {
+    margin-top: 8px;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .main-content {
+        /* 手機版也移除固定高度 */
+    }
+    
+    .subtitle-area {
+        margin: 8px 8px 8px 8px;
+    }
+    
+    .header.collapsed .subtitle-area {
+        margin-top: 6px;
+    }
+}
