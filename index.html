@@ -2178,7 +2178,7 @@
             'use strict';
             
             // 🔐 加密狀態變數
-            let ENCRYPTION_ENABLED = true;
+            let ENCRYPTION_ENABLED = document.querySelector('meta[name="memoir-encryption"]')?.content === 'true';;
             let MEMOIR_DATA = null;
             let isUnlocked = false;
             let currentEventIndex = 0;
@@ -2572,13 +2572,6 @@
                 }
             }
             
-            // 切換網格模式
-            function toggleGridMode() {
-                showGrid = !showGrid;
-                updateGridToggle();
-                updateViewMode();
-            }
-            
             function updateGridToggle() {
                 if (elements.gridToggle) {
                     if (showGrid) {
@@ -2606,6 +2599,7 @@
                     }
                     if (elements.mainContent) elements.mainContent.classList.remove('grid-mode');
                 }
+            }
             
             // 切換字幕
             function toggleSubtitles() {
@@ -3314,7 +3308,7 @@
                         break;
                 }
             }
-            
+
             // 觸控滑動支援
             function initTouchSwipe() {
                 let touchStartX = 0;
@@ -3460,7 +3454,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T08:11:21.413913600+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T08:20:42.862692700+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
