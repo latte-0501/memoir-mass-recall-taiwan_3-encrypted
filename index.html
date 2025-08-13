@@ -934,8 +934,8 @@
                 if (!elements.headerContent || !elements.header) return;
                 
                 if (isHeaderCollapsed) {
-                    // 收合狀態 - 使用動畫版本
-                    elements.headerContent.classList.add('collapsed-animated');
+                    // 收合狀態 - 完全隱藏
+                    elements.headerContent.style.display = 'none';
                     elements.header.classList.add('collapsed');
                     
                     // 更新按鈕圖示
@@ -943,8 +943,8 @@
                     
                     console.log('📤 Header 已收合');
                 } else {
-                    // 展開狀態
-                    elements.headerContent.classList.remove('collapsed-animated');
+                    // 展開狀態 - 恢復顯示
+                    elements.headerContent.style.display = 'flex';
                     elements.header.classList.remove('collapsed');
                     
                     // 更新按鈕圖示
@@ -2377,7 +2377,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T16:44:31.874378800+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T16:53:54.879311500+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
