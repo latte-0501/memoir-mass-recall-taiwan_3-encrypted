@@ -1472,6 +1472,10 @@
         *::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.2);
         }
+
+        /* 動態調整內容高度 */
+        .main-content { padding-top: 0; }            /* 交給 JS 設定 */
+        .main-content.grid-mode { padding-top: 0; }  /* 交給 JS 設定 */
     </style>
 </head>
 <body>
@@ -2290,7 +2294,16 @@
                 
                 return true;
             }
-            
+
+            // 動態調整內容位置高度
+            function syncMainContentOffset() {
+            const header = document.querySelector('.header');
+            const main = document.getElementById('mainContent');
+            if (!header || !main) return;
+            const h = header.offsetHeight;       // 真實高度（包含字幕區）
+            main.style.paddingTop = h + 'px';    // 讓位給 header
+            }
+
             // 更新載入狀態
             function updateLoadingStatus(message) {
                 console.log('🔄 狀態更新:', message);
@@ -2443,7 +2456,11 @@
             // 初始化事件監聽器
             function initEventListeners() {
                 console.log('🔧 初始化事件監聽器');
-                
+
+                // 動態調整內容高度
+                document.addEventListener('DOMContentLoaded', syncMainContentOffset);
+                window.addEventListener('resize', syncMainContentOffset);
+
                 // 設定按鈕
                 if (elements.settingsBtn) {
                     elements.settingsBtn.addEventListener('click', (e) => {
@@ -3488,7 +3505,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T08:38:49.372828300+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T08:43:46.626795600+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
