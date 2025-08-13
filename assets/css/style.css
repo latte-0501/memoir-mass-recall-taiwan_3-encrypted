@@ -15,33 +15,96 @@
     -webkit-touch-callout: none;
 }
 
-/* 全域變數 - 字體大小控制 */
+/* 優化後的全域字體變數 - 更明顯的差異和更好的可讀性 */
 :root {
-    --mf-title-size: 28px;
-    --mf-subtitle-title-size: 18px;
-    --mf-subtitle-text-size: 16px;
-    --mf-date-size: 12px;
+    /* 預設字體大小 (中) */
+    --mf-title-size: 26px;           /* 回憶錄標題 */
+    --mf-subtitle-title-size: 16px;  /* 事件標題 */
+    --mf-subtitle-text-size: 14px;   /* 事件描述 */
+    --mf-date-size: 12px;            /* 日期 */
 }
 
+/* 小字體 - 適合視力較好或喜歡緊湊顯示的用戶 */
 html[data-font="small"] {
-    --mf-title-size: 20px;
-    --mf-subtitle-title-size: 12px;
-    --mf-subtitle-text-size: 10px;
-    --mf-date-size: 11px;
+    --mf-title-size: 20px;           /* 減少 6px */
+    --mf-subtitle-title-size: 13px;  /* 減少 3px */
+    --mf-subtitle-text-size: 11px;   /* 減少 3px */
+    --mf-date-size: 10px;            /* 減少 2px */
 }
 
+/* 中字體 - 預設舒適大小 */
 html[data-font="medium"] {
-    --mf-title-size: 24px;
-    --mf-subtitle-title-size: 14px;
-    --mf-subtitle-text-size: 12px;
-    --mf-date-size: 10px;
+    --mf-title-size: 26px;           /* 預設值 */
+    --mf-subtitle-title-size: 16px;  /* 預設值 */
+    --mf-subtitle-text-size: 14px;   /* 預設值 */
+    --mf-date-size: 12px;            /* 預設值 */
 }
 
+/* 大字體 - 適合視力較弱或喜歡大字的用戶 */
 html[data-font="large"] {
-    --mf-title-size: 30px;
-    --mf-subtitle-title-size: 20px;
-    --mf-subtitle-text-size: 18px;
-    --mf-date-size: 14px;
+    --mf-title-size: 34px;           /* 增加 8px */
+    --mf-subtitle-title-size: 20px;  /* 增加 4px */
+    --mf-subtitle-text-size: 18px;   /* 增加 4px */
+    --mf-date-size: 14px;            /* 增加 2px */
+}
+
+/* 手機版響應式調整 - 確保在小螢幕上也有合適的大小 */
+@media (max-width: 768px) {
+    :root {
+        /* 手機版中字體 */
+        --mf-title-size: 22px;
+        --mf-subtitle-title-size: 14px;
+        --mf-subtitle-text-size: 12px;
+        --mf-date-size: 11px;
+    }
+
+    html[data-font="small"] {
+        /* 手機版小字體 */
+        --mf-title-size: 18px;
+        --mf-subtitle-title-size: 12px;
+        --mf-subtitle-text-size: 10px;
+        --mf-date-size: 9px;
+    }
+
+    html[data-font="medium"] {
+        /* 手機版中字體 */
+        --mf-title-size: 22px;
+        --mf-subtitle-title-size: 14px;
+        --mf-subtitle-text-size: 12px;
+        --mf-date-size: 11px;
+    }
+
+    html[data-font="large"] {
+        /* 手機版大字體 */
+        --mf-title-size: 28px;
+        --mf-subtitle-title-size: 18px;
+        --mf-subtitle-text-size: 16px;
+        --mf-date-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        /* 超小螢幕調整 */
+        --mf-title-size: 20px;
+        --mf-subtitle-title-size: 13px;
+        --mf-subtitle-text-size: 11px;
+        --mf-date-size: 10px;
+    }
+
+    html[data-font="small"] {
+        --mf-title-size: 16px;
+        --mf-subtitle-title-size: 11px;
+        --mf-subtitle-text-size: 9px;
+        --mf-date-size: 8px;
+    }
+
+    html[data-font="large"] {
+        --mf-title-size: 26px;
+        --mf-subtitle-title-size: 16px;
+        --mf-subtitle-text-size: 14px;
+        --mf-date-size: 12px;
+    }
 }
 
 /* ==========================================================================
