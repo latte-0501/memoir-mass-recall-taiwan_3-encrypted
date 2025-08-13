@@ -94,7 +94,7 @@
                         <div class="title-text truncate-one-line">台灣大罷免運動始末</div>
                         <!-- 展開/收合按鈕 -->
                         <button class="header-toggle-btn" id="headerToggleBtn" title="收合控制面板">
-                            <i data-lucide="chevron-down" style="width: 14px; height: 14px;"></i>
+                            <i data-lucide="chevron-up" style="width: 14px; height: 14px;"></i>
                         </button>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                     台灣大罷免運動始末
                     <!-- 手機版按鈕 -->
                     <button class="header-toggle-btn mobile" id="mobileHeaderToggleBtn" title="收合控制面板">
-                        <i data-lucide="chevron-down" style="width: 12px; height: 12px;"></i>
+                        <i data-lucide="chevron-up" style="width: 12px; height: 12px;"></i>
                     </button>
                 </div>
             </div>
@@ -1029,13 +1029,15 @@
                         const icon = btn.querySelector('i[data-lucide]');
                         if (icon) {
                             if (collapsed) {
+                                // 收合狀態：顯示向下箭頭（表示可以展開）
                                 btn.classList.add('collapsed');
                                 btn.title = '展開控制面板';
-                                icon.setAttribute('data-lucide', 'chevron-up');
+                                icon.setAttribute('data-lucide', 'chevron-down');
                             } else {
+                                // 展開狀態：顯示向上箭頭（表示可以收合）
                                 btn.classList.remove('collapsed');
                                 btn.title = '收合控制面板';
-                                icon.setAttribute('data-lucide', 'chevron-down');
+                                icon.setAttribute('data-lucide', 'chevron-up');
                             }
                         }
                     }
@@ -2443,7 +2445,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T17:49:30.017498800+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T17:57:26.389387800+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
