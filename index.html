@@ -7,25 +7,25 @@
     <meta name="description" content="台灣大罷免運動始末 - 加密保護的個人回憶錄 - 個人回憶錄">
     <meta name="author" content="MemoirFlow">
     <meta name="generator" content="MemoirFlow">
-    
+
     <!-- 🔐 加密標記 - 必要元件 -->
     <meta name="memoir-encryption" content="true">
     <meta name="encryption-mode" content="{{ENCRYPTION_MODE}}">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="台灣大罷免運動始末 - 回憶錄">
     <meta property="og:description" content="個人回憶錄">
-    
+
     <!-- PWA Support -->
     <meta name="theme-color" content="#1a1a2e">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
-    
+
     <!-- External Libraries -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -158,6 +158,16 @@
                         <div class="toggle-knob"></div>
                     </div>
                 </div>
+
+                <div class="settings-item">
+                    <span>字體大小</span>
+                    <div class="font-size-controls">
+                        <button class="font-btn" id="fontSmall" title="小">小</button>
+                        <button class="font-btn active" id="fontMedium" title="中">中</button>
+                        <button class="font-btn" id="fontLarge" title="大">大</button>
+                    </div>
+                </div>
+                
                 <button class="settings-btn" id="helpBtn">
                     <i data-lucide="help-circle" style="width: 14px; height: 14px;"></i>
                     使用說明
@@ -785,6 +795,10 @@
             const TYPEWRITER_KEY = 'memoirflow:typewriter';
             let typewriterEnabled = localStorage.getItem(TYPEWRITER_KEY) !== 'false'; // 預設開啟
 
+            // ✅ 字體大小狀態與儲存鍵
+            const FONT_SIZE_KEY = 'memoirflow:font';
+            let fontSize = localStorage.getItem(FONT_SIZE_KEY) || 'medium';
+
             let isTransitioning = false;
             let typewriterTimer = null;
             let typewriterText = '';
@@ -793,6 +807,12 @@
 
             // DOM 元素快取
             const elements = {
+                // 字體調整
+                fontSmall: document.getElementById('fontSmall'),
+                fontMedium: document.getElementById('fontMedium'),
+                fontLarge: document.getElementById('fontLarge'),
+
+                // 載入畫面
                 loadingScreen: document.getElementById('loadingScreen'),
                 passwordModal: document.getElementById('passwordModal'),
                 app: document.getElementById('app'),
@@ -977,11 +997,12 @@
                 }
             }
 
-            // 設定字體大小
+            // ✅ 設定字體大小（狀態 + 儲存 + 套用）
             function setFontSize(size) {
                 fontSize = size;
-                updateFontSizeButtons();
+                localStorage.setItem(FONT_SIZE_KEY, fontSize);
                 applyFontSize();
+                updateFontSizeButtons();
             }
 
             // 切換網格模式
@@ -995,9 +1016,9 @@
 
             function updateFontSizeButtons() {
                 // 移除所有按鈕的 active 狀態
-                if (elements.fontSmall) elements.fontSmall.classList.remove('active');
-                if (elements.fontMedium) elements.fontMedium.classList.remove('active');
-                if (elements.fontLarge) elements.fontLarge.classList.remove('active');
+                if (elements.fontSmall) elements.fontSmall.classList.toggle('active', fontSize === 'small');
+                if (elements.fontMedium) elements.fontMedium.classList.toggle('active', fontSize === 'medium');
+                if (elements.fontLarge) elements.fontLarge.classList.toggle('active', fontSize === 'large');
                 
                 // 添加當前字體大小按鈕的 active 狀態
                 switch (fontSize) {
@@ -1013,12 +1034,9 @@
                 }
             }
 
+            // ✅ 依狀態切換 <html data-font="...">，讓 CSS 變數生效
             function applyFontSize() {
-                // 移除所有字體大小類別
-                if (elements.subtitleArea) {
-                    elements.subtitleArea.classList.remove('font-small', 'font-medium', 'font-large');
-                    elements.subtitleArea.classList.add(`font-${fontSize}`);
-                }
+                document.documentElement.setAttribute('data-font', fontSize);
             }
 
 
@@ -1044,6 +1062,17 @@
                 // 動態調整內容高度
                 document.addEventListener('DOMContentLoaded', syncMainContentOffset);
                 window.addEventListener('resize', syncMainContentOffset);
+
+                // ✅ 字體大小按鈕
+                if (elements.fontSmall) {
+                    elements.fontSmall.addEventListener('click', () => setFontSize('small'));
+                }
+                if (elements.fontMedium) {
+                    elements.fontMedium.addEventListener('click', () => setFontSize('medium'));
+                }
+                if (elements.fontLarge) {
+                    elements.fontLarge.addEventListener('click', () => setFontSize('large'));
+                }
 
                 // 設定按鈕
                 if (elements.settingsBtn) {
@@ -1892,7 +1921,29 @@
                     }
                     return;
                 }
-                
+
+                // ✅ 常見縮放快捷鍵（僅在沒有面板開啟時生效）
+                if (!(elements.timelinePanel?.classList.contains('visible') ||
+                    elements.helpPanel?.classList.contains('visible') ||
+                    elements.mediaViewer?.classList.contains('visible'))) {
+                    const withCtrl = (e.ctrlKey || e.metaKey); // macOS 也支援 Command
+                    if (withCtrl && (e.key === '+' || e.key === '=')) {
+                        e.preventDefault();
+                        setFontSize(fontSize === 'small' ? 'medium' : 'large');
+                        return;
+                    }
+                    if (withCtrl && e.key === '-') {
+                        e.preventDefault();
+                        setFontSize(fontSize === 'large' ? 'medium' : 'small');
+                        return;
+                    }
+                    if (withCtrl && e.key === '0') {
+                        e.preventDefault();
+                        setFontSize('medium');
+                        return;
+                    }
+                }
+
                 switch (e.key) {
                     case 'ArrowLeft':
                         e.preventDefault();
@@ -1998,7 +2049,9 @@
                     updateSubtitleToggle();
                     updateSubtitleVisibility();
                     updateTypewriterToggle();
-                    
+                    updateFontSizeButtons();
+                    applyFontSize();
+
                     // 載入第一個事件
                     if (MEMOIR_DATA.events && MEMOIR_DATA.events.length > 0) {
                         loadEvent();
@@ -2089,7 +2142,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T10:03:32.946239200+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T10:18:57.067097800+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
