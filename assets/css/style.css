@@ -1444,3 +1444,74 @@ body {
 /* 動態調整內容高度 */
 .main-content { padding-top: 0; }            /* 交給 JS 設定 */
 .main-content.grid-mode { padding-top: 0; }  /* 交給 JS 設定 */
+
+/* ========== 字體大小控制（全站） ========== */
+
+/* 預設字級變數（會被 data-font 覆蓋） */
+:root {
+    --mf-title-size: 28px;          /* 桌面標題（.title-text / .mobile-title） */
+    --mf-subtitle-title-size: 18px; /* 字幕區的小標題（.event-title） */
+    --mf-subtitle-text-size: 16px;  /* 字幕段落（.event-description） */
+    --mf-date-size: 12px;           /* 日期（.event-date） */
+}
+
+/* 3 檔字級：將屬性掛在 <html data-font="..."> 上 */
+html[data-font="small"] {
+    --mf-title-size: 24px;
+    --mf-subtitle-title-size: 16px;
+    --mf-subtitle-text-size: 14px;
+    --mf-date-size: 11px;
+}
+html[data-font="medium"] {
+    --mf-title-size: 28px;
+    --mf-subtitle-title-size: 18px;
+    --mf-subtitle-text-size: 16px;
+    --mf-date-size: 12px;
+}
+html[data-font="large"] {
+    --mf-title-size: 32px;
+    --mf-subtitle-title-size: 20px;
+    --mf-subtitle-text-size: 18px;
+    --mf-date-size: 13px;
+}
+
+/* 把變數套到實際元件上 */
+.title-text,
+.mobile-title {
+    font-size: var(--mf-title-size);
+    line-height: 1.15;
+}
+.subtitle-area .event-title {
+    font-size: var(--mf-subtitle-title-size);
+    line-height: 1.25;
+}
+.subtitle-area .event-description {
+    font-size: var(--mf-subtitle-text-size);
+    line-height: 1.7;
+}
+.subtitle-area .event-date {
+    font-size: var(--mf-date-size);
+}
+
+/* 設定選單內按鈕樣式（可依你現有風格微調） */
+.font-size-controls {
+    display: inline-flex;
+    gap: 6px;
+    margin-left: 8px;
+}
+.font-btn {
+    background: rgba(31, 41, 55, 0.7);
+    color: #e5e7eb;
+    border: 1px solid rgba(107, 114, 128, 0.5);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: transform .06s ease, background .2s ease, border-color .2s ease;
+}
+.font-btn:hover { transform: translateY(-1px); }
+.font-btn.active {
+    background: rgba(59, 130, 246, 0.85);
+    border-color: rgba(147, 197, 253, 0.7);
+    color: white;
+}
