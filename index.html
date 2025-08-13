@@ -2347,7 +2347,74 @@
                     typeNextChar();
                 });
             }
-            
+
+            // 切換打字機效果
+            function toggleTypewriter() {
+                typewriterEnabled = !typewriterEnabled;
+                updateTypewriterToggle();
+                
+                // 如果當前正在打字，停止並立即顯示完整文字
+                if (isTyping) {
+                    stopTypewriter();
+                }
+            }
+
+            function updateTypewriterToggle() {
+                if (elements.typewriterToggle) {
+                    if (typewriterEnabled) {
+                        elements.typewriterToggle.classList.add('active');
+                    } else {
+                        elements.typewriterToggle.classList.remove('active');
+                    }
+                }
+            }
+
+            // 設定字體大小
+            function setFontSize(size) {
+                fontSize = size;
+                updateFontSizeButtons();
+                applyFontSize();
+            }
+
+            // 切換網格模式
+            function toggleGridMode() {
+                showGrid = !showGrid;
+                updateGridToggle();
+                updateViewMode();
+            }
+
+
+
+            function updateFontSizeButtons() {
+                // 移除所有按鈕的 active 狀態
+                if (elements.fontSmall) elements.fontSmall.classList.remove('active');
+                if (elements.fontMedium) elements.fontMedium.classList.remove('active');
+                if (elements.fontLarge) elements.fontLarge.classList.remove('active');
+                
+                // 添加當前字體大小按鈕的 active 狀態
+                switch (fontSize) {
+                    case 'small':
+                        if (elements.fontSmall) elements.fontSmall.classList.add('active');
+                        break;
+                    case 'medium':
+                        if (elements.fontMedium) elements.fontMedium.classList.add('active');
+                        break;
+                    case 'large':
+                        if (elements.fontLarge) elements.fontLarge.classList.add('active');
+                        break;
+                }
+            }
+
+            function applyFontSize() {
+                // 移除所有字體大小類別
+                if (elements.subtitleArea) {
+                    elements.subtitleArea.classList.remove('font-small', 'font-medium', 'font-large');
+                    elements.subtitleArea.classList.add(`font-${fontSize}`);
+                }
+            }
+
+
+
             function stopTypewriter() {
                 if (typewriterTimer) {
                     clearTimeout(typewriterTimer);
@@ -2525,15 +2592,20 @@
             function updateViewMode() {
                 if (showGrid) {
                     if (elements.mediaCarousel) elements.mediaCarousel.style.display = 'none';
-                    if (elements.mediaGrid) elements.mediaGrid.style.display = 'block';
+                    if (elements.mediaGrid) {
+                        elements.mediaGrid.style.display = 'block';
+                        elements.mediaGrid.classList.remove('hidden');
+                    }
                     if (elements.mainContent) elements.mainContent.classList.add('grid-mode');
                     renderGridView();
                 } else {
                     if (elements.mediaCarousel) elements.mediaCarousel.style.display = 'flex';
-                    if (elements.mediaGrid) elements.mediaGrid.style.display = 'none';
+                    if (elements.mediaGrid) {
+                        elements.mediaGrid.style.display = 'none';
+                        elements.mediaGrid.classList.add('hidden');
+                    }
                     if (elements.mainContent) elements.mainContent.classList.remove('grid-mode');
                 }
-            }
             
             // 切換字幕
             function toggleSubtitles() {
@@ -3388,7 +3460,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-12T19:08:20.412830500+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T07:11:45.321244100+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
