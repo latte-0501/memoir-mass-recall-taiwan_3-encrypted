@@ -24,7 +24,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+    <link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
 
     <!-- External Libraries -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -77,7 +77,7 @@
     <!-- 載入畫面 -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-animation"></div>
-        <div class="loading-title">📖 台灣大罷免運動始末</div>
+        <div class="loading-title">台灣大罷免運動始末</div>
         <div class="loading-subtitle">加密回憶錄正在載入中...</div>
         <div class="loading-status" id="loadingStatus">正在準備加密內容</div>
     </div>
@@ -89,12 +89,12 @@
             <!-- 桌面版標題 -->
             <div class="title-area">
                 <div class="title-box">
-                    <div class="title-text">台灣大罷免運動始末</div>
+                    <div class="title-text truncate-one-line">台灣大罷免運動始末</div>
                 </div>
             </div>
 
             <!-- 手機版標題 -->
-            <div class="mobile-title">📖 台灣大罷免運動始末</div>
+            <div class="mobile-title truncate-one-line">台灣大罷免運動始末</div>
             <div class="header-content">
                 <!-- 左側控制按鈕 -->
                 <div class="header-left">
@@ -140,7 +140,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="event-title" id="eventTitle">正在載入...</div>
+                <div class="event-title truncate-one-line" id="eventTitle">正在載入...</div>
                 <div class="event-description" id="eventDescription">正在載入加密內容...</div>
             </div>
             <!-- 設定選單 -->
@@ -193,7 +193,7 @@
                     <div class="main-media" id="mainMedia">
                         <div class="media-display" id="mediaDisplay">
                             <div style="text-align: center; color: #9ca3af;">
-                                <div style="font-size: 48px; margin-bottom: 20px;">📖</div>
+                                <div style="font-size: 48px; margin-bottom: 20px;"></div>
                                 <div>內容正在載入中...</div>
                             </div>
                         </div>
@@ -941,7 +941,98 @@
                     </div>
                 `;
             }
-            
+
+            /**
+             * 解除既有跑馬燈（回到單行省略）
+             */
+            function teardownMarquee(el){
+            if(!el) return;
+            // 若 el 本身就是跑馬燈容器
+            if(el.classList && el.classList.contains('marquee')){
+                // 取回原文字
+                const inner = el.querySelector('.marquee__inner');
+                if(inner){
+                // 取回第一段原始內容文字
+                const first = inner.querySelector('.marquee__content');
+                if(first){
+                    el.textContent = first.textContent;
+                }
+                }
+                el.classList.remove('marquee');
+                el.classList.add('truncate-one-line');
+                return;
+            }
+            // 若 el 內有跑馬燈（例如外面再包一層）
+            const marquee = el.querySelector?.('.marquee');
+            if(marquee){
+                const inner = marquee.querySelector('.marquee__inner');
+                const first = inner?.querySelector('.marquee__content');
+                el.textContent = first?.textContent || el.textContent;
+            }
+            el.classList?.add('truncate-one-line');
+            }
+
+            /**
+             * 若文字溢出，將元素轉為跑馬燈。
+             * - 速度依文字寬度自動調整。
+             * - 可重複呼叫（會先清掉舊的狀態再判斷）。
+             */
+            function applyMarqueeIfOverflow(el, {minSpeed = 60, maxSpeed = 140, gap = 48} = {}){
+            if(!el) return;
+
+            // 先把它恢復成純文字 + 省略，才能正確量測
+            teardownMarquee(el);
+
+            // 強制單行省略以測量溢出
+            el.classList.add('truncate-one-line');
+
+            // 量測是否溢出
+            const isOverflow = el.scrollWidth > el.clientWidth;
+            if(!isOverflow) return;  // 不溢出就維持省略（…）
+
+            // 取得原始文字
+            const text = el.textContent;
+
+            // 轉成跑馬燈 DOM
+            el.classList.remove('truncate-one-line');
+            el.classList.add('marquee');
+            el.innerHTML = `
+                <div class="marquee__inner" aria-hidden="false">
+                <span class="marquee__content"></span>
+                <span class="marquee__content"></span>
+                </div>
+            `;
+            const contents = el.querySelectorAll('.marquee__content');
+            contents.forEach(c => c.textContent = text);
+
+            // 重新量測內容寬度（用第一段）
+            const first = el.querySelector('.marquee__content');
+            // 先讓它可量測
+            const temp = document.createElement('span');
+            temp.style.position = 'absolute';
+            temp.style.visibility = 'hidden';
+            temp.style.whiteSpace = 'nowrap';
+            temp.style.font = getComputedStyle(el).font; // 盡量用相同字體
+            temp.textContent = text;
+            document.body.appendChild(temp);
+            const contentWidth = temp.offsetWidth;
+            document.body.removeChild(temp);
+
+            // 依字寬設定速度（字越長，duration 越長）
+            // 每秒移動像素 = speed，duration = 總位移 / speed
+            // 這裡把速度夾在 minSpeed ~ maxSpeed 之間（px/s）
+            const containerWidth = el.clientWidth;
+            const totalTravel = contentWidth + gap + contentWidth + gap; // 兩段 + 間隔做循環
+            // 讓速度隨著文字 / 容器比例遞增（你可微調映射）
+            const ratio = Math.min(3, Math.max(1, contentWidth / containerWidth));
+            const pxPerSecond = Math.max(minSpeed, Math.min(maxSpeed, 60 * ratio));
+            const duration = Math.max(8, Math.min(40, totalTravel / pxPerSecond)); // 限制在 8~40 秒
+
+            const inner = el.querySelector('.marquee__inner');
+            inner.style.setProperty('--gap', `${gap}px`);
+            inner.style.setProperty('--duration', `${duration}s`);
+            }
+
             // 打字機效果
             function startTypewriter(text, element, speed = 50) {
                 if (!typewriterEnabled || !text || !element) {
@@ -1003,6 +1094,11 @@
                 localStorage.setItem(FONT_SIZE_KEY, fontSize);
                 applyFontSize();
                 updateFontSizeButtons();
+
+                // 字體變了要重算是否溢出
+                applyMarqueeIfOverflow(document.querySelector('.title-text'));
+                applyMarqueeIfOverflow(document.querySelector('.mobile-title'));
+                applyMarqueeIfOverflow(elements.eventTitle);
             }
 
             // 切換網格模式
@@ -1061,7 +1157,13 @@
 
                 // 動態調整內容高度
                 document.addEventListener('DOMContentLoaded', syncMainContentOffset);
-                window.addEventListener('resize', syncMainContentOffset);
+                window.addEventListener('resize', () => {
+                    syncMainContentOffset;
+                    applyMarqueeIfOverflow(document.querySelector('.title-text'));
+                    applyMarqueeIfOverflow(document.querySelector('.mobile-title'));
+                    applyMarqueeIfOverflow(elements.eventTitle);
+                    }
+                );
 
                 // ✅ 字體大小按鈕
                 if (elements.fontSmall) {
@@ -1467,6 +1569,9 @@
                     elements.eventTitle.textContent = event.title;
                 }
                 
+                // 跑馬燈：每日文章標題
+                applyMarqueeIfOverflow(elements.eventTitle);
+
                 // 更新描述（使用打字機效果）
                 if (elements.eventDescription && showSubtitles) {
                     startTypewriter(event.description, elements.eventDescription);
@@ -2052,6 +2157,12 @@
                     updateFontSizeButtons();
                     applyFontSize();
 
+                    // 跑馬燈：回憶錄名稱（桌機 + 手機）
+                    const memoirTitleDesktop = document.querySelector('.title-text');
+                    const memoirTitleMobile  = document.querySelector('.mobile-title');
+                    applyMarqueeIfOverflow(memoirTitleDesktop);
+                    applyMarqueeIfOverflow(memoirTitleMobile);
+
                     // 載入第一個事件
                     if (MEMOIR_DATA.events && MEMOIR_DATA.events.length > 0) {
                         loadEvent();
@@ -2078,11 +2189,9 @@
             // 顯示空狀態
             function showEmptyState() {
                 if (elements.mediaDisplay) {
-                    const icon = ENCRYPTION_ENABLED ? '🔒' : '📖';
                     const status = ENCRYPTION_ENABLED ? '加密回憶錄已載入' : '回憶錄已載入';
                     elements.mediaDisplay.innerHTML = `
                         <div style="text-align: center; color: #9ca3af; padding: 40px;">
-                            <div style="font-size: 48px; margin-bottom: 20px;">${icon}</div>
                             <div style="font-size: 18px; margin-bottom: 10px;">${status}</div>
                             <div style="font-size: 14px;">但暫時沒有時間節點內容</div>
                         </div>
@@ -2142,7 +2251,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T10:38:11.612449+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T10:51:53.817655200+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
