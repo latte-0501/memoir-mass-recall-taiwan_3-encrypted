@@ -780,6 +780,8 @@ body {
 }
 
 .event-description {
+    position: absolute;
+    left: 0;
     color: rgb(229, 231, 235);
     font-size: var(--mf-subtitle-text-size);
     line-height: 1.7;
