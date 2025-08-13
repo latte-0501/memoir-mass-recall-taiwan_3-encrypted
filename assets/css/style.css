@@ -31,17 +31,17 @@ html[data-font="small"] {
 }
 
 html[data-font="medium"] {
-    --mf-title-size: 30px;
-    --mf-subtitle-title-size: 24px;
-    --mf-subtitle-text-size: 20px;
-    --mf-date-size: 22px;
+    --mf-title-size: 24px;
+    --mf-subtitle-title-size: 14px;
+    --mf-subtitle-text-size: 12px;
+    --mf-date-size: 10px;
 }
 
 html[data-font="large"] {
-    --mf-title-size: 40px;
-    --mf-subtitle-title-size: 36px;
-    --mf-subtitle-text-size: 30px;
-    --mf-date-size: 33px;
+    --mf-title-size: 30px;
+    --mf-subtitle-title-size: 20px;
+    --mf-subtitle-text-size: 18px;
+    --mf-date-size: 14px;
 }
 
 /* ==========================================================================
@@ -489,14 +489,15 @@ body {
 .header-content.collapsed {
     max-height: 0;
     min-height: 0;
-    height: 0; /* 明確設定高度為 0 */
-    padding: 0; /* 移除所有 padding */
-    margin: 0; /* 移除所有 margin */
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
     opacity: 0;
     visibility: hidden;
-    border: 0; /* 移除所有邊框 */
+    border-top: 0;
+    border-bottom: 0;
     pointer-events: none;
-    overflow: hidden; /* 確保內容不會溢出 */
 }
 
 .header-content:not(.collapsed) {
