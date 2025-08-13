@@ -1758,3 +1758,211 @@ html[data-font="large"] {
 
 /* 標題地展開收合 */
 
+/* 改進的 title-container 區域樣式 */
+#title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(31, 41, 55, 0.8));
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    position: relative;
+}
+
+/* 桌面版標題區域 */
+.title-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    max-width: 500px;
+}
+
+.title-box {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(99, 102, 241, 0.1));
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 16px;
+    padding: 10px 20px;
+    box-shadow: 
+        0 4px 16px rgba(59, 130, 246, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.title-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.title-box:hover::before {
+    left: 100%;
+}
+
+.title-box:hover {
+    transform: translateY(-1px);
+    box-shadow: 
+        0 6px 20px rgba(59, 130, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+.title-text {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+/* 手機版標題 */
+.mobile-title {
+    display: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    padding: 8px 40px 8px 8px; /* 為按鈕留出空間 */
+}
+
+/* 展開/收合按鈕重新設計 */
+.header-toggle-btn {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(99, 102, 241, 0.8));
+    border: 1px solid rgba(147, 197, 253, 0.6);
+    border-radius: 12px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+    z-index: 10;
+    position: relative;
+    box-shadow: 
+        0 2px 8px rgba(59, 130, 246, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.header-toggle-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.header-toggle-btn:hover::before {
+    opacity: 1;
+}
+
+.header-toggle-btn:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 
+        0 4px 16px rgba(59, 130, 246, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: rgba(147, 197, 253, 0.8);
+}
+
+.header-toggle-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.header-toggle-btn.collapsed {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.8));
+    border-color: rgba(110, 231, 183, 0.6);
+    transform: rotate(180deg);
+}
+
+.header-toggle-btn.collapsed:hover {
+    transform: rotate(180deg) translateY(-2px) scale(1.05);
+    box-shadow: 
+        0 4px 16px rgba(16, 185, 129, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* 手機版按鈕樣式 */
+.header-toggle-btn.mobile {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    margin-left: 0;
+}
+
+.header-toggle-btn.mobile.collapsed {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.header-toggle-btn.mobile:hover {
+    transform: translateY(-50%) translateY(-2px) scale(1.05);
+}
+
+.header-toggle-btn.mobile.collapsed:hover {
+    transform: translateY(-50%) rotate(180deg) translateY(-2px) scale(1.05);
+}
+
+/* 加入微妙的動畫效果 */
+@keyframes titleGlow {
+    0%, 100% { 
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 0 rgba(59, 130, 246, 0); 
+    }
+    50% { 
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(59, 130, 246, 0.3); 
+    }
+}
+
+.title-text:hover,
+.mobile-title:hover {
+    animation: titleGlow 2s ease-in-out infinite;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    #title-container {
+        padding: 10px 12px;
+    }
+    
+    .title-area {
+        display: none;
+    }
+
+    .mobile-title {
+        display: block;
+    }
+    
+    .header-toggle-btn:not(.mobile) {
+        display: none;
+    }
+}
