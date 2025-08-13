@@ -934,26 +934,67 @@
                 if (!elements.headerContent || !elements.header) return;
                 
                 if (isHeaderCollapsed) {
-                    // 收合狀態 - 完全隱藏
-                    elements.headerContent.style.display = 'none';
+                    // 收合動畫
+                    const currentHeight = elements.headerContent.offsetHeight;
+                    
+                    // 先設置當前高度
+                    elements.headerContent.style.height = currentHeight + 'px';
+                    elements.headerContent.style.overflow = 'hidden';
+                    
+                    // 強制重繪
+                    elements.headerContent.offsetHeight;
+                    
+                    // 開始收合動畫
+                    elements.headerContent.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    elements.headerContent.style.height = '0px';
+                    elements.headerContent.style.paddingTop = '0px';
+                    elements.headerContent.style.paddingBottom = '0px';
+                    elements.headerContent.style.marginTop = '0px';
+                    elements.headerContent.style.marginBottom = '0px';
+                    elements.headerContent.style.opacity = '0';
+                    
+                    // 動畫完成後設置 pointer-events
+                    setTimeout(() => {
+                        elements.headerContent.style.pointerEvents = 'none';
+                        elements.headerContent.style.visibility = 'hidden';
+                    }, 300);
+                    
                     elements.header.classList.add('collapsed');
-                    
-                    // 更新按鈕圖示
                     updateToggleButtonIcon(true);
-                    
                     console.log('📤 Header 已收合');
+                    
                 } else {
-                    // 展開狀態 - 恢復顯示
-                    elements.headerContent.style.display = 'flex';
+                    // 展開動畫
+                    elements.headerContent.style.visibility = 'visible';
+                    elements.headerContent.style.pointerEvents = 'all';
+                    elements.headerContent.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                    
+                    // 恢復原始樣式
+                    elements.headerContent.style.height = 'auto';
+                    elements.headerContent.style.paddingTop = '12px';
+                    elements.headerContent.style.paddingBottom = '12px';
+                    elements.headerContent.style.marginTop = '';
+                    elements.headerContent.style.marginBottom = '';
+                    elements.headerContent.style.opacity = '1';
+                    
+                    // 計算自然高度並設置
+                    const naturalHeight = elements.headerContent.scrollHeight;
+                    elements.headerContent.style.height = '0px';
+                    elements.headerContent.offsetHeight; // 強制重繪
+                    elements.headerContent.style.height = naturalHeight + 'px';
+                    
+                    // 動畫完成後設置為 auto
+                    setTimeout(() => {
+                        elements.headerContent.style.height = 'auto';
+                        elements.headerContent.style.overflow = '';
+                    }, 300);
+                    
                     elements.header.classList.remove('collapsed');
-                    
-                    // 更新按鈕圖示
                     updateToggleButtonIcon(false);
-                    
                     console.log('📥 Header 已展開');
                 }
             }
-
+            
             // 更新切換按鈕圖示
             function updateToggleButtonIcon(collapsed) {
                 const buttons = [elements.headerToggleBtn, elements.mobileHeaderToggleBtn];
@@ -2377,7 +2418,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T16:53:54.879311500+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T16:54:35.954639600+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
