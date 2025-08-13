@@ -3,6 +3,7 @@ const CACHE_NAME = 'memoir-cache-v1';
 const urlsToCache = [
   './',
   './index.html',
+  './assets/css/style.css',
   // 媒體文件會動態添加到快取
 ];
 
