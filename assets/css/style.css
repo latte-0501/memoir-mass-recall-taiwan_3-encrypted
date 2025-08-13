@@ -512,12 +512,12 @@ body {
 /* 移除字幕區域的加密保護水印 */
 .subtitle-area {
     padding: 12px 16px;
-    background: linear-gradient(to right, rgba(31, 41, 55, 0.6), rgba(55, 65, 81, 0.6));
-    backdrop-filter: blur(4px);
+    /* background: linear-gradient(to right, rgba(31, 41, 55, 0.6), rgba(55, 65, 81, 0.6)); */
+    /* backdrop-filter: blur(4px); */
     border-radius: 12px;
     margin: 0 16px 12px 16px;
-    border: 1px solid rgba(107, 114, 128, 0.2);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    /* border: 1px solid rgba(107, 114, 128, 0.2); */
+    /* box-shadow: 0 4px 8px rgba(0,0,0,0.3); */
     transition: all 0.3s ease;
     opacity: 1;
     position: relative;
@@ -1457,22 +1457,22 @@ body {
 
 /* 3 檔字級：將屬性掛在 <html data-font="..."> 上 */
 html[data-font="small"] {
-    --mf-title-size: 24px;
-    --mf-subtitle-title-size: 16px;
-    --mf-subtitle-text-size: 14px;
+    --mf-title-size: 20px;
+    --mf-subtitle-title-size: 12px;
+    --mf-subtitle-text-size: 10px;
     --mf-date-size: 11px;
 }
 html[data-font="medium"] {
-    --mf-title-size: 28px;
-    --mf-subtitle-title-size: 18px;
-    --mf-subtitle-text-size: 16px;
-    --mf-date-size: 12px;
+    --mf-title-size: 24px;
+    --mf-subtitle-title-size: 14px;
+    --mf-subtitle-text-size: 12px;
+    --mf-date-size: 10px;
 }
 html[data-font="large"] {
-    --mf-title-size: 32px;
+    --mf-title-size: 30px;
     --mf-subtitle-title-size: 20px;
     --mf-subtitle-text-size: 18px;
-    --mf-date-size: 13px;
+    --mf-date-size: 14px;
 }
 
 /* 把變數套到實際元件上 */
