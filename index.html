@@ -301,38 +301,79 @@
                         throw new Error('解密後的數據格式無效');
                     }
                     
-                    // 🚨 重要：驗證和修正媒體路徑
+                    // 🚨 重要：正確的媒體路徑處理邏輯
                     if (globals.MEMOIR_DATA && globals.MEMOIR_DATA.events) {
-                        console.log('🎬 檢查並修正媒體路徑...');
+                        console.log('🎬 開始媒體路徑檢查和修正...');
                         
                         globals.MEMOIR_DATA.events.forEach(function(event, eventIndex) {
                             if (event.media && Array.isArray(event.media)) {
                                 event.media.forEach(function(media, mediaIndex) {
-                                    // 🚨 確保媒體路徑正確
-                                    if (media.path && !media.path.startsWith('http')) {
-                                        if (!media.path.startsWith('./') && !media.path.startsWith('media/')) {
-                                            const filename = media.path.split('/').pop() || media.filename;
-                                            media.path = './media/' + filename;
-                                            console.log(`🔧 修正媒體路徑 [Event ${eventIndex}, Media ${mediaIndex}]: ${media.path}`);
-                                        } else if (media.path.startsWith('media/')) {
-                                            media.path = './' + media.path;
-                                            console.log(`🔧 添加相對路徑前綴 [Event ${eventIndex}, Media ${mediaIndex}]: ${media.path}`);
-                                        }
+                                    console.log(`🔍 檢查媒體 [Event ${eventIndex}, Media ${mediaIndex}]:`, media.path);
+                                    
+                                    // 🚨 跳過網路 URL
+                                    if (media.path && (media.path.startsWith('http://') || media.path.startsWith('https://'))) {
+                                        console.log(`🌐 保持網路 URL: ${media.path}`);
+                                        return;
                                     }
                                     
-                                    // 🚨 確保媒體有必要的屬性
-                                    if (!media.originalName && media.filename) {
-                                        media.originalName = media.filename;
-                                    }
-                                    if (!media.type && media.filename) {
-                                        const ext = media.filename.split('.').pop().toLowerCase();
-                                        media.type = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext) ? 'image' : 'video';
+                                    // 🚨 修正媒體路徑邏輯
+                                    if (media.path) {
+                                        let correctedPath = media.path;
+                                        
+                                        // 1. 如果路徑已經是正確的相對路徑，保持不變
+                                        if (media.path.startsWith('./media/')) {
+                                            console.log(`✅ 路徑已正確: ${media.path}`);
+                                            return;
+                                        }
+                                        
+                                        // 2. 如果路徑只是 media/filename，添加 ./
+                                        if (media.path.startsWith('media/')) {
+                                            correctedPath = './' + media.path;
+                                            console.log(`🔧 添加相對路徑前綴: ${media.path} -> ${correctedPath}`);
+                                        }
+                                        // 3. 如果是絕對路徑或其他格式，提取檔名並重新構建路徑
+                                        else {
+                                            const filename = media.path.split(/[/\\]/).pop() || media.filename || media.originalName;
+                                            if (filename) {
+                                                correctedPath = './media/' + filename;
+                                                console.log(`🔧 重建媒體路徑: ${media.path} -> ${correctedPath}`);
+                                            } else {
+                                                console.warn(`⚠️ 無法提取檔名: ${media.path}`);
+                                                correctedPath = './media/placeholder.jpg';
+                                            }
+                                        }
+                                        
+                                        // 更新路徑
+                                        media.path = correctedPath;
+                                        
+                                        // 🚨 確保媒體有必要的屬性
+                                        if (!media.originalName && media.filename) {
+                                            media.originalName = media.filename;
+                                        }
+                                        if (!media.type && media.filename) {
+                                            const ext = media.filename.split('.').pop().toLowerCase();
+                                            media.type = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext) ? 'image' : 'video';
+                                        }
+                                        
+                                        console.log(`✅ 媒體路徑最終確定: ${media.path}`);
                                     }
                                 });
                             }
                         });
                         
                         console.log('✅ 媒體路徑檢查完成');
+                        
+                        // 🚨 調試：列出所有媒體檔案的最終路徑
+                        let totalMediaCount = 0;
+                        globals.MEMOIR_DATA.events.forEach(function(event, eventIndex) {
+                            if (event.media) {
+                                event.media.forEach(function(media, mediaIndex) {
+                                    console.log(`📄 最終媒體路徑 [Event ${eventIndex}, Media ${mediaIndex}]: ${media.path}`);
+                                    totalMediaCount++;
+                                });
+                            }
+                        });
+                        console.log(`📊 總共處理了 ${totalMediaCount} 個媒體檔案`);
                     }
                     
                     // 🚨 驗證解碼結果
@@ -340,18 +381,6 @@
                         const name = globals.MEMOIR_DATA.chineseName || globals.MEMOIR_DATA.chinese_name;
                         console.log('✅ 中文名稱解碼結果:', name);
                         console.log('✅ 事件數量:', globals.MEMOIR_DATA.events ? globals.MEMOIR_DATA.events.length : 0);
-                        
-                        // 🚨 計算媒體檔案總數
-                        let totalMediaCount = 0;
-                        if (globals.MEMOIR_DATA.events) {
-                            globals.MEMOIR_DATA.events.forEach(function(event) {
-                                if (event.media) {
-                                    totalMediaCount += event.media.length;
-                                }
-                            });
-                        }
-                        console.log('✅ 媒體檔案總數:', totalMediaCount);
-                        
                     } else {
                         console.warn('⚠️ 回憶錄資料結構異常');
                     }
@@ -389,8 +418,10 @@
                                         event.media.forEach(function(media) {
                                             if (media.path && !media.path.startsWith('http')) {
                                                 if (!media.path.startsWith('./media/')) {
-                                                    const filename = media.path.split('/').pop() || media.filename;
-                                                    media.path = './media/' + filename;
+                                                    const filename = media.path.split(/[/\\]/).pop() || media.filename;
+                                                    if (filename) {
+                                                        media.path = './media/' + filename;
+                                                    }
                                                 }
                                             }
                                         });
@@ -2058,7 +2089,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T09:54:18.920225800+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T10:03:32.946239200+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
