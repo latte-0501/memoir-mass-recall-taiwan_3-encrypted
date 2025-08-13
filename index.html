@@ -1593,6 +1593,10 @@
                     <div class="toggle-switch" id="gridToggle">
                         <div class="toggle-knob"></div>
                     </div>
+                    <span>打字機效果</span>
+                    <div class="toggle-switch active" id="typewriterToggle">
+                        <div class="toggle-knob"></div>
+                    </div>
                 </div>
                 <button class="settings-btn" id="helpBtn">
                     <i data-lucide="help-circle" style="width: 14px; height: 14px;"></i>
@@ -2185,19 +2189,26 @@
             let currentMediaIndex = 0;
             let showSubtitles = true;
             let showGrid = false;
-            let typewriterEnabled = true;
+
+            // 記錄使用者偏好
+            const TYPEWRITER_KEY = 'memoirflow:typewriter';
+            let typewriterEnabled = localStorage.getItem(TYPEWRITER_KEY) !== 'false'; // 預設開啟
+
             let isTransitioning = false;
             let typewriterTimer = null;
             let typewriterText = '';
             let typewriterIndex = 0;
             let isTyping = false;
-            
+
             // DOM 元素快取
             const elements = {
                 loadingScreen: document.getElementById('loadingScreen'),
                 passwordModal: document.getElementById('passwordModal'),
                 app: document.getElementById('app'),
                 loadingStatus: document.getElementById('loadingStatus'),
+
+                // 打字機效果開關
+                typewriterToggle: document.getElementById('typewriterToggle'),
                 
                 // 控制按鈕
                 settingsBtn: document.getElementById('settingsBtn'),
@@ -2351,12 +2362,9 @@
             // 切換打字機效果
             function toggleTypewriter() {
                 typewriterEnabled = !typewriterEnabled;
+                localStorage.setItem(TYPEWRITER_KEY, String(typewriterEnabled));
                 updateTypewriterToggle();
-                
-                // 如果當前正在打字，停止並立即顯示完整文字
-                if (isTyping) {
-                    stopTypewriter();
-                }
+                if (isTyping) stopTypewriter();
             }
 
             function updateTypewriterToggle() {
@@ -2528,7 +2536,29 @@
                         }
                     });
                 }
-                
+
+                // 打字機效果切換
+                if (elements.typewriterToggle) {
+                    elements.typewriterToggle.addEventListener('click', () => {
+                        // 切換狀態
+                        toggleTypewriter();
+
+                        // 立即以目前事件的描述刷新顯示（關→開時重跑打字；開→關時顯示完整文字）
+                        const ev = getCurrentEvent();
+                        if (ev && elements.eventDescription && showSubtitles) {
+                            // 先停止（確保游標與計時清乾淨）
+                            stopTypewriter();
+                            if (typewriterEnabled) {
+                                // 重新跑字
+                                startTypewriter(ev.description, elements.eventDescription);
+                            } else {
+                                // 直接顯示完整文字
+                                elements.eventDescription.textContent = ev.description || '';
+                            }
+                        }
+                    });
+                }
+
                 // 鍵盤控制
                 document.addEventListener('keydown', handleKeyPress);
                 
@@ -3363,6 +3393,7 @@
                     updateGridToggle();
                     updateSubtitleToggle();
                     updateSubtitleVisibility();
+                    updateTypewriterToggle();
                     
                     // 載入第一個事件
                     if (MEMOIR_DATA.events && MEMOIR_DATA.events.length > 0) {
@@ -3454,7 +3485,7 @@
     
     <!-- 版權聲明 -->
     <script>
-        console.log('%c🔒 生成時間: 2025-08-13T08:20:42.862692700+00:00', 'color: #6b7280; font-size: 10px;');
+        console.log('%c🔒 生成時間: 2025-08-13T08:34:54.614720800+00:00', 'color: #6b7280; font-size: 10px;');
         console.log('%c🔐 版權所有 © MemoirFlow (加密版)', 'color: #6b7280; font-size: 10px;');
         console.log('%c🛡️ 此內容受 AES-256-GCM 加密保護', 'color: #10b981; font-size: 10px;');
     </script>
