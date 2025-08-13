@@ -2069,3 +2069,56 @@ html[data-font="large"] {
         margin-top: 6px;
     }
 }
+
+/* 修正 header-content 的收合動畫 */
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    gap: 8px;
+    min-height: 60px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top;
+    /* 設置固定高度以便動畫 */
+    height: 60px;
+}
+
+.header-content.collapsed {
+    /* 完全收合 */
+    height: 0;
+    min-height: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    opacity: 0;
+    transform: scaleY(0);
+    pointer-events: none;
+    border: none;
+    /* 確保完全不可見 */
+    visibility: hidden;
+}
+
+/* 展開狀態 */
+.header-content:not(.collapsed) {
+    height: 60px;
+    opacity: 1;
+    transform: scaleY(1);
+    visibility: visible;
+}
+
+/* 響應式調整 */
+@media (max-width: 768px) {
+    .header-content {
+        height: 56px;
+        min-height: 56px;
+    }
+    
+    .header-content:not(.collapsed) {
+        height: 56px;
+    }
+}
+
