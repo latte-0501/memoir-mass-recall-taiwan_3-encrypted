@@ -513,11 +513,11 @@ body {
 .subtitle-area {
     padding: 12px 16px;
     /* background: linear-gradient(to right, rgba(31, 41, 55, 0.6), rgba(55, 65, 81, 0.6)); */
-    /* backdrop-filter: blur(4px); */
+    backdrop-filter: blur(4px);
     border-radius: 12px;
     margin: 0 16px 12px 16px;
-    /* border: 1px solid rgba(107, 114, 128, 0.2); */
-    /* box-shadow: 0 4px 8px rgba(0,0,0,0.3); */
+    border: 1px solid rgba(107, 114, 128, 0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     transition: all 0.3s ease;
     opacity: 1;
     position: relative;
@@ -1515,3 +1515,54 @@ html[data-font="large"] {
     border-color: rgba(147, 197, 253, 0.7);
     color: white;
 }
+
+/* 跑馬燈 */
+
+/* 單行省略（預設狀態） */
+.truncate-one-line{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 跑馬燈外層（會套在原文字元素上，或把原文字元素包起來） */
+.marquee{
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  /* 兩側做一點淡出，較不突兀（可調） */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+
+/* 內層軌道：真正移動的容器 */
+.marquee__inner{
+  display: inline-flex;
+  gap: var(--gap, 48px);        /* 兩段文字間距 */
+  will-change: transform;
+  animation: marquee-scroll linear infinite;
+  animation-duration: var(--duration, 12s);
+}
+
+/* 單段內容（會複製 2 份做無縫輪播） */
+.marquee__content{
+  display: inline-block;
+}
+
+/* 滾動動畫 */
+@keyframes marquee-scroll{
+  from{ transform: translateX(0); }
+  to  { transform: translateX(calc(-50% - var(--gap, 48px)/2)); }
+}
+
+/* 滑鼠移入暫停（可選） */
+.marquee:hover .marquee__inner{
+  animation-play-state: paused;
+}
+
+/* 使用者偏好：減少動效時，直接顯示省略 */
+@media (prefers-reduced-motion: reduce){
+  .marquee .marquee__inner{ animation: none; }
+}
+
+/* 跑馬燈 */
